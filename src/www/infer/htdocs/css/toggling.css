@@ -1,0 +1,12 @@
+td.asTitle {
+cursor:pointer;
+}
+tbody.asBody {
+display:none;
+}
+.hidden {
+display:none;
+}
+.pointer {
+cursor:pointer;
+}

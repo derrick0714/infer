@@ -1,0 +1,17 @@
+TIME
+
+It is important for both the sensor and analysis machines to have the 
+correct time, so, be sure to set the correct time zone on each machine  
+using the tzsetup(8) utility, execute "ntpdate pool.ntp.org" as root to 
+set the machines' clocks to the correct time, and configure an NTP 
+daemon to keep them in sync.
+
+One such daemon is OpenNTPD. To install and  configure it, once each machine
+has a ports tree, cd to "/usr/ports/net/openntpd/", and, as root, execute "make 
+install clean". Then, add the following lines to /etc/rc.conf:
+
+openntpd_enable="YES"
+openntpd_flags="-s"
+
+Finally, as root, execute "/usr/local/etc/rc.d/openntpd start" to start 
+it.

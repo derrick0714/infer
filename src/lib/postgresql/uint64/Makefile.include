@@ -1,0 +1,2 @@
+lib/postgresql/uint64/uint64.o: SYS_INCLUDE_DIRS := $(SYS_INCLUDE_DIRS) /usr/local/include/postgresql/server
+lib/postgresql/uint64/uint64.o: SYS_INCLUDE_DIRS:= $(SYS_INCLUDE_DIRS:%=-isystem %)

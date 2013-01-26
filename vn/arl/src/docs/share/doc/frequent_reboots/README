@@ -1,0 +1,176 @@
+FrequentReboots(1)  Vivic Networks Command
+
+NAME
+     FrequentReboots - search for dark space accesses in input data
+
+SYNOPSIS
+     FrequentReboots [-c configuration_file]
+                    [[-t value] | [--time-window value]]
+                    [[-s] | [ --stdout ]]
+                    [[-p pcap_file] | [--input-pcap pcap_file]]
+                    -i netflow_file
+                    --input-netflow netflow_file
+                    -o output_file | --output output_file
+     FrequentReboots -h
+
+DESCRIPTION
+     FrequentReboots program scans through the netflow data file to flag
+     hosts that are considered to reboot too often. The user defined
+     parameters are used as the criteria. A reboot is determined
+     based on specific events that are associated with a host's
+     initiation process. This includes things like checking for
+     updates, connecting to the time server, etc. These events can
+     be configured by the user.
+
+     The program can also read DNS data from PCAP files and leverage
+     the host events based on DNS names. It is assumed that most DNS
+     requests will be proxied, so rules on responses are loosened.
+     As long as a DNS response was seen for a specific IP then
+     connections to that are IP are tied to the DNS name in the
+     response.
+
+     The output of the program shows the flow that was the "last
+     straw." Basically it's the flow that triggered off the event.
+     The Client IP represents the violating host. A host that
+     reboots too often is considered unstable and/or infected.
+
+     If configuration_file is not specified, the default configuration
+     file location is /usr/local/etc/symptoms.conf.
+
+     The configuration file format is:
+
+           option = value
+
+     with each option/value pair separated by a newline.
+
+     The following command-line options are required:
+
+           -i input file
+
+           --input-netflow input file
+                   Specify the netflow input file. In this case the
+                   netflows as defined by ARL accepted.
+
+           -o output file
+
+           --output output file
+                   Specify the output file. This is the file that
+                   will be used by other symptoms if needed.
+                   FrequentRebootsV program can be used to view those
+                   entries without reprocessing the input.
+
+     The following command-line options are optional:
+
+           -c configuration_file
+
+           --config-file configuration_file
+                   Specify the file from which to read additional configuration
+                   options.
+
+           -h
+
+           --help
+                   Print a help message to stdout.
+
+           -s
+
+           --stdout
+                   By default the symptom will output its finding to stdout
+                   in human readable format. This option will disable this
+                   feature.
+
+           -n
+
+           --sensor
+                   Specify the sensor name, optional but recommended as
+                   NetFlow file doesn't contain this name.
+
+
+           -d
+
+           --state-dir
+                  Directory that will contain state files. Those
+                  should be from the previous execution of the
+                  program. Due to these files the program must be
+                  executed with sequential inputs. Default: "./"
+
+           -a
+
+           --app-def
+                 Application definition file. This file defines
+                 initiation events. Default:
+                 "/usr/local/etc/boot_applications.conf"
+
+           -e
+
+           --events-at-reboot
+                 How many initialization events needed to mark a
+                 reboot. Events as defiled but --app-def file.
+                 Default: 3
+
+           -b
+
+           --boot-time-window
+                 Defined in seconds. How long does it take for a
+                 host to boot. More precisely, in what time window
+                 -e value of events need to happen to mark a reboot.
+                 Default: 300 (5 mins)
+
+           -r
+
+           --reboot-count
+                How many reboots are needed to flag the host.
+                Default: 5
+
+           -w
+
+           --watch-time
+                Defined in hours. Time window for watching the
+                reboots of a host. Default: 24
+
+
+
+     The following configuration-file options are available:
+
+           state-dir = file
+                   see: --state-dir
+
+           app-def = file
+                   see: --app-def
+
+           events-at-reboot = number
+                   see: --events-at-reboot
+
+           boot-time-window = number
+                   see: --boot-time-window
+
+           watch-time = number
+                   see: --watch-time
+
+           reboot-count = number
+                   see: --reboot-count
+
+     The application definition file uses a format similar to the
+     configuration file:
+
+           Application="[IP] [PORT] [Comment without spaces]"
+                   this is the line for defining IP based Host
+                   Initialization Event. Ex: "72.247.146.18 80
+                   Panda_Antivirus"
+
+           Application_dns="[DNS] [PORT] [Comment without spaces]"
+                   This is the line for defining DNS based Host
+                   Initialization Event. Ex: "dmzs.com 123
+                   Time_Server_dmzs.com"
+
+EXIT STATUS
+     FrequentReboots exits 0 on success, and >0 if an error occurs.
+
+EXAMPLES
+     Process an hour worth of traffic:
+
+           ./FrequentReboots -i ./arl/ARL-sample/idata_1/20071003.05.flow
+                        -o output -f ./state/
+
+
+                              February 15, 2010

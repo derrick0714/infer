@@ -1,0 +1,224 @@
+\documentclass[titlepage,12pt]{report}
+
+\usepackage{graphicx}
+\usepackage{fullpage}
+\usepackage{listings}
+\usepackage{verbatim}
+
+\usepackage[%
+%pdftitle={\TITLE}
+pdfauthor={Mikhail Sosonkin}, pdftex, colorlinks=true,
+linkcolor={black}, citecolor={black}, urlcolor={black}]{hyperref}
+
+
+\newcommand{\FIGURE}[5]{%
+\typeout{FIGURE: #2}
+\begin{figure}[#1]
+     \centerline{\resizebox{#3\linewidth}{!}{\includegraphics{#2}}}
+     \caption{#4}
+       \label{#5}
+       \end{figure}
+}
+
+\newcommand{\FULLFIGURE}[5]{%
+    \typeout{FIGURE: #2}
+    \begin{figure*}[#1]
+    \centerline{\resizebox{#3\linewidth}{!}{\includegraphics{#2}}}
+    \caption{#4}
+    \label{#5}
+    \end{figure*}
+}
+
+\newcommand{\PIC}[2]{\centerline{\resizebox{#1\linewidth}{!}{\includegraphics{#2}}} }
+
+\title{INFER Symptoms Concept of Operations}
+\author{Vivic Networks}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\chapter{Introduction}
+To describe a symptom it is often easier to say what it is not. A symptom is not a signature. Meaning that it will not identify a specific attack, similar to how Snort and other popular IDS's work. A symptom is not behavioral intrusion detection. It will not show a deviation from some baseline.
+
+A symptom will highlight certain types of interesting behaviors. Combinations of temporal data and various symptoms could indicate malicious or otherwise undesirable activity. The idea is to bring interesting activity to the attention of an analyst. The analyst will then make a determination if there is proof of malicious activity and further action is required.
+
+Vivic Networks delivers symptoms geared toward intrusion detection and tools that identify them within traffic.
+
+The following chapters will address different types of symptoms, how to properly execute them and how to interpret the output.
+
+\chapter{Symptom Types}
+Symptoms come in two different types: stateful and stateless. The type is generally determined by the complexity of the implementation.
+
+\section{Stateless}
+Stateless symptoms are those that can be executed independently of their previous executions. For this reason the tools that implement those symptoms can be executed in parallel.
+
+\section{Stateful}
+Stateful symptoms require state to be saved on persistent storage between executions. It's the case because a specific execution would become more accurate if information from previous runs is available. The exact format of state is determined by the implementing tool, however it is generally left up to the user to specify the correct file or files to use.
+
+For example, if we had ARL NetFlow inputs broken down into the following time coded files:
+
+\begin{center}
+\begin{tabular}{l}
+20091020-1200.flow \\
+20091020-1300.flow \\
+20091020-1400.flow \\
+20091020-1500.flow \\
+20091020-1600.flow \\
+20091020-1700.flow \\
+20091020-1800.flow \\
+20091020-1900.flow \\
+\end{tabular}
+\end{center}
+
+In an ideal world all these files would be supplied to a tool at once for processing. Obviously, that's not possible. Computing resources are limited and we cannot look forward in time to get all the inputs we need. So, in the real world we would want to process one flow file at a time. Or, more generally, a fixed set of files at a time. In case of stateless symptom it is easy. Just, supply each time as input.
+
+In case of stateful symptoms the user must be careful to use the correct sequence of inputs and a correct state file. A simplest case would be to the execute the following commands:
+
+\begin{center}
+\begin{tabular}{l}
+symptom -i 20091020-1200.flow -s state-file \\
+symptom -i 20091020-1300.flow -s state-file  \\
+symptom -i 20091020-1400.flow -s state-file  \\
+symptom -i 20091020-1500.flow -s state-file  \\
+symptom -i 20091020-1600.flow -s state-file  \\
+symptom -i 20091020-1700.flow -s state-file  \\
+symptom -i 20091020-1800.flow -s state-file  \\
+symptom -i 20091020-1900.flow -s state-file  \\
+\end{tabular}
+\end{center}
+
+Each time the same state file is provided. If an error is made and the sequence is switched then the state file could be corrupted beyond repair. This would require a new one to be create or a previous version restored. Consider the following sequence of events:
+
+\begin{center}
+\begin{tabular}{l}
+symptom -i 20091020-1200.flow -s state-file \\
+cp state-file state-file-1200 \\
+symptom -i 20091020-1300.flow -s state-file  \\
+cp state-file state-file-1300 \\
+symptom -i 20091020-1400.flow -s state-file  \\
+cp state-file state-file-1400 \\
+\textbf{\# An error has occurred} \\
+\textbf{symptom -i 20091020-1600.flow -s state-file}  \\
+\textbf{cp state-file state-file-1600} \\
+\textbf{symptom -i 20091020-1500.flow -s state-file}  \\
+\textbf{cp state-file state-file-1500} \\
+\texttt{\# Recover} \\
+\texttt{cp state-file-1400 state-file} \\
+\texttt{symptom -i 20091020-1500.flow -s state-file}\\
+\texttt{cp state-file state-file-1500}\\
+\texttt{symptom -i 20091020-1600.flow -s state-file}\\
+\texttt{cp state-file state-file-1600}\\
+symptom -i 20091020-1700.flow -s state-file  \\
+cp state-file state-file-1700 \\
+symptom -i 20091020-1800.flow -s state-file  \\
+cp state-file state-file-1800 \\
+symptom -i 20091020-1900.flow -s state-file  \\
+cp state-file state-file-1900
+\end{tabular}
+\end{center}
+
+In this scenario something went wrong but it was possible to restore and recover from an earlier state. It becomes up to the user to decide of backup point. One could decide to trust the system and not save a restore point, but if an error occurs a clean state file would have to be used. Generally it is not a problem aside from some symptomatic flows potentially being missed.
+
+If there are multiple sensors being processed, then it possible to reuse the same state file. However, timing has to match and IP's should not conflict. Meaning that \texttt{20091020-1400.flow} from sensor 1 should be processes right before or after \texttt{20091020-1400.flow} from sensor 2. This allows for processing of data that is logically of the same traffic (i.e sensor load balancing or egress/ingress separation)
+
+\chapter{Examples}
+In this chapter we describe the three symptom implementations that have been delivered. This is not intended to be an in-depth technical implementation description. Instead, we aim to show how these tools are intended to be used, what the inputs and outputs are expected to be.
+
+In general terms all symptoms require a configuration file, input files and output files. Each tool outputs its flagged data to a binary file and standard out (STDOUT). The errors are written to standard error (STDERR).
+
+Each tool comes with two programs. One for applying the symptom detection algorithm and generating the output. Another, known as the viewer, for reviewing the output of the first program and printing it out in ASCII format specified by the customer. The viewer is named the same as the tool with a capital letter `V' at the end. For example, \texttt{DarkAccess} and \texttt{DarkAccessV} - the latter being the viewer.
+
+Another commonality between all symptoms is the format of the configuration file. A very simple, human readable \verb|[key]=[value]<newline>| format is used. The value may also be enclosed in double quotes. The default location for the configuration file is \\ \verb|/usr/local/etc/symtoms.conf|.
+
+Those symptoms that rely exclusively on the NetFlow as input also accept the sensor name as a command line option. The NetFlow files do not contain this information but is it preferred for the output.
+
+\section{Evasive Traffic}
+\subsection{Concept}
+Evasive traffic symptom is used to detect those flows that intentionally attempt to evade detection or disrupt flow reconstruction. The evasion techniques it aims to capture have been described in the public security research many years ago. However, if we don't look for them then we don't know if they are being employed. Additionally it can be used to find flows that had custom generated packets or possibly with a corrupted application.
+
+\subsection{Detection}
+Any flow that has one or more packets with a low TTL value, IP fragment packet or more fragment flag is set is considered evasive traffic. 
+
+\subsection{Operation}
+\begin{itemize}
+\item This is an example of a Stateless symptom. As evident by detection criteria it requires one complete ARL NetFlow entry to make a determination.
+\item The default low TTL value is 10. This value can be set via the command line option, \verb|-t or --ttl-value|, or the a configuration file field, \verb|ttl-value|. The command line option takes the precedence and can be used to override the configuration file if needed.
+\end{itemize}
+
+\subsection{Output}
+An output file is required for this tool. If empty, the file will be created. If it is not empty then it should be in Berkley DB format. New data will be appended to the database.
+
+Even through the symptom can be executed in parallel or out of sequence, there is no synchronization on the output file. So, the same output file should not be specified for parallel processes.
+
+\section{Dark Space Access}
+\subsection{Concept}
+Dark space access symptom detects accesses into a network to unannounced hosts. This is used to detect unsolicited connections and generally those flows that should have no reason to know there is a host on a receiving end.
+
+\subsection{Detection}
+Initially a network is defined. Then the hosts within the network will be monitored for unsolicited connections. If a host connects to a host outside of this network then it is flagged as announced (or not dark) for a period of time. This means that external hosts can connect to it without triggering the symptom. If a host has not made any connections to external hosts within a period of time then it is know as unannounced (or in the dark space) and any incoming connections are flagged as dark accesses.
+
+\subsection{Operation}
+\begin{itemize}
+\item This is an example of a stateful symptom where sequence of execution matters. As such it requires a state file through command line option \verb|-f or --state-file|.
+\item The network is defined through a standard CIDR format for either IPv4 or IPv6. Options \verb|-z or --zone| or the \verb|zone| field in the configuration file can be used to set this value.
+	\begin{itemize}
+	\item The network can be defined as a list of subnets (space separated). For example: ``192.168.1.2/24 10.1.2.0/10''
+	\item It can also be defined as a list of hosts. Bit length is still required but it can be set to $32$. For example: ``192.168.1.2/32 10.1.2.1/32''
+	\end{itemize}
+\item The time window is the period of time used to determine when a host is considered as not dark. The default value is set to $24$ hours. The granularity of this option is in hours. Options \verb|-t or --time-window| or the configuration file field \verb|time-window| can be used to set this value.
+\end{itemize}
+
+\subsection{Output}
+An output file is required for this tool. If empty, the file will be created. If it is not empty then it should be in Berkley DB format. New data will be appended to the database.
+
+The entries in this database will maintain ARL NetFlow format. They represent the flows that have accessed dark space. So, the server will be a host within the monitored zone and the client will be external.
+
+\section{Frequent Reboots}
+\subsection{Concept}
+This symptom flags those hosts that reboot too frequently and thus indicate that there are issues with them. Such host is potentially infected or malfunctioning.
+
+\subsection{Detection}
+Initially a list of host initialization events (HIEs) is defined. HIE is an event generally associated with a host booting up. Events such as checking for time at \verb|updates.windows.com|. If a host produces too many HIEs within a set time period then the host is thought to have been rebooted. If a host has rebooted too many within a specified amount of time then it is flagged as frequently rebooted.
+
+\subsection{Operation}
+\begin{itemize}
+\item This is another example of a stateful symptom. Unlike dark access this tool requires several state files and thus the user is required to specify a directory instead. While other files in the directory will not interfere is it highly recommend that a dedicated directory is used for posterity and safety reasons.
+\item A default list of HIEs is provided with the delivery in file \\ \texttt{share/examples/boot\_applications.conf}.
+\item The tool requires four parameters. The command line option and configuration file field carries the name of the parameter:
+	\begin{description}
+	\item[events-at-reboot] The count of HIEs required to mark a host as rebooted. Default value is $3$
+	\item[reboot-count] The count of reboots required to mark a host as frequently rebooted. Default value is $5$
+	\item[boot-time-window] The time length where the HIEs must have occurred for a host to be marked as rebooted. Default value is $300$ seconds.
+	\item[watch-time] The time length where the reboots must have occurred for a host to marked as frequently rebooted. Default value is 24 hours.
+	\end{description}
+\end{itemize}
+
+\subsection{Output}
+An output file is required for this tool. If empty, the file will be created. If it is not empty then it should be in Berkley DB format. New data will be appended to the database.
+
+To maintain consistency the entries in the output file are in ARL NetFlow format. However, the user is required to apply some rules on interpreting the output.
+
+Each entry is the last offending flow. Meaning that as HIE's are happening, the last HIE that caused a host to be flagged will be entered into the database. So the server IP and other field are of low importance. The real information is in the client IP field. That is the field that points to the host that has rebooted too frequently.
+
+\section{DNS Free Flows}
+\subsection{Concept}
+This symptom flags those connections that happen without a corresponding DNS look up. For example, if a client contacts the google front page, it is expected that a look up for google.com will happen shortly before the connection.
+
+\subsection{Detection}
+The tool will correlate the DNS responses and Netflows to determine which connections (or UDP flows) do not meet the time threshold. The default time out is set to 24 hours. This allows the host to cache DNS responses. This means that any connection to an IP that happens more than 24 hours after the corresponding look up for that IP will be flagged.
+
+\subsection{Operation}
+\begin{itemize}
+\item This is another example of a stateful symptom. However, unlike other stateful symptoms this tool requires two inputs: NetFlow and PCAP. Note that it is important for NetFlow and PCAP inputs to be from the same time slice of traffic. For example, both for time $1300$ to $1400$.
+\item The tool requires one parameter. The command line option and configuration file field carries the name of the parameter:
+	\begin{description}
+	\item[dns-timeout] Duration, in hours, that a DNS response is valid. Default value is $24$
+	\end{description}
+\end{itemize}
+
+\subsection{Output}
+An output file is required for this tool. If empty, the file will be created. If it is not empty then it should be in Berkley DB format. New data will be appended to the database. The flagged connections are recorded as ARL NetFlows records in this file.
+
+\end{document}

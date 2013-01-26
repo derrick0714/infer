@@ -1,0 +1,6 @@
+lib/sensor/neoflow/libneoflow.so: lib/sensor/neoflow/neoflow.o \
+								  include/featureset.o \
+								  include/svm.o \
+								  include/packet.o \
+								  include/timeStamp.o \
+								  include/locks.o

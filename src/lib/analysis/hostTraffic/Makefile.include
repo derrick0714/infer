@@ -1,0 +1,6 @@
+lib/analysis/hostTraffic/libhostTraffic.so: lib/analysis/hostTraffic/hostTraffic.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o \
+													  include/roles.o

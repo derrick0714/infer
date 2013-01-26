@@ -1,0 +1,5 @@
+lib/analysis/sshBruteForcers/libsshBruteForcers.so: lib/analysis/sshBruteForcers/sshBruteForcers.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o

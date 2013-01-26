@@ -1,0 +1,62 @@
+DNSFreeFlowsV(1)  Vivic Networks Command
+
+NAME
+     DNSFreeFlowsV - displays flows flagged by the DNSFreeFlows program
+
+SYNOPSIS
+     DNSFreeFlowsV [[-n value] | [--sensor value]]
+                 [[-s date time] | [--start-time date time]]
+                 [[-e date time] | [--end-time date time]]
+                    -i file | --input-file file
+
+     DNSFreeFlowsV -h
+
+DESCRIPTION
+     DNSFreeFlowsV program scans through the output file of DNSFreeFlows
+     program and output the data to STDOUT. The output can be
+     limited to a time range.
+
+     The following command-line options are required:
+
+           -i input file
+
+           --input-file input file
+                   Specify the output file as produced by DNSFreeFlows
+                   program.
+
+
+     The following command-line options are optional:
+
+           -h
+
+           --help
+                   Print a help message to stdout.
+
+           -n
+
+           --sensor
+                   Specify the sensor name, optional but
+                   recommended. This information is not stored in
+                   the output file for DNSFreeFlows.
+
+           -s
+
+           --start-time
+                  Specify the start time in format %Y[-%m[-%d[ %H[:%M[:%S]]]]]
+
+           -e
+
+           --end-time
+                  Specify the end time in format %Y[-%m[-%d[ %H[:%M[:%S]]]]]
+
+
+EXIT STATUS
+     DNSFreeFlowsV exits 0 on success, and >0 if an error occurs.
+
+EXAMPLES
+     Output all data in the output file:
+
+           ./DNSFreeFlowsV -i ./output
+
+
+                              January 24, 2010

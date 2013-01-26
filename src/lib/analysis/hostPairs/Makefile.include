@@ -1,0 +1,5 @@
+lib/analysis/hostPairs/libhostPairs.so: lib/analysis/hostPairs/hostPairs.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o

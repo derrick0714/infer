@@ -1,0 +1,17 @@
+/usr/ports/sysutils/screen
+/usr/ports/devel/boost-libs
+/usr/ports/math/fftw3
+/usr/ports/databases/postgresql83-server
+/usr/ports/www/apache22
+/usr/ports/lang/php5
+/usr/ports/graphics/php5-gd
+/usr/ports/net/php5-ldap
+/usr/ports/security/php5-hash
+/usr/ports/sysutils/php5-posix
+/usr/ports/devel/php5-pcntl
+/usr/ports/databases/php5-pgsql
+/usr/ports/devel/php5-json
+/usr/ports/www/php5-session
+/usr/ports/graphics/jpgraph2
+/usr/ports/databases/p5-DBD-Pg
+/usr/ports/mail/p5-Net-SMTP_auth

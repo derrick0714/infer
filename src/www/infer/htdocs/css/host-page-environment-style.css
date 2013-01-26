@@ -1,0 +1,9 @@
+#environment_title{
+	font-size: 2.0em;
+	font-family: Georgia, Garamond;
+	line-height: .80em;
+	/*border-top: #F00000 0px solid;*/
+	color: #F00000;
+	letter-spacing: -2px;
+	text-align: right;
+}

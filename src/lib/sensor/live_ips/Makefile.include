@@ -1,0 +1,6 @@
+lib/sensor/live_ips/liblive_ips.so: lib/sensor/live_ips/live_ips.o \
+									include/featureset.o \
+									include/svm.o \
+									include/packet.o \
+									include/timeStamp.o \
+									include/locks.o

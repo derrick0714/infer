@@ -1,0 +1,9 @@
+lib/analysis/nonDNSTraffic/libnonDNSTraffic.so: lib/analysis/nonDNSTraffic/nonDNSTraffic.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o \
+													  include/address.o \
+													  include/roles.o \
+													  include/nameResolution.o \
+													  include/sqlTime.o

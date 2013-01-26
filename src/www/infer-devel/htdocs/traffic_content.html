@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+ 
+<head> 
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" /> 
+	<script type="text/javascript" src="js/jQuery/jquery.js"></script> 
+	<script type="text/javascript" src="js/protovis/protovis-r3.2.js"></script>	
+	
+	<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui.css" /> 
+	<link rel="stylesheet" type="text/css" href="css/main.css" /> 
+</head>
+
+<body>
+	<script type="text/javascript" src="js/widgets/essentials.js"></script> 
+	
+	<script type="text/javascript" src="js/widgets/traffic_content_pie.js"></script> 
+	<script type="text/javascript">
+	$(document).ready(function()
+	{
+		traffic_content_pie('traffic_content_ingress_pie', 'ingress', '2010-06-20', '2010-06-30');
+		traffic_content_pie('traffic_content_egress_pie', 'egress', '2010-06-20', '2010-06-30');
+	});
+	</script>
+	<div id="traffic_content_ingress_pie"></div> 
+	<div id="traffic_content_egress_pie"></div> 
+	
+	<script type="text/javascript" src="js/widgets/traffic_content_legend.js"></script> 
+	<script type="text/javascript">
+	$(document).ready(function()
+	{
+		traffic_content_legend('traffic_content_legend');
+	});
+	</script>
+	<div id="traffic_content_legend"></div> 
+</body>

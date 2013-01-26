@@ -1,0 +1,6 @@
+lib/analysis/infectedContacts/libinfectedContacts.so: lib/analysis/infectedContacts/infectedContacts.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o \
+													  include/getHTTPData.o

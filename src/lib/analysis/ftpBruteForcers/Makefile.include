@@ -1,0 +1,5 @@
+lib/analysis/ftpBruteForcers/libftpBruteForcers.so: lib/analysis/ftpBruteForcers/ftpBruteForcers.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o

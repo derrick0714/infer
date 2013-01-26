@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>Application Inventory Test</title>
+	<script type="text/javascript" src="/js/jQuery/jquery.js"></script> 
+	<!--[if IE]>
+    <script type="text/javascript" src="/js/protovis/3rdparty/svg.js" data-path="/js/protovis/3rdparty/"></script>
+	<![endif]-->
+    <script type="text/javascript" src="/js/protovis/protovis-d3.3.js"></script>
+    <script type="text/javascript" src="/js/vn/vn.js"></script>
+    <script type="text/javascript" src="/js/vn/vn-internals.js"></script>
+    <script type="text/javascript" src="/js/vn/widget.js"></script>
+    <script type="text/javascript" src="/js/vn/widget/app_inventory_table.js"></script>
+
+    <script type="text/javascript+protovis">
+
+var app_inventory_table = new vn.widget.app_inventory_table()
+	.div("app_inventory_table")
+	.width(500)
+	.height(300)
+	.data_uri(["/data/app_inventory/browser/2010-06-20"]);
+
+app_inventory_table.render();
+
+var i = 21;
+
+var timer = window.setInterval(function() {
+	app_inventory_table.data_uri(["/data/app_inventory/browser/2010-06-" + i])
+		.render();
+	i = i + 1;
+	if (i > 30) {
+		i = 20;
+	}
+}, 1000);
+    </script>
+  </head>
+  <body>
+    <div id="app_inventory_table"></div>
+  </body>
+</html>

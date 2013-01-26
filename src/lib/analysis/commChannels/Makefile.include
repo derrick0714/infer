@@ -1,0 +1,11 @@
+lib/analysis/commChannels/libcommChannels.so: lib/analysis/commChannels/commChannels.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o \
+													  include/reputationInformation.o \
+													  include/seenIPsInformation.o \
+													  include/roles.o \
+													  include/nameResolution.o \
+													  include/dns.o \
+													  include/sqlTime.o

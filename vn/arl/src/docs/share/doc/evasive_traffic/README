@@ -1,0 +1,90 @@
+EvasiveTraffic(1)  Vivic Networks Command
+
+NAME
+     sym_main_EvasiveTraffic - search for evasive traffic in input data
+
+SYNOPSIS
+     EvasiveTraffic [-c configuration_file]
+                    [[-t value] | [--ttl-value value]]
+                    [ [-s] | [ --stdout ]] -i netflow_file |
+                    --input-netflow netflow_file -o output_file |
+                    --output output_file
+     EvasiveTraffic -h
+
+DESCRIPTION
+     EvasiveTraffic program scans through the netflow data
+     file to flag those flows that exhibit the characteristics of
+     being evasive.
+
+     If configuration_file is not specified, the default configuration file
+     location is /usr/local/etc/symtoms.conf.
+
+     The configuration file format is:
+
+           option = value
+
+     with each option/value pair separated by a newline.
+
+     The program will accept the ttl value through the configuration file
+     ('ttl-value' option name) or the command line. The command line
+     option will take precedence over the value in the configuration file.
+
+     The following command-line options are required:
+
+           -i input file
+
+           --input-netflow input file
+                   Specify the netflow input file. In this case the
+                   netflows as defined by ARL accepted.
+
+           -o output file
+
+           --output output file
+                   Specify the output file. This is the file that
+                   will be used by other symptoms if needed.
+                   EvasiveTrafficV program can be used to view those
+                   entries without reprocessing the data.
+
+     The following command-line options are optional:
+
+           -c configuration_file
+
+           --config-file configuration_file
+                   Specify the file from which to read additional configuration
+                   options.
+
+           -h
+
+           --help  Print a help message to stdout.
+
+           -t ttl value
+
+           --ttl-value ttl value
+                   Specifies the TTL threshold. 10 is default. This
+                   option overrides the value read from the
+                   configuration file.
+
+           -s
+
+           --stdout
+                   By default the symptom will output its finding to stdout
+                   in human readable format. This option will disable this
+                   feature.
+
+
+     The following configuration-file options are available:
+
+           ttl-value = number
+                   Specify the threshold for the ttl value.
+
+EXIT STATUS
+     EvasiveTraffic exits 0 on success, and >0 if an error occurs.
+
+EXAMPLES
+     Process an hour worth of traffic:
+
+           ./EvasiveTraffic -i ./idata_1/20071003.05.flow
+              -t 11 -c ./test-c.cfg -o ev_traff.out
+
+
+                              January 24, 2010

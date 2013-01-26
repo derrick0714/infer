@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+ 
+<head> 
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" /> 
+	<script type="text/javascript" src="js/jQuery/jquery.js"></script> 
+	<script type="text/javascript" src="js/flexigrid/flexigrid.js"></script>
+	<script type="text/javascript" src="/js/jQuery/jquery.address.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="js/flexigrid/css/flexigrid/flexigrid.css" /> 
+
+	<script type="text/javascript">
+	$(document).ready(function()
+	{
+		function date_format(date)
+		{
+			var year = date.getFullYear();
+			var month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+			var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+			return year + '-' + month + '-' + day;
+		}
+		
+		function parse_params(params)
+		{
+			var new_params =  new Array();
+			
+			var temp_date = window.location.hash.match(/(([0-9]{4})-([0-9]{1,2})-([0-9]{1,2}))/g);
+			if(temp_date != null) new_params['date'] = temp_date[temp_date.length - 1];
+			
+			var qm = window.location.hash.lastIndexOf('?');
+			if(qm != -1)
+			{
+				var params_str = window.location.hash.substring(qm + 1);
+				var params_strs = params_str.split('&');
+				$(params_strs).each(function(i, v)
+				{
+					var param = v.split('=', 2);
+					new_params[param[0]] = param[1];
+				});
+			}
+
+			for(attr in new_params)
+			{
+				params[attr] = new_params[attr];
+			}
+			
+			return params;
+		}
+		
+		function params_str(params)
+		{
+			var temp = new Array();
+			var n = 0;
+			
+			for(attr in params)
+			{
+				if($.inArray(attr, new Array('date', 'display_columns_raw')) == -1)
+				{
+					temp[n] = attr + '=' + params[attr];
+					n++;
+				}
+			}
+			
+			return params['date'] + (temp.length > 0 ? '?' + temp.join('&') : '');
+		}
+		
+		function render_table(check_hash)
+		{
+			if(check_hash)
+			{
+				var new_params = parse_params(params);
+				
+				var temp_date = (Date.parse(new_params['date'].replace(/-/g, '/'))) / 1000;
+				if(first_date <= temp_date && temp_date <= last_date)
+				{
+					params = new_params;
+				}
+			}
+			
+			$('#flex1').flexOptions({url: 'data/role/web_server/' + params['date'], newp: params['page'], rp: params['rp'], sortname: params['sortname'], sortorder: params['sortorder']}).flexReload();
+			$('#permalink').attr('href', 'http://' + window.location.host + window.location.pathname + '#' + params_str(params));
+			$('.ftitle').html('Web Server - ' + params['date']); 
+		}
+		
+		function table_updated()
+		{
+			if(window.location.hash.indexOf('?') != -1)
+			{
+				var _params_str = params_str(params);
+				if(window.location.hash == '#' + _params_str)
+					render_table(false);
+				else
+					window.location.hash = _params_str;
+			}
+			else
+				render_table(false);
+		}
+		
+		function col_to_pos(col)
+		{
+			return $('.nDiv').find('input[value=' + col + ']').parent().parent().index();
+		}
+		
+		var params = parse_params(new Array());
+		var first_date, last_date;
+		
+		$.getJSON('/data/date_checker/' + params['date'], function(content) {
+			first_date = (Date.parse(content.date_checker.first_date.replace(/-/g, '/'))) / 1000;
+			last_date = (Date.parse(content.date_checker.last_date.replace(/-/g, '/'))) / 1000;
+			
+			params['date'] = date_format(new Date(Date.parse(content.date_checker.date.replace(/-/g, '/'))));
+			
+			params['display_columns_raw'] = [
+					{display: 'Internal IP', name: 'internal_ip', width: 150, sortable: true, align: 'center', hide: false},
+					{display: 'Number of Hosts', name: 'num_hosts', width: 150, sortable: true, align: 'left', hide: false},
+					{display: 'Bytes Transferred', name: 'num_bytes', width: 150, sortable: true, align: 'left', hide: false}
+					];
+			
+			var new_positions = new Array();
+			
+			if(params['display_columns'] != null)
+			{
+				var order_num = params['display_columns'].split(',').length;
+				$.each(params['display_columns_raw'], function(di, dv)
+				{
+					var found = false;
+					
+					$.each(params['display_columns'].split(','), function(i, v)
+					{
+						if(v == dv['name'])
+						{
+							dv['hide'] = false;
+							found = true;
+							new_positions[di] = i;
+							return false;
+						}
+					});
+					
+					if(!found)
+					{
+						dv['hide'] = true;
+						new_positions[di] = order_num++;
+					}
+				});
+			}
+			else
+			{
+				for(var i = 0; i < params['display_columns_raw'].length; i++)
+					new_positions[i] = i;
+			}
+			
+			$('#flex1').flexigrid({
+				dataType: 'json',
+				url: 'data/role/web_server/' + params['date'],
+				method: 'GET',
+				colModel: params['display_columns_raw'],
+				sortname: params['sortname'],
+				sortorder: params['sortorder'],
+				usepager: true,
+				singleSelect: true,
+				useRp: true,
+				rp: params['rp'],
+				newp: params['page'],
+				showTableToggleBtn: false,
+				title: 'Web Server - ' + params['date'],
+				width: '510',
+				height: '300',
+				resizable: false,
+				onChangePage: function(newp)
+				{
+					params['page'] = newp;
+					table_updated();
+				},
+				onRpChange: function(rp)
+				{
+					params['rp'] = rp;
+					table_updated();
+				},
+				onChangeSort: function(sortname, sortorder)
+				{
+					if(!sortorder) sortorder = 'desc';
+					params['sortname'] = sortname;
+					params['sortorder'] = sortorder;
+					table_updated();
+				},
+				onToggleCol: function(cid, visible)
+				{
+					params['display_columns_raw'][cid]['hide'] = visible == undefined ? true : !visible;
+					
+					var col_names = new Array();
+					$.each(new_positions, function(i, v)
+					{
+						if(params['display_columns_raw'][v]['hide'] != true)
+							col_names.push(params['display_columns_raw'][v]['name']);
+					});
+					
+					params['display_columns'] = col_names.join(',');
+					table_updated();
+				},
+				onDragCol: function(dcoln, dcolt)
+				{
+					var old_val = new_positions[dcoln];
+					if (dcoln < dcolt) {
+						for (i = dcoln; i < dcolt; i++) {
+							new_positions[i] = new_positions[i+1];
+						}
+					}
+					else if (dcolt < dcoln) {
+						for (i = dcoln; i > dcolt; i--) {
+							new_positions[i] = new_positions[i-1];
+						}
+					}
+					new_positions[dcolt] = old_val;
+
+					var col_names = new Array();
+					$.each(new_positions, function(i, v)
+					{
+						if(params['display_columns_raw'][v]['hide'] != true)
+							col_names.push(params['display_columns_raw'][v]['name']);
+					});
+					
+					params['display_columns'] = col_names.join(',');
+					table_updated();
+				},
+				onClickRow: function(e, r) {
+					//var i = r.parent().children().index(r);
+					alert(r.children().eq(0).children().html());
+				},
+				onHoverRow: [
+					function(e, r) {
+						r.css("cursor", "pointer");
+					}
+				],
+				onSuccess: table_updated()
+			});
+			
+			$.each(new_positions, function(i, v)
+			{
+				if(col_to_pos(i) != v) $('#flex1').flexSwitchCol(col_to_pos(i),v);
+			});
+						
+			$.address.change(function(){render_table(true)});
+		});
+	});
+	</script>
+</head>
+
+<body>
+	<table id="flex1" style="display:none"></table> 
+	<p>
+		<a id='permalink'>Permalink</a>
+	</p>
+</body>

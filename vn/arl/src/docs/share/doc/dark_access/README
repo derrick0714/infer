@@ -1,0 +1,124 @@
+DarkAccess(1)  Vivic Networks Command
+
+NAME
+     DarkAccess - search for dark space accesses in input data
+
+SYNOPSIS
+     DarkAccess [-c configuration_file]
+                    [[-t value] | [--time-window value]]
+                    [[-s] | [ --stdout ]] [[-z value] | [--zone value]]
+                    [[-f file] | [--state-file file]]
+                    [[-n value] | [--sensor value]]
+                    -i netflow_file
+                    --input-netflow netflow_file -o output_file
+                    --output output_file
+     DarkAccess -h
+
+DESCRIPTION
+     DarkAccess program scans through the netflow data file to flag
+     connections where a client connects to a server, within the
+     monitored zone, that has not connected out of the zone.
+
+     If configuration_file is not specified, the default configuration
+     file location is /usr/local/etc/symtoms.conf.
+
+     The configuration file format is:
+
+           option = value
+
+     with each option/value pair separated by a newline.
+
+     The program will accept the zone value through the
+     configuration file or through the command line. This value is
+     required through one of the methods.
+
+     The following command-line options are required:
+
+           -i input file
+
+           --input-netflow input file
+                   Specify the netflow input file. In this case the
+                   netflows as defined by ARL accepted.
+
+           -o output file
+
+           --output output file
+                   Specify the output file. This is the file that
+                   will be used by other symptoms if needed.
+                   DarkAccessV program can be used to view those
+                   entries without reprocessing the input.
+
+     The following command-line options are optional:
+
+           -c configuration_file
+
+           --config-file configuration_file
+                   Specify the file from which to read additional configuration
+                   options.
+
+           -h
+
+           --help
+                   Print a help message to stdout.
+
+           -s
+
+           --stdout
+                   By default the symptom will output its finding to stdout
+                   in human readable format. This option will disable this
+                   feature.
+
+           -t
+
+           --time-window
+                   Specify the time window for the Darkspace Access
+                   scan. Default is 24. The value is in hours. The
+                   value is used to determine how long a host
+                   considered "not dark" after it has made a
+                   connection outside of the monitored zone.
+
+           -z
+
+           --zone
+                   Specify the monitored zone. ex: 192.168.1.2/24 or
+                   2001:480:60:55::3/96
+
+           -f
+
+           --state-file
+                   Specify the state file from previous execution or a
+                   new file. State file is need store data between
+                   executions. It is important that the data is
+                   processed in sequential time. Meaning netflows
+                   should be provided in the other they were
+                   recorded (ie. 1200, 1300, 1400, etc).
+
+           -n
+
+           --sensor
+                   Specify the sensor name, optional but recommended as
+                   NetFlow file doesn't contain this name.
+
+
+
+     The following configuration-file options are available:
+
+           time-window = number
+                   Same as the command line argument.
+
+           zone = subnet
+                   This can be a list of subnets separated by a
+                   space character. Specified in the same way as the
+                   command line argument.
+
+EXIT STATUS
+     DarkAccess exits 0 on success, and >0 if an error occurs.
+
+EXAMPLES
+     Process an hour worth of traffic:
+
+           ./DarkAccess -i ./arl/ARL-sample/idata_1/20071003.05.flow
+                        -o output -f ./state/file -z '192.0.0.0/24'
+
+
+                              January 24, 2010

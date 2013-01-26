@@ -1,0 +1,5 @@
+lib/analysis/sampleNeoflowModule/libsampleNeoflowModule.so: lib/analysis/sampleNeoflowModule/sampleNeoflowModule.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o

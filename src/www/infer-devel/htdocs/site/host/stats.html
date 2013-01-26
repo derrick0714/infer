@@ -1,0 +1,172 @@
+<link rel="stylesheet" type="text/css" href="/site/dashboard/main.css" /> 
+
+<script type="text/javascript">
+
+tab_uri_notify = function(e) {
+	if (argv[1] == undefined) {
+		$.address.path('/error/nohost');
+		return;
+	}
+	
+	// TODO verify host...
+
+	$.getJSON('/data/date_checker/' + argv[2], function(content) {
+		var date =
+			(Date.parse(content.date_checker.date.replace(/-/g, '/'))) / 1000;
+		var first_date =
+			(Date.parse(content.date_checker.first_date.replace(/-/g, '/'))) 
+				/ 1000;
+		var last_date =
+			(Date.parse(content.date_checker.last_date.replace(/-/g, '/')))
+				/ 1000;
+		var date_object = new Date(date * 1000);
+		var current_date = date_format(date_object);
+		
+		argv[2] = date_format(
+			new Date(Date.parse(content.date_checker.date.replace(/-/g, '/'))));
+
+		if ($.address.pathNames()[2] != argv[2]) {
+			$.address.path(argv.join("/"));
+			return;
+		}
+
+		set_page_date(argv[2]);
+		document.title = page_title + ' - Stats - ' + argv[1] + ' - ' + argv[2];
+
+		$('#current_date').text(current_date);
+		$('#current_host').text(argv[1]);
+		$('#previous_date').text(function()
+		{
+			var temp_date = date_format(new Date(date_object.getTime() - 86400000));
+			$(this).parent().attr('href', '#/' + argv[0] + '/' + argv[1] + '/' + temp_date);
+			return temp_date;
+		});
+		
+		$('#next_date').text(function()
+		{
+			var temp_date = date_format(new Date(date_object.getTime() + 86400000));
+			$(this).parent().attr('href', '#/' + argv[0] + '/' + argv[1] + '/' + temp_date);
+			return temp_date;
+		});
+	
+		$('#previous_date').css('visibility', date - 86400 < first_date ? 'hidden' : 'visible');
+		$('#next_date').css('visibility', date + 86400 > last_date ? 'hidden' : 'visible');
+
+		var date = current_date;
+		var ip = argv[1];
+
+		traffic_overview
+			.ingress_content_pie_data_uri("/data/traffic_content/ingress/" + ip + "/" + date)
+			.egress_content_pie_data_uri("/data/traffic_content/egress/" + ip + "/" + date)
+			.traffic_content_legend_data_uri("/data/traffic_content/legend")
+			.bandwidth_utilization_areas_data_uri(["/data/bandwidth_utilization/ingress/" + ip + "/" + date, "/data/bandwidth_utilization/egress/" + ip + "/" + date])
+			.render();
+
+		port_overview
+			.ingress_port_traffic_bar_data_uri("/data/port_traffic/ingress/" + ip + "/" + date)
+			.egress_port_traffic_bar_data_uri("/data/port_traffic/egress/" + ip + "/" + date)
+			.render();
+
+		as_overview
+			.ingress_as_exposure_bar_data_uri("/data/host_as_exposure/top_ingress/" + ip + "/" + date)
+			.egress_as_exposure_bar_data_uri("/data/host_as_exposure/top_egress/" + ip + "/" + date)
+			.render();
+
+		host_overview
+			.host_inventory_table_data_uri([
+				"/data/host_role_history/web_server/" + ip + "/" + date,
+				"/data/host_role_history/web_client/" + ip + "/" + date,
+				"/data/host_role_history/mail_server/" + ip + "/" + date,
+				"/data/host_role_history/mail_client/" + ip + "/" + date,
+				"/data/host_role_history/secure_web_server/" + ip + "/" + date,
+				"/data/host_role_history/secure_web_client/" + ip + "/" + date,
+				"/data/host_role_history/secure_mail_server/" + ip + "/" + date,
+				"/data/host_role_history/secure_mail_client/" + ip + "/" + date,
+				"/data/host_role_history/dark_space_bot/" + ip + "/" + date,
+				"/data/host_role_history/encrypted_p2p_node/" + ip + "/" + date,
+				"/data/host_role_history/ftp_brute_forced/" + ip + "/" + date,
+				"/data/host_role_history/ftp_brute_forcer/" + ip + "/" + date,
+				"/data/host_role_history/microsoft_sql_brute_forced/" + ip + "/" + date,
+				"/data/host_role_history/microsoft_sql_brute_forcer/" + ip + "/" + date,
+				"/data/host_role_history/multimedia_p2p_node/" + ip + "/" + date,
+				"/data/host_role_history/mysql_brute_forced/" + ip + "/" + date,
+				"/data/host_role_history/mysql_brute_forcer/" + ip + "/" + date,
+				"/data/host_role_history/oracle_sql_brute_forcer/" + ip + "/" + date,
+				"/data/host_role_history/oracle_sql_brute_forced/" + ip + "/" + date,
+				"/data/host_role_history/postgresql_brute_forced/" + ip + "/" + date,
+				"/data/host_role_history/postgresql_brute_forcer/" + ip + "/" + date,
+				"/data/host_role_history/scan_bot/" + ip + "/" + date,
+				"/data/host_role_history/spam_bot/" + ip + "/" + date,
+				"/data/host_role_history/ssh_brute_forced/" + ip + "/" + date,
+				"/data/host_role_history/ssh_brute_forcer/" + ip + "/" + date,
+				"/data/host_role_history/telnet_brute_forced/" + ip + "/" + date,
+				"/data/host_role_history/telnet_brute_forcer/" + ip + "/" + date,
+				"/data/host_role_history/unclassified_p2p_node/" + ip + "/" + date
+			])
+			.render();
+	});
+}
+
+function date_format(date)
+{
+	var year = date.getFullYear();
+	var month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+	var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+	return year + '-' + month + '-' + day;
+}
+
+var width;
+var traffic_overview;
+var port_overview;
+var as_overview;
+var host_overview;
+
+$(document).ready(function() {
+	$('#inner_wrapper').parent().width('auto');
+	// width = 980;
+	width = $('#inner_wrapper').parent().width() - 20;
+	$('#inner_wrapper').width(width);
+
+	traffic_overview = new vn.portlet.traffic_overview()
+		.div("traffic_overview")
+		.width(width/2)
+		.height(width*.3);
+
+	port_overview = new vn.portlet.port_overview()
+		.div("port_overview")
+		.width(width/2)
+		.height(width*.3);
+
+	as_overview = new vn.portlet.as_overview()
+		.div("as_overview")
+		.width(width/2)
+		.height(width*.3);
+
+	host_overview = new vn.portlet.host_overview()
+		.div("host_overview")
+		.width(width/2)
+		.height(width*.3);
+});
+
+</script>
+
+
+<div id="inner_wrapper">
+	<div class="navigation">
+		<a><div class="nav_date" id="previous_date"></div></a>
+		<div id="status_title">Stats for <span id="current_host"></span> on <span id="current_date"></span></div>
+		<a><div class="nav_date" id="next_date"></div></a>
+	</div>
+	<div class="row">
+		<div class="column">
+			<div class="portlet" id="traffic_overview"></div>
+			<!-- <div class="portlet" id="ingress_bandwidth_overview"></div> -->
+			<div class="portlet" id="port_overview"></div>
+			<!-- <div class="portlet" id="egress_bandwidth_overview"></div> -->
+		</div>
+		<div class="column">
+			<div class="portlet" id="host_overview"></div>
+			<div class="portlet" id="as_overview"></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,8 @@
+lib/analysis/slowdown/libslowdown.so: lib/analysis/slowdown/slowdown.o \
+													  include/postgreSQL.o \
+													  include/forecast.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/smoothing.o \
+													  include/sqlTime.o \
+													  include/stringHelpers.o

@@ -1,0 +1,4 @@
+AuthUserFile /usr/home/justin/dot_htpasswd
+AuthType Basic
+AuthName "INFER"
+Require valid-user

@@ -1,0 +1,5 @@
+lib/analysis/darkSpaceTargets/libdarkSpaceTargets.so: lib/analysis/darkSpaceTargets/darkSpaceTargets.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o

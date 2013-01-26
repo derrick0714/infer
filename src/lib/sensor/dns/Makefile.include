@@ -1,0 +1,6 @@
+lib/sensor/dns/libdns.so: lib/sensor/dns/dns.o \
+						  include/featureset.o \
+						  include/svm.o \
+						  include/packet.o \
+						  include/timeStamp.o \
+						  include/locks.o

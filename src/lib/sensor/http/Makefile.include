@@ -1,0 +1,13 @@
+lib/sensor/http/libhttp.so: \
+	INCLUDE_DIRS += -I$(SRC_DIR)/lib/sensor/http/
+
+lib/sensor/http/libhttp.so: \
+	lib/sensor/http/http.o \
+	lib/sensor/http/http_parser.o \
+	include/HTTPRequest.o \
+	include/HTTPResponse.o \
+	include/featureset.o \
+	include/svm.o \
+	include/packet.o \
+	include/timeStamp.o \
+	include/locks.o

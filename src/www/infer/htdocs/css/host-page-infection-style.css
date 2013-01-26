@@ -1,0 +1,55 @@
+#hotnumber {
+	color: #F00;
+}
+
+#lukewarmnumber {
+	color: #FBC;
+}
+
+#coldnumber{
+	color: #0F0;
+}
+
+#report_title{
+	font-size: 2.0em;
+	font-family: Georgia, Garamond;
+	line-height: .80em;
+	border-bottom: #F00000 1px solid;
+	color: #F00000;
+	letter-spacing: -2px;
+}
+
+#reason{
+	padding: 1%;
+	font-size: 1.0em;
+	font-family: Georgia, Garamond;
+}
+
+#reason_block{
+	padding-left: 10px;
+	border-left: #F00000 15px solid;
+}
+
+table#centered {
+	text-align: center; 
+	margin-left: auto; 
+	margin-right: auto;
+	width: auto;
+}
+	
+div.metrics{
+	margin: 2px;
+	height: auto;
+	width: auto;
+	float: center;
+	text-align: center;
+}
+
+h1{
+	clear: left;
+	color: #003;
+	font-size: 2.6em;
+	font-weight: normal;
+	font-style: normal;
+	line-height: 1.2em;
+}

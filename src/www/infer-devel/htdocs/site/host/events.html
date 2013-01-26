@@ -1,0 +1,185 @@
+<script type="text/javascript">
+
+tab_uri_notify = function(e) {
+	if (argv[1] == undefined) {
+		$.address.path('/error/nohost');
+		return;
+	}
+	
+	// TODO verify host...
+
+	$.getJSON('/data/date_checker/' + argv[2], function(content) {
+		var date =
+			(Date.parse(content.date_checker.date.replace(/-/g, '/'))) / 1000;
+		var first_date =
+			(Date.parse(content.date_checker.first_date.replace(/-/g, '/'))) 
+				/ 1000;
+		var last_date =
+			(Date.parse(content.date_checker.last_date.replace(/-/g, '/')))
+				/ 1000;
+		var date_object = new Date(date * 1000);
+		var current_date = date_format(date_object);
+		
+		argv[2] = date_format(
+			new Date(Date.parse(content.date_checker.date.replace(/-/g, '/'))));
+
+		if ($.address.pathNames()[2] != argv[2]) {
+			$.address.path(argv.join("/"));
+			return;
+		}
+
+		set_page_date(argv[2]);
+		document.title = page_title + ' - Events - ' + argv[1] + ' - ' + argv[2];
+
+		var ip = argv[1];
+
+		$.getJSON('/data/host_role/index/' + ip + '/' + current_date + '?page=1&rp=100', function(content) {
+			$('#current_date').text(current_date);
+			$('#current_host').text(argv[1]);
+			$('#previous_date').text(function()
+			{
+				var temp_date = date_format(new Date(date_object.getTime() - 86400000));
+				$(this).parent().attr('href', '#/' + argv[0] + '/' + argv[1] + '/' + temp_date);
+				return temp_date;
+			});
+			
+			$('#next_date').text(function()
+			{
+				var temp_date = date_format(new Date(date_object.getTime() + 86400000));
+				$(this).parent().attr('href', '#/' + argv[0] + '/' + argv[1] + '/' + temp_date);
+				return temp_date;
+			});
+		
+			$('#previous_date').css('visibility', date - 86400 < first_date ? 'hidden' : 'visible');
+			$('#next_date').css('visibility', date + 86400 > last_date ? 'hidden' : 'visible');
+
+			// display the top ten hosts from JSON data...
+			var table = '<ul class="recent_events">';
+			$.each(content.rows, function(i, val) {
+				table += '<li>' +
+							event_message(val.cell, ip, current_date) +
+							'<div class="event_date">' +
+								'From ' + val.cell[3] + ' to ' + val.cell[4] +
+							'</div>' +
+						 '</li>';
+			});
+			table += '</ul>';
+			$('#recent_events').html(table);
+		});
+	});
+}
+
+function date_format(date)
+{
+	var year = date.getFullYear();
+	var month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+	var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+	return year + '-' + month + '-' + day;
+}
+
+function event_message(e, ip, date) {
+	var m;
+	var plural = e[1] > 1?true:false;
+	switch(e[0]) {
+	  case 'Dark Space Source':
+		m = "This host attempted to contact " +
+			'<a href="/host/#/indicators/' + ip + '/' + date + '/' +
+				e[0].toLowerCase().replace(/ /g, "_") + '">' +
+					e[1] +
+					" host" + (plural?"s":"") + " in dark space" +
+			'</a>.';
+		break;
+	  case 'Dark Space Target':
+		m = "This host transferred " + e[2] + " with " +
+			'<a href="/host/#/indicators/' + ip + '/' + date + '/' +
+				e[0].toLowerCase().replace(/ /g, "_") + '">' +
+					e[1] +
+					" host" + (plural?"s":"") +
+			"</a> that " +
+					(plural?"have":"has") +
+					" attempted to contact dark space.";
+		break;
+	  case 'Infected Contacts':
+		m = "This host transferred " + e[2] + " with " +
+			'<a href="/host/#/indicators/' + ip + '/' + date + '/' +
+				e[0].toLowerCase().replace(/ /g, "_") + '">' +
+					e[1] +
+					" black-listed host" + (plural?"s":"") +
+			'</a>.';
+		break;
+	  case 'Mail Client':
+		m = "This host sent " + e[2] + " of E-Mail to " +
+			'<a href="/host/#/indicators/' + ip + '/' + date + '/' +
+				e[0].toLowerCase().replace(/ /g, "_") + '">' +
+					e[1] +
+					" host" + (plural?"s":"") +
+			'</a>.';
+		break;
+	  case 'Spam Bot':
+		m = "This host sent " + e[2] + " of E-Mail to " +
+			'<a href="/host/#/indicators/' + ip + '/' + date + '/' +
+				e[0].toLowerCase().replace(/ /g, "_") + '">' +
+					e[1] +
+					" host" + (plural?"s":"") +
+					" without serving any mail to clients" +
+			'</a>.';
+		break;
+	  case 'Web Client':
+		m = "This host transferred " + e[2] + " with " +
+			'<a href="/host/#/indicators/' + ip + '/' + date + '/' +
+				e[0].toLowerCase().replace(/ /g, "_") + '">' +
+					e[1] +
+					" host" + (plural?"s":"") +
+			'</a> while surfing the web.';
+		break;
+	  case 'Secure Web Client':
+		m = "This host transferred " + e[2] + " with " +
+			'<a href="/host/#/indicators/' + ip + '/' + date + '/' +
+				e[0].toLowerCase().replace(/ /g, "_") + '">' +
+					e[1] +
+					" host" + (plural?"s":"") +
+			'</a> while surfing the web using an encrypted connection.';
+		break;
+	  case 'Web Server':
+		m = "This " +
+			'<a href="/host/#/web_server_summary/' + ip + '/' + date + '/">' +
+				'web server</a> transferred ' +
+			e[2] + " with " +
+			'<a href="/host/#/indicators/' + ip + '/' + date + '/' +
+				e[0].toLowerCase().replace(/ /g, "_") + '">' +
+					e[1] +
+					" client" + (plural?"s":"") +
+			'</a>.';
+		break;
+	  case 'Protocol Violations':
+		m = "This host transferred " + e[2] + " with " +
+			'<a href="/host/#/indicators/' + ip + '/' + date + '/' +
+				e[0].toLowerCase().replace(/ /g, "_") + '">' +
+					e[1] +
+					" host" + (plural?"s":"") +
+			'</a> whose IP address' + (plural?"es were":"was") +
+			' not obtained using ' + (plural?"DNS queries":"a DNS query") +
+			'.';
+		break;
+	  default:
+		m = 'This host transferred ' + e[2] + ' with ' + 
+			'<a href="/host/#/indicators/' + ip + '/' + date + '/' +
+				e[0].toLowerCase().replace(/ /g, "_") + '">' +
+					e[1] +
+			" host" + (plural?"s":"") + '</a> while exhibiting behavior "' + 
+			e[0] + '".'; 
+	}
+
+	return m;
+}
+
+</script>
+
+<div id="inner_wrapper">
+	<div class="navigation">
+		<a><div class="nav_date" id="previous_date"></div></a>
+		<div id="status_title">Events for <span id="current_host"></span> on <span id="current_date"></span></div>
+		<a><div class="nav_date" id="next_date"></div></a>
+	</div>
+	<div id="recent_events"></div>
+</div>

@@ -1,0 +1,13 @@
+lib/analysis/bandwidth_content/libbandwidth_content.so: \
+	BOOST_LIBS := $(BOOST_SYSTEM_LIB)
+lib/analysis/bandwidth_content/libbandwidth_content.so: \
+	BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+lib/analysis/bandwidth_content/libbandwidth_content.so: \
+	DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+lib/analysis/bandwidth_content/libbandwidth_content.so: \
+	STATIC_LIBS :=
+lib/analysis/bandwidth_content/libbandwidth_content.so: \
+	lib/analysis/bandwidth_content/bandwidth_content.o \
+	include/ipInformation.o \
+	include/timeStamp.o \
+	include/stringHelpers.o

@@ -1,0 +1,17 @@
+lib/sensor/hbf/libhbf.so: \
+	BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+				  $(BOOST_FILESYSTEM_LIB) \
+				  $(BOOST_THREAD_LIB)
+lib/sensor/hbf/libhbf.so: \
+	BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+lib/sensor/hbf/libhbf.so: \
+	DYNAMIC_LIBS := -lcrypto -lfftw3 -lssl -lz $(BOOST_LIBS)
+lib/sensor/hbf/libhbf.so: \
+	lib/sensor/hbf/hbf.o \
+	include/HBF.o \
+	include/ZlibCompressedHBF.o \
+	include/featureset.o \
+	include/svm.o \
+	include/packet.o \
+	include/timeStamp.o \
+	include/locks.o

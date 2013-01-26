@@ -1,0 +1,18 @@
+CPP= g++
+CFLAGS= -W -Wall -Weffc++
+
+SYS_INCLUDE_DIRS= /opt/local/include
+SYS_LIB_DIRS= /opt/local/lib
+
+INCLUDE_DIRS= $(SRC_DIR)/../extern/arl/include
+
+BOOST_SYSTEM_LIB= boost_system-mt
+BOOST_FILESYSTEM_LIB= boost_filesystem-mt
+BOOST_PROGRAM_OPTIONS_LIB= boost_program_options-mt
+BOOST_REGEX_LIB= boost_regex-mt
+BOOST_DATE_TIME_LIB= boost_date_time-mt
+
+BOOST_LIBS= $(BOOST_SYSTEM_LIB) $(BOOST_FILESYSTEM_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) $(BOOST_REGEX_LIB) $(BOOST_DATE_TIME_LIB)
+
+DYNAMIC_LIBS= db db_cxx-4.4 pcap ssl z
+STATIC_LIBS= $(BOOST_LIBS)

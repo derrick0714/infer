@@ -1,0 +1,116 @@
+DNSFreeFlows(1)  Vivic Networks Command
+
+NAME
+     DNSFreeFlows - search for dark space accesses in input data
+
+SYNOPSIS
+     DNSFreeFlows [-c configuration_file]
+                    [[-d value] | [--dns-timeout value]]
+                    [[-s] | [ --stdout ]]
+                    [[-f file] | [--state-file file]]
+                    [[-n value] | [--sensor value]]
+                    -i netflow_file | --input-netflow netflow_file
+                    -p pcap_file | --input-pcap pcap_file
+                    -o output_file | --output output_file
+     DNSFreeFlows -h
+
+DESCRIPTION
+     DNSFreeFlows program correlates netflow data files and corresponding pcap
+     files to flag those connections where a client connects to a server
+     without first looking up the IP address.
+
+     If configuration_file is not specified, the default configuration
+     file location is /usr/local/etc/symtoms.conf.
+
+     The configuration file format is:
+
+           option = value
+
+     with each option/value pair separated by a newline.
+
+     The following command-line options are required:
+
+           -i input file
+
+           --input-netflow input file
+                   Specify the netflow input file. In this case the
+                   netflows as defined by ARL accepted.
+
+           -p input file
+
+           --input-pcap input file
+                   Specify the pcap file. It is expected that this
+                   file will contain DNS packets for the same
+                   timeframe as entries in the netflow input file.
+
+           -o output file
+
+           --output output file
+                   Specify the output file. This is the file that
+                   will be used by other symptoms if needed.
+                   DNSFreeFlowsV program can be used to view those
+                   entries without reprocessing the input.
+
+     The following command-line options are optional:
+
+           -c configuration_file
+
+           --config-file configuration_file
+                   Specify the file from which to read additional configuration
+                   options.
+
+           -h
+
+           --help
+                   Print a help message to stdout.
+
+           -s
+
+           --stdout
+                   By default the symptom will output its finding to stdout
+                   in human readable format. This option will disable this
+                   feature.
+
+           -d
+
+           --dns-timeout
+                   Defined in hours. Default value is 24. This is
+                   the duration that a DNS resolution is considered
+                   valid. If a connection is made to the resolved IP
+                   within this time frame then the connection will
+                   not be flagged.
+
+           -f
+
+           --state-file
+                   Specify the state file from previous execution or a
+                   new file. State file is need store data between
+                   executions. It is important that the data is
+                   processed in sequential time. Meaning netflows
+                   should be provided in the other they were
+                   recorded (ie. 1200, 1300, 1400, etc).
+
+           -n
+
+           --sensor
+                   Specify the sensor name, optional but recommended as
+                   NetFlow file doesn't contain this name.
+
+
+
+     The following configuration-file options are available:
+
+           dns-timeout = number
+                   Same as the command line argument.
+
+EXIT STATUS
+     DNSFreeFlows exits 0 on success, and >0 if an error occurs.
+
+EXAMPLES
+     Process an hour worth of traffic:
+
+           ./DNSFreeFlows -i ../ARL-sample/poly-source/20091207.19.flow
+                          -p ../ARL-sample/poly-source/pcap/arl_sample.td0
+                          -o output -d 10
+
+                              March 29, 2010

@@ -1,0 +1,19 @@
+CPP= g++
+CFLAGS=
+
+SYS_INCLUDE_DIRS= $(SRC_DIR)/../extern/boost/include
+SYS_LIB_DIRS= $(SRC_DIR)/../extern/boost/lib
+
+INCLUDE_DIRS= $(SRC_DIR)/../extern/arl/include
+
+BOOST_GCC_V=
+BOOST_SYSTEM_LIB= boost_system${BOOST_GCC_V}
+BOOST_FILESYSTEM_LIB= boost_filesystem${BOOST_GCC_V}
+BOOST_PROGRAM_OPTIONS_LIB= boost_program_options${BOOST_GCC_V}
+BOOST_REGEX_LIB= boost_regex${BOOST_GCC_V}
+BOOST_DATE_TIME_LIB= boost_date_time${BOOST_GCC_V}
+
+BOOST_LIBS= $(BOOST_SYSTEM_LIB) $(BOOST_FILESYSTEM_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) $(BOOST_REGEX_LIB) $(BOOST_DATE_TIME_LIB)
+
+DYNAMIC_LIBS= db db_cxx-4.4 pcap ssl z
+STATIC_LIBS= $(BOOST_LIBS)

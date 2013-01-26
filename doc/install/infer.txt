@@ -1,0 +1,35 @@
+Installing INFER
+
+Installing INFER onto a dedicated physical machine has been completely
+automated, and consists of just a few steps.
+
+First, make sure you have installed FreeBSD as documented in freebsd.txt
+and that you have followed the instructions in time.txt for setting up
+NTP and adjusting the timezone accordingly.
+
+Second, make sure you are root. If you are not, become root.
+
+# sh -c 'if [ $(whoami) != root ] ; then su - ; fi;'
+
+Next, extract the source tree tarball somewhere.
+
+# cd /root
+# tar xf source_tree.tar
+
+Change directory to the src directory in the tree.
+
+# cd ims-site/trunk/src
+
+Copy the install script(s) into a directory in your PATH.
+
+# cp bin/scripts/infer_{install,database}* /usr/local/bin/
+
+Next, modify all of the configuration options in the install script.
+
+# vim /usr/local/bin/infer_install.sh
+
+...
+
+Finally, execute the script.
+
+# sh /usr/local/bin/infer_install.sh

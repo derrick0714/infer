@@ -1,0 +1,10 @@
+#ifndef INFER_LIB_ANALYSIS_BANDWIDTH_UTILIZATION_BANDWIDTH_UTILIZATION_DATUM_HPP_
+#define INFER_LIB_ANALYSIS_BANDWIDTH_UTILIZATION_BANDWIDTH_UTILIZATION_DATUM_HPP_
+
+struct bandwidth_utilization_datum {
+	uint32_t time_seconds;
+	double ingress_bytes_per_second;
+	double egress_bytes_per_second;
+};
+
+#endif

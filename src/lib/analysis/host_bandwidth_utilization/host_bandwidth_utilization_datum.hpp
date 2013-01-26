@@ -1,0 +1,11 @@
+#ifndef INFER_LIB_ANALYSIS_HOST_BANDWIDTH_UTILIZATION_HOST_BANDWIDTH_UTILIZATION_DATUM_HPP_
+#define INFER_LIB_ANALYSIS_HOST_BANDWIDTH_UTILIZATION_HOST_BANDWIDTH_UTILIZATION_DATUM_HPP_
+
+struct host_bandwidth_utilization_datum {
+	uint32_t host;
+	uint32_t time_seconds;
+	double ingress_bytes_per_second;
+	double egress_bytes_per_second;
+};
+
+#endif

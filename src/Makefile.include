@@ -1,0 +1,213 @@
+all: analysis sensor tools
+
+dist: dist-analysis dist-sensor dist-tools
+
+install:
+	cp -R $(DIST_DIR)/* $(INSTALL_PREFIX)/
+
+
+
+################################################################################
+# ANALYSIS                                                                     #
+################################################################################
+
+analysis: analysis-bin analysis-modules analysis-utils postgresql-extensions
+
+analysis-bin: bin/analysis/analysis \
+			  bin/query_manager/query_manager \
+			  bin/find_contacts_sql/find_contacts_sql \
+			  bin/payload_search/payload_search \
+			  bin/search/search \
+			  bin/config/config
+
+analysis-modules: \
+	lib/analysis/bandwidth_content/libbandwidth_content.so \
+	lib/analysis/bandwidth_utilization/libbandwidth_utilization.so \
+	lib/analysis/commChannels/libcommChannels.so \
+	lib/analysis/darkSpaceSources/libdarkSpaceSources.so \
+	lib/analysis/darkSpaceTargets/libdarkSpaceTargets.so \
+	lib/analysis/evasiveTraffic/libevasiveTraffic.so \
+	lib/analysis/ftpBruteForcers/libftpBruteForcers.so \
+	lib/analysis/host_bandwidth_utilization/libhost_bandwidth_utilization.so \
+	lib/analysis/host_bandwidth_content/libhost_bandwidth_content.so \
+	lib/analysis/host_exposure/libhost_exposure.so \
+	lib/analysis/hostPairs/libhostPairs.so \
+	lib/analysis/hostTraffic/libhostTraffic.so \
+	lib/analysis/infectedContacts/libinfectedContacts.so \
+	lib/analysis/network_exposure/libnetwork_exposure.so \
+	lib/analysis/networkTraffic/libnetworkTraffic.so \
+	lib/analysis/nonDNSTraffic/libnonDNSTraffic.so \
+	lib/analysis/slowdown/libslowdown.so \
+	lib/analysis/sqlBruteForcers/libsqlBruteForcers.so \
+	lib/analysis/sshBruteForcers/libsshBruteForcers.so \
+	lib/analysis/telnetBruteForcers/libtelnetBruteForcers.so \
+	lib/analysis/topPorts/libtopPorts.so
+
+analysis-utils: bin/interesting_ips/interesting_ips \
+				bin/country_map/country_map \
+				bin/host_domain/host_domain \
+				bin/http2psql/http2psql \
+				bin/mutual_contacts/mutual_contacts \
+				bin/privacy_matrix/privacy_matrix \
+				bin/pruned_network_graph/pruned_network_graph \
+				bin/related_hosts/related_hosts \
+				bin/external_contacts/external_contacts \
+				bin/shared_private_contacts/shared_private_contacts \
+				bin/comm_channel_fanin/comm_channel_fanin \
+				bin/browser_stats/browser_stats \
+				bin/web_server_browsers/web_server_browsers \
+				bin/web_server_crawlers/web_server_crawlers \
+				bin/web_server_servers/web_server_servers \
+				bin/web_server_top_hosts/web_server_top_hosts \
+				bin/web_server_top_urls/web_server_top_urls
+
+
+dist-analysis: dist-tree dist-www analysis
+	cp bin/analysis/analysis $(DIST_DIR)/bin/$(DIST_PREFIX)analysis
+	cp bin/interesting_ips/interesting_ips $(DIST_DIR)/bin/$(DIST_PREFIX)interesting_ips
+	cp bin/find_contacts_sql/find_contacts_sql $(DIST_DIR)/bin/$(DIST_PREFIX)find_contacts_sql
+	cp bin/payload_search/payload_search $(DIST_DIR)/bin/$(DIST_PREFIX)payload_search
+	cp bin/search/search $(DIST_DIR)/bin/$(DIST_PREFIX)search
+	cp bin/query_manager/query_manager $(DIST_DIR)/bin/$(DIST_PREFIX)query_manager
+	cp bin/country_map/country_map $(DIST_DIR)/bin/$(DIST_PREFIX)country_map
+	cp bin/host_domain/host_domain $(DIST_DIR)/bin/$(DIST_PREFIX)host_domain
+	cp bin/http2psql/http2psql $(DIST_DIR)/bin/$(DIST_PREFIX)http2psql
+	cp bin/mutual_contacts/mutual_contacts $(DIST_DIR)/bin/$(DIST_PREFIX)mutual_contacts
+	cp bin/privacy_matrix/privacy_matrix $(DIST_DIR)/bin/$(DIST_PREFIX)privacy_matrix
+	cp bin/pruned_network_graph/pruned_network_graph $(DIST_DIR)/bin/$(DIST_PREFIX)pruned_network_graph
+	cp bin/related_hosts/related_hosts $(DIST_DIR)/bin/$(DIST_PREFIX)related_hosts
+	cp bin/external_contacts/external_contacts $(DIST_DIR)/bin/$(DIST_PREFIX)external_contacts
+	cp bin/shared_private_contacts/shared_private_contacts $(DIST_DIR)/bin/$(DIST_PREFIX)shared_private_contacts
+	cp bin/comm_channel_fanin/comm_channel_fanin $(DIST_DIR)/bin/$(DIST_PREFIX)comm_channel_fanin
+	cp bin/browser_stats/browser_stats $(DIST_DIR)/bin/$(DIST_PREFIX)browser_stats
+	cp bin/web_server_browsers/web_server_browsers $(DIST_DIR)/bin/$(DIST_PREFIX)web_server_browsers
+	cp bin/web_server_crawlers/web_server_crawlers $(DIST_DIR)/bin/$(DIST_PREFIX)web_server_crawlers
+	cp bin/web_server_servers/web_server_servers $(DIST_DIR)/bin/$(DIST_PREFIX)web_server_servers
+	cp bin/web_server_top_hosts/web_server_top_hosts $(DIST_DIR)/bin/$(DIST_PREFIX)web_server_top_hosts
+	cp bin/web_server_top_urls/web_server_top_urls $(DIST_DIR)/bin/$(DIST_PREFIX)web_server_top_urls
+	cp bin/config/config $(DIST_DIR)/bin/$(DIST_PREFIX)config
+	for i in lib/analysis/*/*.so; do \
+		cp $$i $(DIST_DIR)/`echo $$i | sed -e 's/lib\/analysis\/\(.*\)\/.*so/lib\/lib$(DIST_PREFIX)analysis_\1.so/'`; \
+	done
+	for i in lib/postgresql/*/*.so; do \
+		cp $$i $(DIST_DIR)/`echo $$i | sed -e 's/lib\/postgresql\/\(.*\)\/.*so/lib\/lib$(DIST_PREFIX)postgresql_\1.so/'`; \
+	done
+	cp $(SRC_DIR)/bin/scripts/infer_analysis.sh $(DIST_DIR)/bin/
+	cp $(SRC_DIR)/bin/scripts/infer_hourly.sh $(DIST_DIR)/bin/
+	cp $(SRC_DIR)/bin/scripts/infer_daily.sh $(DIST_DIR)/bin/
+	cp $(SRC_DIR)/bin/scripts/infer_index_symptom_tables.sh* $(DIST_DIR)/bin/
+	cp $(SRC_DIR)/bin/scripts/infer_update_portip_relevance.pl $(DIST_DIR)/bin/
+	cp $(SRC_DIR)/bin/scripts/infer_http_domain_relevance.pl $(DIST_DIR)/bin/
+	cp $(SRC_DIR)/bin/scripts/infer_http_host_relevance.pl $(DIST_DIR)/bin/
+	cp $(SRC_DIR)/bin/scripts/infer_smtp_notify.pl $(DIST_DIR)/bin/
+	cp $(SRC_DIR)/share/examples/infer/infer.conf $(DIST_DIR)/share/examples/infer/
+	cp $(SRC_DIR)/share/examples/infer/infer_analysis_scanners_monitoredServices.conf $(DIST_DIR)/share/examples/infer/
+	cp $(SRC_DIR)/share/examples/infer/infer_domain_suffix.conf $(DIST_DIR)/share/examples/infer/
+	cp $(SRC_DIR)/etc/rc.d/infer_query_manager.sh $(DIST_DIR)/etc/rc.d/
+	cp $(SRC_DIR)/etc/rc.d/infer_loop.sh $(DIST_DIR)/etc/rc.d/
+
+################################################################################
+# SENSOR                                                                       #
+################################################################################
+
+sensor: sensor-bin sensor-modules sensor-utils
+
+sensor-bin: bin/sensor/sensor
+
+sensor-modules: lib/sensor/dns/libdns.so \
+				lib/sensor/hbf/libhbf.so \
+				lib/sensor/http/libhttp.so \
+				lib/sensor/live_ips/liblive_ips.so \
+				lib/sensor/neoflow/libneoflow.so
+
+sensor-utils: bin/delete_old_data/delete_old_data \
+			  bin/config/config
+
+dist-sensor: dist-tree sensor
+	cp bin/sensor/sensor $(DIST_DIR)/bin/$(DIST_PREFIX)sensor
+	for i in lib/sensor/*/*.so; do \
+		cp $$i $(DIST_DIR)/`echo $$i | sed -e 's/lib\/sensor\/\(.*\)\/.*so/lib\/lib$(DIST_PREFIX)sensor_\1.so/'`; \
+	done
+	cp $(SRC_DIR)/share/examples/infer/infer.conf $(DIST_DIR)/share/examples/infer/
+	cp $(SRC_DIR)/share/examples/infer/infer_sensor_neoflow_fcc.model $(DIST_DIR)/share/examples/infer/
+	cp $(SRC_DIR)/etc/rc.d/infer_sensor.sh $(DIST_DIR)/etc/rc.d/
+	cp $(SRC_DIR)/etc/rc.d/infer_loop.sh $(DIST_DIR)/etc/rc.d/
+	cp bin/delete_old_data/delete_old_data $(DIST_DIR)/bin/$(DIST_PREFIX)delete_old_data
+	cp bin/config/config $(DIST_DIR)/bin/$(DIST_PREFIX)config
+
+################################################################################
+# POSTGRESQL                                                                   #
+################################################################################
+
+postgresql-extensions: lib/postgresql/uint16/libuint16.so \
+					   lib/postgresql/uint32/libuint32.so \
+					   lib/postgresql/uint64/libuint64.so
+
+
+################################################################################
+# TOOLS                                                                        #
+################################################################################
+
+tools: bin/as_map/as_map \
+	   bin/dumpDNS/dumpDNS \
+	   bin/dumpHTTP/dumpHTTP \
+	   bin/dumpLiveIPs/dumpLiveIPs \
+	   bin/dumpNeoflow/dumpNeoflow
+
+dist-tools: dist-tree tools
+	cp bin/as_map/as_map $(DIST_DIR)/bin/$(DIST_PREFIX)as_map
+	cp bin/dumpDNS/dumpDNS $(DIST_DIR)/bin/$(DIST_PREFIX)dumpDNS
+	cp bin/dumpHTTP/dumpHTTP $(DIST_DIR)/bin/$(DIST_PREFIX)dumpHTTP
+	cp bin/dumpLiveIPs/dumpLiveIPs $(DIST_DIR)/bin/$(DIST_PREFIX)dumpLiveIPs
+	cp bin/dumpNeoflow/dumpNeoflow $(DIST_DIR)/bin/$(DIST_PREFIX)dumpNeoflow
+	cp $(SRC_DIR)/share/examples/infer/infer.conf $(DIST_DIR)/share/examples/infer/
+
+################################################################################
+# WWW                                                                          #
+################################################################################
+
+dist-www: dist-tree
+#	cp -R $(SRC_DIR)/www $(DIST_DIR)/
+#	find $(DIST_DIR)/www -name '.svn' -exec rm -rf {} +
+
+################################################################################
+# DIST                                                                         #
+################################################################################
+
+dist-tree:
+	mkdir -p $(DIST_DIR)/bin \
+			 $(DIST_DIR)/lib \
+			 $(DIST_DIR)/etc \
+			 $(DIST_DIR)/etc/rc.d \
+			 $(DIST_DIR)/share \
+			 $(DIST_DIR)/share/examples \
+			 $(DIST_DIR)/share/examples/infer
+
+################################################################################
+
+ifeq ($(BUILD),Debug)
+ ifeq ($(shell uname -s),Linux)
+ include $(SRC_DIR)/Makefile.linux-debug
+ endif
+ ifeq ($(shell uname -s),FreeBSD)
+ include $(SRC_DIR)/Makefile.freebsd-debug
+ endif
+ ifeq ($(shell uname -s),Darwin)
+ include $(SRC_DIR)/Makefile.darwin-debug
+ endif
+else
+ ifeq ($(shell uname -s),Linux)
+ include $(SRC_DIR)/Makefile.linux
+ endif
+ ifeq ($(shell uname -s),FreeBSD)
+ include $(SRC_DIR)/Makefile.freebsd
+ endif
+ ifeq ($(shell uname -s),Darwin)
+ include $(SRC_DIR)/Makefile.darwin
+ endif
+endif
+
+-include $(SRC_DIR)/bin/*/Makefile.include
+-include $(SRC_DIR)/lib/*/*/Makefile.include
+
+include $(SRC_DIR)/Makefile.mk

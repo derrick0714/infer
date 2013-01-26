@@ -1,0 +1,13 @@
+lib/analysis/host_exposure/libhost_exposure.so: \
+	BOOST_LIBS := $(BOOST_SYSTEM_LIB)
+lib/analysis/host_exposure/libhost_exposure.so: \
+	BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+lib/analysis/host_exposure/libhost_exposure.so: \
+	DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+lib/analysis/host_exposure/libhost_exposure.so: \
+	STATIC_LIBS :=
+lib/analysis/host_exposure/libhost_exposure.so: \
+	lib/analysis/host_exposure/host_exposure.o \
+	include/ipInformation.o \
+	include/timeStamp.o \
+	include/stringHelpers.o

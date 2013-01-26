@@ -1,0 +1,5 @@
+lib/analysis/darkSpaceSources/libdarkSpaceSources.so: lib/analysis/darkSpaceSources/darkSpaceSources.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o

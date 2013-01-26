@@ -1,0 +1,5 @@
+lib/analysis/topPorts/libtopPorts.so: lib/analysis/topPorts/topPorts.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o

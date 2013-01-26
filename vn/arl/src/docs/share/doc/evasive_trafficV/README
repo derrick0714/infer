@@ -1,0 +1,62 @@
+EvasiveTrafficV(1)  Vivic Networks Command
+
+NAME
+     EvasiveTrafficV - displays flows flagged by the EvasiveTraffic program
+
+SYNOPSIS
+     EvasiveTrafficV [[-n value] | [--sensor value]]
+                     [[-s date time] | [--start-time date time]]
+                     [[-e date time] | [--end-time date time]]
+                      -i file | --input-file file
+
+     EvasiveTrafficV -h
+
+DESCRIPTION
+     EvasiveTrafficV program scans through the output file of
+     EvasiveTraffic program and output the data to STDOUT. The
+     output can be limited to a time range.
+
+     The following command-line options are required:
+
+           -i input file
+
+           --input-file input file
+                   Specify the netflow input file. In this case the
+                   netflows are defined by ARL accepted.
+
+
+     The following command-line options are optional:
+
+           -h
+
+           --help
+                   Print a help message to stdout.
+
+           -n
+
+           --sensor
+                   Specify the sensor name, optional but
+                   recommended. This information is not stored in
+                   the output file for EvasiveTraffic.
+
+           -s
+
+           --start-time
+                  Specify the start time in format %Y[-%m[-%d[ %H[:%M[:%S]]]]]
+
+           -e
+
+           --end-time
+                  Specify the end time in format %Y[-%m[-%d[ %H[:%M[:%S]]]]]
+
+
+EXIT STATUS
+     EvasiveTrafficV exits 0 on success, and >0 if an error occurs.
+
+EXAMPLES
+     Output all data in the output file:
+
+           ./EvasiveTrafficV -i ./output
+
+
+                              January 24, 2010

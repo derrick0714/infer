@@ -1,0 +1,232 @@
+all: evasive_traffic synapp_hbf query_hbf synapp_sample ls-R pcap_test queue_writer_test payload_search arlTypesTest
+
+symptoms: \
+	sym_main_EvasiveTraffic sym_view_EvasiveTraffic \
+	sym_main_DarkAccess sym_view_DarkAccess \
+	sym_main_FrequentReboots sym_view_FrequentReboots \
+	sym_main_DNSFreeFlows sym_view_DNSFreeFlows \
+	sym_main_PeerToPeer sym_view_PeerToPeer
+
+arlTypesTest: arlTypesTest.o shared/arl_parsing/PDXRecord.o shared/arl_parsing/NetFlowARLRecord.o shared/TimeStamp.o shared/arl_parsing/NetFlowARL_v1_Record.o shared/arl_parsing/NetFlowARL_v2_Record.o shared/arl_parsing/NetFlowARL_v3_Record.o shared/arl_parsing/ISTRRecord.o
+
+test_IPZone: \
+	test_IPZone.o \
+	symptoms/IPZone.o \
+	symptoms/IPsubnet.o
+
+sym_main_EvasiveTraffic: \
+	sym_main_EvasiveTraffic.o \
+	symptoms/EvasiveTraffic/EvasiveTrafficArguments.o \
+	symptoms/EvasiveTraffic/EvasiveTrafficConfiguration.o \
+	symptoms/NetflowEntry.o \
+	shared/SynappConfiguration.o \
+	shared/SynappArguments.o \
+	shared/arl_parsing/PDXRecord.o \
+	shared/arl_parsing/NetFlowARLRecord.o \
+	shared/TimeStamp.o \
+	shared/arl_parsing/NetFlowARL_v1_Record.o \
+	shared/arl_parsing/NetFlowARL_v2_Record.o \
+	shared/arl_parsing/NetFlowARL_v3_Record.o \
+	shared/arl_parsing/ISTRRecord.o \
+	shared/FilesystemHelpers.o
+
+sym_view_EvasiveTraffic: \
+	sym_view_EvasiveTraffic.o \
+	symptoms/NetflowEntryViewer/NetflowViewerArguments.o \
+	symptoms/NetflowEntry.o \
+	shared/SynappConfiguration.o \
+	shared/SynappArguments.o \
+	shared/arl_parsing/PDXRecord.o \
+	shared/arl_parsing/NetFlowARLRecord.o \
+	shared/TimeStamp.o \
+	shared/arl_parsing/NetFlowARL_v1_Record.o \
+	shared/arl_parsing/NetFlowARL_v2_Record.o \
+	shared/arl_parsing/NetFlowARL_v3_Record.o \
+	shared/arl_parsing/ISTRRecord.o \
+	shared/FilesystemHelpers.o
+
+sym_view_DarkAccess: \
+	sym_view_DarkAccess.o \
+	symptoms/NetflowEntryViewer/NetflowViewerArguments.o \
+	symptoms/NetflowEntry.o \
+	shared/SynappConfiguration.o \
+	shared/SynappArguments.o \
+	shared/arl_parsing/PDXRecord.o \
+	shared/arl_parsing/NetFlowARLRecord.o \
+	shared/TimeStamp.o \
+	shared/arl_parsing/NetFlowARL_v1_Record.o \
+	shared/arl_parsing/NetFlowARL_v2_Record.o \
+	shared/arl_parsing/NetFlowARL_v3_Record.o \
+	shared/arl_parsing/ISTRRecord.o \
+	shared/FilesystemHelpers.o
+
+sym_main_DarkAccess: \
+	sym_main_DarkAccess.o \
+	symptoms/DarkAccess/DarkAccessArguments.o \
+	symptoms/DarkAccess/DarkAccessConfiguration.o \
+	symptoms/DarkAccess/DarkAccessMapEntry.o \
+	symptoms/NetflowEntry.o \
+	symptoms/IPZone.o \
+	symptoms/IPsubnet.o \
+	shared/SynappConfiguration.o \
+	shared/SynappArguments.o \
+	shared/arl_parsing/PDXRecord.o \
+	shared/arl_parsing/NetFlowARLRecord.o \
+	shared/TimeStamp.o \
+	shared/arl_parsing/NetFlowARL_v1_Record.o \
+	shared/arl_parsing/NetFlowARL_v2_Record.o \
+	shared/arl_parsing/NetFlowARL_v3_Record.o \
+	shared/arl_parsing/ISTRRecord.o \
+	shared/FilesystemHelpers.o
+
+sym_main_FrequentReboots: \
+	sym_main_FrequentReboots.o \
+	symptoms/FrequentReboots/FrequentRebootsArguments.o \
+	symptoms/FrequentReboots/FrequentRebootsConfiguration.o \
+	symptoms/FrequentReboots/FrequentRebootsMapEntry.o \
+	symptoms/FrequentReboots/HIEApplication.o \
+	symptoms/NetflowEntry.o \
+	symptoms/IPZone.o \
+	symptoms/IPsubnet.o \
+	shared/SynappConfiguration.o \
+	shared/SynappArguments.o \
+	shared/arl_parsing/PDXRecord.o \
+	shared/arl_parsing/NetFlowARLRecord.o \
+	shared/TimeStamp.o \
+	shared/arl_parsing/NetFlowARL_v1_Record.o \
+	shared/arl_parsing/NetFlowARL_v2_Record.o \
+	shared/arl_parsing/NetFlowARL_v3_Record.o \
+	shared/arl_parsing/ISTRRecord.o \
+	shared/FilesystemHelpers.o \
+	shared/DNS/DNSQueryEntry.o \
+	shared/DNS/DNSResponseEntry.o \
+	shared/Frame.o \
+	shared/EthernetFrame.o \
+	shared/EthernetAddress.o
+
+
+sym_view_FrequentReboots: \
+	sym_view_FrequentReboots.o \
+	symptoms/NetflowEntryViewer/NetflowViewerArguments.o \
+	symptoms/NetflowEntry.o \
+	shared/SynappConfiguration.o \
+	shared/SynappArguments.o \
+	shared/arl_parsing/PDXRecord.o \
+	shared/arl_parsing/NetFlowARLRecord.o \
+	shared/TimeStamp.o \
+	shared/arl_parsing/NetFlowARL_v1_Record.o \
+	shared/arl_parsing/NetFlowARL_v2_Record.o \
+	shared/arl_parsing/NetFlowARL_v3_Record.o \
+	shared/arl_parsing/ISTRRecord.o \
+	shared/FilesystemHelpers.o
+
+sym_main_DNSFreeFlows: \
+	sym_main_DNSFreeFlows.o \
+	symptoms/DNSFreeFlows/DNSFreeFlowsArguments.o \
+	symptoms/DNSFreeFlows/DNSFreeFlowsConfiguration.o \
+	symptoms/DNSFreeFlows/DNSFreeFlowsEntry.o \
+	symptoms/NetflowEntry.o \
+	shared/SynappConfiguration.o \
+	shared/SynappArguments.o \
+	shared/TimeStamp.o \
+	shared/DNS/DNSQueryEntry.o \
+	shared/DNS/DNSResponseEntry.o \
+	shared/Frame.o \
+	shared/EthernetFrame.o \
+	shared/EthernetAddress.o \
+	shared/FilesystemHelpers.o \
+	shared/arl_parsing/NetFlowARLRecord.o \
+	shared/arl_parsing/NetFlowARL_v1_Record.o \
+	shared/arl_parsing/NetFlowARL_v2_Record.o \
+	shared/arl_parsing/NetFlowARL_v3_Record.o 
+
+sym_view_DNSFreeFlows: \
+	sym_view_DNSFreeFlows.o \
+	symptoms/NetflowEntryViewer/NetflowViewerArguments.o \
+	symptoms/NetflowEntry.o \
+	shared/SynappConfiguration.o \
+	shared/SynappArguments.o \
+	shared/arl_parsing/PDXRecord.o \
+	shared/arl_parsing/NetFlowARLRecord.o \
+	shared/TimeStamp.o \
+	shared/arl_parsing/NetFlowARL_v1_Record.o \
+	shared/arl_parsing/NetFlowARL_v2_Record.o \
+	shared/arl_parsing/NetFlowARL_v3_Record.o \
+	shared/arl_parsing/ISTRRecord.o \
+	shared/FilesystemHelpers.o
+
+sym_view_PeerToPeer: \
+	sym_view_PeerToPeer.o \
+	symptoms/NetflowEntryViewer/NetflowViewerArguments.o \
+	symptoms/NetflowEntry.o \
+	shared/SynappConfiguration.o \
+	shared/SynappArguments.o \
+	shared/arl_parsing/PDXRecord.o \
+	shared/arl_parsing/NetFlowARLRecord.o \
+	shared/TimeStamp.o \
+	shared/arl_parsing/NetFlowARL_v1_Record.o \
+	shared/arl_parsing/NetFlowARL_v2_Record.o \
+	shared/arl_parsing/NetFlowARL_v3_Record.o \
+	shared/arl_parsing/ISTRRecord.o \
+	shared/FilesystemHelpers.o
+
+sym_main_PeerToPeer: \
+	sym_main_PeerToPeer.o \
+	symptoms/PeerToPeer/PeerToPeerArguments.o \
+	symptoms/PeerToPeer/PeerToPeerConfiguration.o \
+	symptoms/PeerToPeer/PeerToPeerMapEntry.o \
+	symptoms/NetflowEntry.o \
+	symptoms/IPZone.o \
+	symptoms/IPsubnet.o \
+	shared/SynappConfiguration.o \
+	shared/SynappArguments.o \
+	shared/arl_parsing/PDXRecord.o \
+	shared/arl_parsing/NetFlowARLRecord.o \
+	shared/TimeStamp.o \
+	shared/arl_parsing/NetFlowARL_v1_Record.o \
+	shared/arl_parsing/NetFlowARL_v2_Record.o \
+	shared/arl_parsing/NetFlowARL_v3_Record.o \
+	shared/arl_parsing/ISTRRecord.o \
+	shared/FilesystemHelpers.o
+
+
+
+synapp_hbf: synapp_hbf.o shared/FilesystemHelpers.o shared/SynappArguments.o shared/HBFSynappArguments.o shared/SynappConfiguration.o shared/HBFSynappConfiguration.o shared/HBF.o shared/TimeStamp.o shared/TempWriterHelpers.o shared/EthernetFrame.o shared/Frame.o shared/EthernetAddress.o shared/ZlibCompressedHBF.o
+
+query_hbf: query_hbf.o shared/SynappArguments.o shared/HBFQueryProcessorArguments.o shared/HBF.o shared/TimeStamp.o shared/TimeStamp.o shared/Base64.o shared/HBFQueryProcessorConfiguration.o shared/SynappConfiguration.o shared/ZlibCompressedHBF.o shared/OstreamHelpers.o
+
+synapp_sample: synapp_sample.o synapps/SampleSynapp.o shared/SynappArguments.o shared/DefaultSynappArguments.o shared/SynappConfiguration.o shared/SampleSynappConfiguration.o shared/TimeStamp.o
+
+ls-R: ls-R.o
+
+pcap_test: pcap_test.o shared/Frame.o shared/EthernetFrame.o shared/EthernetAddress.o shared/TimeStamp.o
+
+queue_writer_test: queue_writer_test.o shared/TimeStamp.o
+
+payload_search: payload_search.o shared/Base64.o shared/TimeStamp.o shared/SynappArguments.o shared/PayloadSearchManagerArguments.o shared/OstreamHelpers.o shared/HBF.o shared/ZlibCompressedHBF.o shared/SynappConfiguration.o shared/PayloadSearchManagerConfiguration.o shared/HTTP.o
+
+################################################################################
+
+ifeq ($(BUILD),Debug)
+ ifeq ($(shell uname -s),Linux)
+ include $(SRC_DIR)/Makefile.linux-debug
+ endif
+ ifeq ($(shell uname -s),FreeBSD)
+ include $(SRC_DIR)/Makefile.freebsd-debug
+ endif
+ ifeq ($(shell uname -s),Darwin)
+ include $(SRC_DIR)/Makefile.darwin-debug
+ endif
+else
+ ifeq ($(shell uname -s),Linux)
+ include $(SRC_DIR)/Makefile.linux
+ endif
+ ifeq ($(shell uname -s),FreeBSD)
+ include $(SRC_DIR)/Makefile.freebsd
+ endif
+ ifeq ($(shell uname -s),Darwin)
+ include $(SRC_DIR)/Makefile.darwin
+ endif
+endif
+
+include $(SRC_DIR)/Makefile.mk

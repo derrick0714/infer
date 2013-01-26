@@ -1,0 +1,5 @@
+lib/analysis/telnetBruteForcers/libtelnetBruteForcers.so: lib/analysis/telnetBruteForcers/telnetBruteForcers.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o

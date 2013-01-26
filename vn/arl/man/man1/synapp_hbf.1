@@ -1,0 +1,85 @@
+.Dd July 29, 2009
+.Os
+.Dt SYNAPP_HBF \&1 "Vivic Networks Command Manual"
+.Sh NAME
+.Nm synapp_hbf
+.Nd generate HBFs from pcap files
+.Sh SYNOPSIS
+.HP
+.Nm
+.Op Fl c Ar configuration_file
+.Fl i Ar input_directory
+.Fl o Ar output_directory
+.Nm
+.Fl h
+.Sh DESCRIPTION
+The
+.Nm
+program generates HBFs from the pcap files in
+.Ar input_directory
+and writes them to BerkeleyDB files in
+.Ar output_directory .
+.Pp
+If
+.Ar configuration_file
+is not specified, the default configuration file location is
+.Pa /usr/local/etc/synapp_hbf.conf .
+.Pp
+The configuration file format is:
+.Pp
+.D1 Cm option = Ar value
+.Pp
+with each option/value pair separated by a newline.
+.Ar input_directory
+is scanned recursively for files to read. Any regular file found is assumed to
+be a pcap file and is read.
+.Pp
+The generated HBFs are written, in BerkeleyDB files, to
+.Ar output_directory ,
+with the following directory structure:
+.Bd -ragged -offset indent
+.Pa output_directory/%Y/%m/%d/hbf_%H
+.Ed
+.Pp
+See
+.Xr strftime 3
+for time-formatting information. File names are determined by the start time of
+the HBF flow.
+.Pp
+The following command-line options are required:
+.Bl -tag -width indent -offset indent
+.It Fl i Ar input_directory
+.It Fl -input-dir Ar input_directory
+directory from which to read data files
+.It Fl o Ar output_directory
+.It Fl -output-dir Ar output_directory
+directory into which to write synopses
+.El
+.Pp
+The following command-line options are optional:
+.Bl -tag -width indent -offset indent
+.It Fl c Ar configuration_file
+.It Fl -config-file Ar configuration_file
+file from which to read additional configuration options
+.It Fl h
+.It Fl -help
+prints a help message to stdout
+.El
+.Pp
+The following configuration-file options are required:
+.Bl -tag -width indent -offset indent
+.It Cm max-flows = Ar number
+the maximum number of HBFs to keep in memory before flushing to disk
+.It Cm idle-timeout = Ar number
+the maximum time, in seconds, a flow can remain inactive before being
+flushed to disk
+.It Cm min-payload = Ar number
+the minimum size required for a packet to qualify for hbf processing
+.El
+.Sh EXIT STATUS
+.Nm 
+exits 0 on success, and >0 if an error occurs.
+.Sh SEE ALSO
+.Xr query_hbf 1 ,
+.Xr strftime 3
+.\" vim: set filetype=groff nu:

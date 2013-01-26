@@ -1,0 +1,61 @@
+FREEBSD INSTALLATION
+
+First, configure any hardware RAID controllers in the machine not to act 
+in a RAID capacity--that is, to just act as ATA or SCSI controllers.
+
+Boot the machine from the installation disc, choose your country 
+(assumed to be "United States"), then choose the "Custom" installation. 
+Navigate down to "Partition" and select it. You may ignore any warnings 
+about the physical geometry of disks--they stem from the fact that hard 
+drive vendors these days do not care to provide proper physical 
+geometries as modern hardware tends to use Logical Block Addressing to 
+do disk I/O.
+
+Choose a drive to install the operating system onto. The first one 
+is usually a good choice. Delete any partitions you may have with the 
+"d" key, then, press "c" to create one. Press "OK" to accept the default 
+size, which should be all available space, then accept the default 
+partition type of 165. Press "q" and select the "Standard" option to 
+install an MBR. You should now be back at the custom installation menu. 
+Proceed to the "Label" submenu.
+
+Press "c" and accept the default size, then choose the default of "FS", 
+and a mount point of "/". Press the down arrow so that the newly-created 
+partition is selected, then press the "s" key. This will enable 
+soft-updates on the partition--an add-on to the UFS filesystem that 
+increases performance and helps maintain filesystem consistency across 
+system failures (http://www.mckusick.com/softdep/). Press "q" to return 
+to the custom installation menu and proceed to the "Distributions" 
+submenu.
+
+Select the "Custom" option all the way at the bottom, then select the 
+"base", "kernels" (check "GENERIC" in the "kernels" distribution), "man" 
+and "ports"  distributions. Select "OK", and "OK" again to return to the
+custom installation menu and proceed to the "Media" submenu.
+
+Select "CD/DVD". You will find yourself at the custom installation menu. 
+Select "Commit", press "Yes", and "Yes" again when confronted by the 
+swap device warning. The installer will now perform partitioning, 
+filesystem creation, and file copying. This may take a few minutes.
+
+The installer will then prompt you for additional options. You may use 
+the opportunity to configure the network and any services you may wish 
+to start at boot time. It should be noted that all of this can be 
+configured at a later time using the rc.d(8) system 
+(http://www.freebsd.org/doc/en/books/handbook/configtuning-rcd.html). 
+When done, exit the installer, reboot the system, and boot it from the 
+drive you instaleld FreeBSD onto.
+
+I prefer to have swap files as opposed to swap partitions due to the 
+relatively static nature of partitions and the dynamic nature of 
+general-purpose computers. Swap file creation is documented at 
+http://www.freebsd.org/doc/en/books/handbook/adding-swap-space.html.
+
+I also favor the GEOM Mirror software RAID-1 subsystem over hardware 
+RAID-1 due to its backward compatability with the filesystems that 
+reside on it (for example, you can mount any member of a GEOM Mirror 
+set with a UFS filesystem on it as a UFS filesystem), portability (the 
+(set does not depend on hardware to operate), and simplicity (metadata
+is self-contained on the last sector of each member of the set).
+Documentation for creating a GEOM Mirror set can be found at 
+http://www.onlamp.com/pub/a/bsd/2005/11/10/FreeBSD_Basics.html.

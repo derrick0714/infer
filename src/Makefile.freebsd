@@ -1,0 +1,28 @@
+CC= gcc
+CXX= g++
+CFLAGS= -W -Wall -g
+CXXFLAGS= -W -Wall -g
+
+SYS_INCLUDE_DIRS= /usr/local/include
+SYS_LIB_DIRS= /usr/local/lib
+INCLUDE_DIRS= $(SRC_DIR)/include
+
+BOOST_SYSTEM_LIB= boost_system
+BOOST_FILESYSTEM_LIB= boost_filesystem
+BOOST_PROGRAM_OPTIONS_LIB= boost_program_options
+BOOST_REGEX_LIB= boost_regex
+BOOST_DATE_TIME_LIB= boost_date_time
+BOOST_SERIALIZATION_LIB= boost_serialization
+BOOST_THREAD_LIB= boost_thread
+
+BOOST_LIBS= $(BOOST_SYSTEM_LIB) \
+			$(BOOST_FILESYSTEM_LIB) \
+			$(BOOST_PROGRAM_OPTIONS_LIB) \
+			$(BOOST_REGEX_LIB) $(BOOST_DATE_TIME_LIB) \
+			$(BOOST_SERIALIZATION_LIB) \
+			$(BOOST_THREAD_LIB)
+
+DYNAMIC_LIBS= crypto fetch fftw3 kvm pcap pq ssl z $(BOOST_LIBS)
+STATIC_LIBS=
+
+DIST_PREFIX= infer_

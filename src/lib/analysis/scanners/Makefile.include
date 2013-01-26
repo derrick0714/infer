@@ -1,0 +1,5 @@
+lib/analysis/scanners/libscanners.so: lib/analysis/scanners/scanners.o \
+													  include/postgreSQL.o \
+													  include/ipInformation.o \
+													  include/timeStamp.o \
+													  include/stringHelpers.o

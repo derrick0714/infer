@@ -1,0 +1,13 @@
+lib/analysis/host_bandwidth_utilization/libhost_bandwidth_utilization.so: \
+	BOOST_LIBS := $(BOOST_SYSTEM_LIB)
+lib/analysis/host_bandwidth_utilization/libhost_bandwidth_utilization.so: \
+	BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+lib/analysis/host_bandwidth_utilization/libhost_bandwidth_utilization.so: \
+	DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+lib/analysis/host_bandwidth_utilization/libhost_bandwidth_utilization.so: \
+	STATIC_LIBS :=
+lib/analysis/host_bandwidth_utilization/libhost_bandwidth_utilization.so: \
+	lib/analysis/host_bandwidth_utilization/host_bandwidth_utilization.o \
+	include/ipInformation.o \
+	include/timeStamp.o \
+	include/stringHelpers.o
