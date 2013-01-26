@@ -13,6 +13,8 @@ bin/
 gen/
 build/
 contrib/
+deprecated/
+dist/
 
 # svn
 *.svn
