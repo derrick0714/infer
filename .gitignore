@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #built application files
+=======
+# built application files
+>>>>>>> bd6d0aebb4402152ac6135b5e54103cfcc104061
 *.apk
 *.ap_
 
@@ -13,8 +17,11 @@ bin/
 gen/
 build/
 contrib/
+<<<<<<< HEAD
 deprecated/
 dist/
+=======
+>>>>>>> bd6d0aebb4402152ac6135b5e54103cfcc104061
 
 # svn
 *.svn
@@ -28,4 +35,7 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+<<<<<<< HEAD
 
+=======
+>>>>>>> bd6d0aebb4402152ac6135b5e54103cfcc104061
