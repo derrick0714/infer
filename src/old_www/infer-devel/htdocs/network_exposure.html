@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+ 
+<head> 
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" /> 
+	<script type="text/javascript" src="js/jQuery/jquery.js"></script> 
+	<script type="text/javascript" src="js/protovis/protovis-r3.2.js"></script>	
+	
+	<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui.css" /> 
+	<link rel="stylesheet" type="text/css" href="css/main.css" /> 
+</head>
+
+<body>
+	<script type="text/javascript" src="js/widgets/essentials.js"></script> 
+	
+	<script type="text/javascript" src="js/widgets/network_exposure_bar.js"></script> 
+	<script type="text/javascript">
+	$(document).ready(function()
+	{
+		network_exposure_bar('network_exposure_ingress_bar', 'ingress', '2010-06-29');
+		network_exposure_bar('network_exposure_egress_bar', 'egress', '2010-06-30');
+	});
+	</script>
+	<div id="network_exposure_ingress_bar"></div> 
+	<div id="network_exposure_egress_bar"></div> 
+</body>

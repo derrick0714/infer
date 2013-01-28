@@ -1,0 +1,136 @@
+<link rel="stylesheet" type="text/css" href="/site/dashboard/main.css" /> 
+
+<script type="text/javascript">
+
+tab_uri_notify = function(e) {
+	if (argv[1] == undefined) {
+		$.address.path('/error/nohost');
+		return;
+	}
+	
+	// TODO verify host...
+
+	$.getJSON('/data/date_checker/' + argv[2], function(content) {
+		var date =
+			(Date.parse(content.date_checker.date.replace(/-/g, '/'))) / 1000;
+		var first_date =
+			(Date.parse(content.date_checker.first_date.replace(/-/g, '/'))) 
+				/ 1000;
+		var last_date =
+			(Date.parse(content.date_checker.last_date.replace(/-/g, '/')))
+				/ 1000;
+		var date_object = new Date(date * 1000);
+		var current_date = date_format(date_object);
+		
+		argv[2] = date_format(
+			new Date(Date.parse(content.date_checker.date.replace(/-/g, '/'))));
+
+		if ($.address.pathNames()[2] != argv[2]) {
+			$.address.path(argv.join("/"));
+			return;
+		}
+
+		set_page_date(argv[2]);
+		document.title = page_title + ' - Related Hosts - ' + argv[1] + ' - ' + argv[2];
+
+		$('#current_date').text(current_date);
+		$('#current_host').text(argv[1]);
+		$('#previous_date').text(function()
+		{
+			var temp_date = date_format(new Date(date_object.getTime() - 86400000));
+			$(this).parent().attr('href', '#/' + argv[0] + '/' + argv[1] + '/' + temp_date);
+			return temp_date;
+		});
+		
+		$('#next_date').text(function()
+		{
+			var temp_date = date_format(new Date(date_object.getTime() + 86400000));
+			$(this).parent().attr('href', '#/' + argv[0] + '/' + argv[1] + '/' + temp_date);
+			return temp_date;
+		});
+	
+		$('#previous_date').css('visibility', date - 86400 < first_date ? 'hidden' : 'visible');
+		$('#next_date').css('visibility', date + 86400 > last_date ? 'hidden' : 'visible');
+
+		var date = current_date;
+		var ip = argv[1];
+		var insight_ip = argv[3];
+		var prev_ip = prev_argv[1];
+		var prev_current_date = prev_argv[2];
+		var prev_insight_ip = prev_argv[3];
+
+
+		if (prev_argv[0] != argv[0] || prev_ip != ip || prev_current_date != current_date) {
+			related_hosts_graph
+				.data_uri("/data/host/related_hosts_graph/" + ip + "/" + date)
+				.render();
+		}
+		related_hosts_insight_panel
+			.clear();
+		if (insight_ip) {
+			related_hosts_insight_panel
+		//		.data_uri("/data/host/related_hosts_external_hosts/" + ip + "/" + date + '/' + insight_ip)
+				.data_uri("/data/host/shared_private_contacts/" + ip + "/" + date + "/" + insight_ip)
+				.render();
+		}
+		else {
+			related_hosts_insight_panel
+		//		.data_uri("/data/host/related_hosts_external_hosts/" + ip + "/" + date + '/' + insight_ip)
+				.data_uri("/data/host/related_hosts/" + ip + "/" + date)
+				.render();
+		}
+	});
+}
+
+function date_format(date)
+{
+	var year = date.getFullYear();
+	var month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+	var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+	return year + '-' + month + '-' + day;
+}
+
+var width;
+var related_hosts_insight_panel;
+var related_hosts_graph;
+
+$(document).ready(function() {
+	$('#inner_wrapper').parent().width('auto');
+	// width = 980;
+	width = $('#inner_wrapper').parent().width() - 20;
+	$('#inner_wrapper').width(width);
+
+
+	related_hosts_insight_panel = new vn.widget.related_hosts_insight_panel()
+		.div("related_hosts_insight_panel")
+		.width(width/2)
+		.height(width/3);
+
+	related_hosts_graph = new vn.widget.related_hosts_graph()
+		.div("related_hosts_graph")
+		.width(width/2)
+		.height(width/3)
+		.on_click_edge(
+			function(n, d) {
+				$.address.path([argv[0],argv[1],argv[2],d.targetNode.ip].join('/'));
+			});
+});
+
+</script>
+
+
+<div id="inner_wrapper">
+	<div class="navigation">
+		<a><div class="nav_date" id="previous_date"></div></a>
+		<div id="status_title">Hosts related to <span id="current_host"></span> on <span id="current_date"></span></div>
+		<a><div class="nav_date" id="next_date"></div></a>
+	</div>
+	<div class="row">
+		<div class="column">
+			<div id="related_hosts_graph" class="portlet"></div>
+		</div>
+		<div class="column">
+			<div id="related_hosts_insight_panel" class="portlet"></div>
+		</div>
+	</div>
+</div>

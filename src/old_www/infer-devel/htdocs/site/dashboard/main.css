@@ -1,0 +1,126 @@
+#inner_wrapper
+{
+	font-size: 12px;
+	overflow: auto;
+	margin: 0px auto;
+}
+
+.navigation
+{
+	font-size: 14px;
+	font-family: Arial, Helvetica;
+	padding: 10px 20px 30px 20px;
+}
+
+.naviagtion a
+{
+	text-decoration: none;
+}
+
+.nav_date
+{
+	width: 18%;
+	cursor: pointer;
+	float: left;
+	overflow: hidden;
+}
+
+#previous_date
+{
+	background: url(/images/icons/arrow_left.png) no-repeat;
+	padding-left: 2%;
+	text-align: left;
+}
+
+#current_date
+{
+	font-style: italic;
+}
+
+#status_title
+{
+	width: 60%;
+	float: left;
+	font-weight: bold;
+	text-align: center;
+}
+
+#next_date
+{
+	background: url(/images/icons/arrow_right.png) no-repeat;
+	background-position: right;
+	padding-right: 2%;
+	text-align: right;
+}
+
+.row
+{
+	width: 100%;
+	clear: both;
+	float: left;
+}
+
+.column
+{
+	float: left;
+	width: 50%;
+	*width: 49%;
+}
+
+.portlet
+{
+	overflow: auto;
+}
+
+#ingress_content_pie, #egress_content_pie
+{
+	width: 40%;
+	height: 50%;
+	float: left;
+}
+
+#traffic_content_legend
+{
+	width: 20%;
+	height: 50%;
+	float: left;
+}
+
+#bandwidth_utilization_areas
+{
+	width: 100%;
+	height: 50%;
+	clear: both;
+}
+
+#app_inventory_table
+{
+	width: 100%;
+	height: 100%;
+}
+
+#host_inventory_table
+{
+	width: 100%;
+	height: 100%;
+}
+
+#as_exposure_bar_label
+{
+	width: 100%;
+	height: 5%;
+}
+
+#ingress_as_exposure_bar
+{
+	width: 50%;
+	height: 95%;
+	float: left;
+}
+
+#egress_as_exposure_bar
+{
+	width: 50%;
+	height: 95%;
+	float: left;
+}

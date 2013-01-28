@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0054)https://128.238.9.109/incidents/#/top_hosts/2010-06-30 -->
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD><META http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+	<TITLE>INFER - Incidents</TITLE>
+	 
+	<LINK rel="stylesheet" type="text/css" href="style.css">
+	<SCRIPT type="text/javascript" src="jquery.js"></SCRIPT> 
+	<SCRIPT type="text/javascript" src="jquery.address.js"></SCRIPT>
+
+	<SCRIPT src="jquery-latest.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	<SCRIPT src="jquery.tagcloud.0-0-1.js" type="text/javascript" charset="utf-8"></SCRIPT>
+	<SCRIPT type="text/javascript" charset="utf-8">
+	 $(document).ready(function(){
+	   $("#tagcloud a").tagcloud();
+	   
+	   $('#tagForm').submit(function() {
+	     $("#tagcloud a").tagcloud({
+         size: {
+           start: parseInt($('#minFont').val()), 
+           end: parseInt($('#maxFont').val()), 
+           unit: $('#unit').val()
+         }, 
+         color: {
+           start: "#"+$('#startColour').val(), 
+           end: "#"+$('#endColour').val()
+         }
+       })
+       return false;
+     })
+   })
+   
+	</SCRIPT>
+	<STYLE type="text/css">
+		body {
+  		margin-top: 1.0em;
+  		background-color: #ffffff;
+		  font-family: "helvetica"; 
+  		color: #000000;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+	h1 { font-size: 3.8em; color: #000000; margin-bottom: 3px; }
+	h1 .small { font-size: 0.4em; }
+	h1 a { text-decoration: none }
+	h2 { font-size: 1.5em; color: #000000; }
+    h3 { text-align: center; color: #000000; }
+    a { color: #000000; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+		pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    
+    #tagcloud a {
+  	  text-decoration: none;
+  	}
+
+  	#tagcloud a:hover {
+  	  text-decoration: underline;
+  	}
+
+  	#tagcloud {
+  	  margin: 25px auto;
+  	  font: 75% Arial, "MS Trebuchet", sans-serif;
+  	}
+	</STYLE>
+<!--
+	<SCRIPT type="text/javascript">
+	$(document).ready(function()
+	{
+		$('#bottom_row_tabs li:eq(0) a').attr('href', '#/top_ten');
+		
+		var argv, page;
+		
+		var change_page = function()
+		{
+			argv = $.address.pathNames();
+			
+			if (argv[0] == undefined) {
+				$.address.path("/top_ten");
+				argv[0] = "top_ten";
+			}
+
+			if(page != 0)
+			{
+				//window.location.hash = $('#bottom_row_tabs li:eq(0) a').attr('href');
+				$('#body_content').load('/site/incidents/top_ten');
+				$('#bottom_row_active').removeAttr('id');
+				$('#bottom_row_tabs li:eq(0) a').attr('id', 'bottom_row_active');
+				page = 0;
+			}
+		};
+		
+		change_page();
+		$.address.change(change_page);
+	});
+</SCRIPT>
+-->
+
+</HEAD><BODY>
+	<DIV id="wrapper">
+				<DIV id="header">
+			<DIV id="top_row">
+				<DIV id="top_row_wrapper">
+					<DIV id="top_row_left">INFER</DIV>
+					
+										<DIV id="top_row_right">
+						<A href="https://128.238.9.109/logout">Logout</A>
+					</DIV>
+									</DIV>
+			</DIV>
+			
+			<DIV id="mid_row">
+				<DIV id="mid_row_wrapper">
+					<UL id="mid_row_tabs">
+						<LI><A href="https://128.238.9.109/dashboard/#/2010-06-30">Dashboard</A></LI><LI><A id="mid_row_active" href="https://128.238.9.109/incidents/">Incidents</A></LI><LI><A href="https://128.238.9.109/search/">Search</A></LI><LI style="float: right;"><A href="https://128.238.9.109/admin">Admin</A></LI>					</UL>
+				</DIV>
+			</DIV>
+			
+			<DIV id="bottom_row">
+				<DIV id="bottom_row_wrapper">
+					<UL id="bottom_row_tabs">
+						<LI><A href="https://128.238.9.109/incidents/#/top_ten" id="bottom_row_active">Top Ten Hosts</A></LI>					</UL>
+				</DIV>
+			</DIV>
+		</DIV>
+		
+		<DIV id="body">
+			<DIV id="body_content">
+				<div class="label">Recent Web Server Activities</div>
+					<div>
+						<ul class="recent_events">
+							<li>Page /index.html served successfully to 128.238.42.43
+							from Polytechnic University <img class="flags" src="US.png" title="United States" /><div class="event_date">09-05-2010 at 23:15:53</div></li>
+							<li>Crawled by Baidu Spider for /robot.txt from 54.21.1.34
+							<img class="flags" src="CN.png" title="People Republic of China" /> <div class="event_date">09-05-2010 at 23:10:32</div></li>
+							<li>Crawled by Googlebot for /users.html from 64.63.83.99
+						from Google, Inc. <img class="flags" src="US.png" title="United States" /> <div class="event_date">09-05-2010 at 23:05:00</div></li>
+						<li>Error 404 returned to 122.39.90.2 from CNG Group <img class="flags" src="CN.png" title="People Republic of China" /> for requesting /cialis.html and 10 other URLs <div class="event_date">09-05-2010 at
+							22:32:43</div></li>
+							<li>Error 403 access denied to 122.40.32.98 from CNG Group
+					<img class="flags" src="CN.png" title="People Republic of China" /> for user name &quot;admin&quot; and 10 other names <div
+						class="event_date">09-05-2010 at 22:00:21</div></li>
+						</ul>
+					</div>
+
+				<div class="section">
+					<div class="label">Server Environment: Apache/2.2.15 (FreeBSD) mod_ssl/2.2.15 OpenSSL/0.9.8k D |AV/2 PHP/5.3.2</div>
+					<div style="float:left;width:200px;margin:20px 10px 20px 10px;">
+						<table class="comp-table" summary="Domains served by this web server">
+							<thead>
+								<tr>
+									<th scope="col">Domains</th>
+									<th scope="col">Served</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>poly.edu</td>
+									<td class="center">323</td>
+								</tr>
+								<tr>
+									<td>images.poly.edu</td>
+									<td class="center">783</td>
+								</tr>
+								<tr>
+									<td>media.poly.edu</td>
+									<td class="center">324</td>
+								</tr>
+								<tr>
+									<td>gatekeeper.poly.edu</td>
+									<td class="center">10</td>
+								</tr>
+							</tbody>
+						</table>
+						<div style="margin-top: 10px;text-align:center;font-size:14px;font-weight:bold;color:#444;">Domains serviced by this web server in the past 24 hours.</div>
+					</div>
+
+					<div style="float:right;width:500px;margin:20px 10px 20px 50px;">
+						<table class="comp-table" summary="Popular countries served by this web server">
+							<thead>
+								<tr>
+									<th scope="col">Country</th>
+									<th scope="col">Type of Content Served</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><img class="flags" src="US.png" title="United States" /></td>
+									<td>text/html (5MB), images/jpeg (10MB), text/styles (1MB)</td>
+								</tr>
+								<tr>
+									<td><img class="flags" src="NL.png" title="The Netherlands" /></td>
+									<td>text/html (2MB), images/jpeg (9MB), text/styles (1MB)</td>
+								</tr>
+								<tr>
+									<td><img class="flags" src="CN.png" title="People Republic of China" /></td>
+									<td>text/html (1MB), images/jpeg (10MB), text/styles (1MB)</td>
+								</tr>
+								<tr>
+									<td><img class="flags" src="SG.png" title="Singapore" /></td>
+									<td>text/html (1MB), images/jpeg (4MB), text/styles (1MB)</td>
+								</tr>
+								<tr>
+									<td><img class="flags" src="CA.png" title="Canada" /></td>
+									<td>text/html (1MB), images/jpeg (3MB), text/styles (1MB)</td>
+								</tr>
+							</tbody>
+						</table>
+						<div style="margin-top: 10px;text-align:center;font-size:14px;font-weight:bold;color:#444;">Popular countries served by this web server.</div>
+					</div>
+
+					<div class="clearfix"></div>
+
+					<div style="width:670px;margin:50px auto 20px auto;">
+						<table class="comp-table" summary="Web crawlers that crawled this web server">
+							<thead>
+								<tr>
+									<th scope="col">Crawler</th>
+									<th scope="col">AS</th>
+									<th scope="col">Country</th>
+									<th scope="col">URLs</th>
+									<th scope="col">Last Visit</th>
+									<th scope="col">Info URL</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>GoogleBot</td>
+									<td>Google, Inc.</td>
+									<td><img class="flags" src="US.png" title="United States" /></td>
+									<td class="center">10</td>
+									<td>09-05-2010 21:23:45</td>
+									<td>http://googlebot.google.com</td>
+								</tr>
+								<tr>
+									<td>Baidu Spider</td>
+									<td>Baidu, Ltd.</td>
+									<td><img class="flags" src="CN.png" title="People Republic of China" /></td>
+									<td class="center">10</td>
+									<td>09-05-2010 21:20:21</td>
+									<td>http://spider.baidu.cn</td>
+								</tr>
+								<tr>
+									<td>Bingbot</td>
+									<td>Microsoft, Inc.</td>
+									<td><img class="flags" src="US.png" title="United States" /></td>
+									<td class="center">302</td>
+									<td>09-05-2010 23:20:21</td>
+									<td>http://bot.bing.com</td>
+								</tr>
+								<tr>
+									<td>Unknown</td>
+									<td>CNG Group</td>
+									<td><img class="flags" src="CN.png" title="People Republic of China" /></td>
+									<td class="center">3</td>
+									<td>09-05-2010 20:21:09</td>
+									<td>None</td>
+								</tr>
+							</tbody>
+						</table>
+						<div style="margin-top: 10px;text-align:center;font-size:14px;font-weight:bold;color:#444;">Web crawlers that visited this web server in the past 24 hours.</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+
+				<div class="section">
+					<div class="label">Content Statistics</div>
+					<div style="float:left;width:300px;margin: 20px 10px 20px 10px;">
+						<table class="comp-table" summary="Popularity of URLs served by this web server">
+							<thead>
+								<tr>
+									<th scope="col"></th>
+									<th scope="col">Popular URLs</th>
+									<th scope="col">Content-Type</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>&uarr;</td>
+									<td>/index.html</td>
+									<td>text/html</td>
+								</tr>
+								<tr>
+									<td>&mdash;</td>
+									<td>/users/joe.jpg</td>
+									<td>image/jpeg</td>
+								</tr>
+								<tr>
+									<td>&darr;</td>
+									<td>/users/jane.jpg</td>
+									<td>image/jpeg</td>
+								</tr>
+								<tr>
+									<td>&uarr;</td>
+									<td>/scripts/jquery.js</td>
+									<td>text/javascript</td>
+								</tr>
+								<tr>
+									<td>&uarr;</td>
+									<td>/css/styles.css</td>
+									<td>text/styles</td>
+								</tr>
+							</tbody>
+						</table>
+					<div style="margin-top: 10px;text-align:center;font-size:14px;font-weight:bold;color:#444;">Popularity of URLs served by this server.</div>
+					</div>
+					<div style="float:right;width:300px;margin: 20px 10px 20px 10px;">
+						<table class="comp-table" summary="Browsers served by this web server">
+							<thead>
+								<tr>
+									<th scope="col"></th>
+									<th scope="col">Browsers</th>
+									<th scope="col">Percentage</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>&uarr;</td>
+									<td>Google Chrome</td>
+									<td class="center">40%</td>
+								</tr>
+								<tr>
+									<td>&mdash;</td>
+									<td>Internet Explorer</td>
+									<td class="center">30%</td>
+								</tr>
+								<tr>
+									<td>&darr;</td>
+									<td>Mozilla Firefox</td>
+									<td class="center">10%</td>
+								</tr>
+								<tr>
+									<td>&mdash;</td>
+									<td>Unknown</td>
+									<td class="center">10%</td>
+								</tr>
+								<tr>
+									<td>&uarr;</td>
+									<td>Safari</td>
+									<td class="center">7%</td>
+								</tr>
+								<tr>
+									<td>&uarr;</td>
+									<td>Crawlers</td>
+									<td class="center">3%</td>
+								</tr>
+							</tbody>
+						</table>
+					<div style="margin-top: 10px;text-align:center;font-size:14px;font-weight:bold;color:#444;">Various browsers served by this server.</div>
+					</div>
+					<div class="clearfix"></div>
+
+					<!--- Tag cloud -->
+    
+					<div class="label">URL Tag Cloud</div>
+    <DIV id="demo">
+      <DIV id="tagcloud">
+        <A href="#" rel="0.1" style="font-size: 14pt; color: rgb(51, 51, 51); ">Lorem</A>
+        <A href="#" rel="2" style="font-size: 16.8739pt; color: rgb(74, 45, 43); ">ipsum</A>
+        <A href="#" rel="3" style="font-size: 18.3866pt; color: rgb(85, 41, 39); ">dolor</A>
+        <A href="#" rel="4" style="font-size: 19.8992pt; color: rgb(97, 38, 34); ">sit</A>
+        <A href="#" rel="5" style="font-size: 21.4118pt; color: rgb(109, 35, 30); ">amet,</A>
+        <A href="#" rel="6" style="font-size: 22.9244pt; color: rgb(121, 32, 26); ">consectetur</A>
+        <A href="#" rel="7" style="font-size: 24.437pt; color: rgb(133, 28, 21); ">adipisicing</A>
+        <A href="#" rel="8" style="font-size: 25.9496pt; color: rgb(145, 25, 17); ">elit,</A>
+        <A href="#" rel="5" style="font-size: 21.4118pt; color: rgb(109, 35, 30); ">sed</A>
+        <A href="#" rel="7" style="font-size: 24.437pt; color: rgb(133, 28, 21); ">do</A>
+        <A href="#" rel="3" style="font-size: 18.3866pt; color: rgb(85, 41, 39); ">eiusmod</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">tempor</A>
+        <A href="#" rel="12" style="font-size: 32pt; color: rgb(192, 12, 0); ">SELECT</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">ut</A>
+        <A href="#" rel="2" style="font-size: 16.8739pt; color: rgb(74, 45, 43); ">labore</A>
+        <A href="#" rel="5" style="font-size: 21.4118pt; color: rgb(109, 35, 30); ">et</A>
+        <A href="#" rel="7" style="font-size: 24.437pt; color: rgb(133, 28, 21); ">dolore</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">magna</A>
+        <A href="#" rel="4" style="font-size: 19.8992pt; color: rgb(97, 38, 34); ">aliqua.</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">Ut</A>
+        <A href="#" rel="2" style="font-size: 16.8739pt; color: rgb(74, 45, 43); ">enim</A>
+        <A href="#" rel="10" style="font-size: 28.9748pt; color: rgb(168, 19, 9); ">ad</A>
+        <A href="#" rel="4" style="font-size: 19.8992pt; color: rgb(97, 38, 34); ">minim</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">veniam,</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">quis</A>
+        <A href="#" rel="8" style="font-size: 25.9496pt; color: rgb(145, 25, 17); ">nostrud</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">exercitation</A>
+        <A href="#" rel="3" style="font-size: 18.3866pt; color: rgb(85, 41, 39); ">ullamco</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">laboris</A>
+        <A href="#" rel="11" style="font-size: 30.4874pt; color: rgb(180, 15, 4); ">nisi</A>
+        <A href="#" rel="10" style="font-size: 28.9748pt; color: rgb(168, 19, 9); ">ut</A>
+        <A href="#" rel="3" style="font-size: 18.3866pt; color: rgb(85, 41, 39); ">aliquip</A>
+        <A href="#" rel="5" style="font-size: 21.4118pt; color: rgb(109, 35, 30); ">ex</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">ea</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">commodo</A>
+        <A href="#" rel="6" style="font-size: 22.9244pt; color: rgb(121, 32, 26); ">Cialis.</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">Duis</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">aute</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">irure</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">dolor</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">in</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">reprehenderit</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">in</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">voluptate</A>
+        <A href="#" rel="1" style="font-size: 15.3613pt; color: rgb(62, 48, 47); ">velit</A>
+      </DIV>
+    </DIV>
+
+				</div>
+			</div>
+		</div>		
+
+		<DIV id="footer">
+			<DIV id="footer_wrapper">
+				<DIV id="footer_links">&copy;2010 Vivic Networks, LLC. All rights reserved.</DIV> 
+			</DIV>
+		</DIV>
+	</DIV>
+
+</BODY>
+</HTML>

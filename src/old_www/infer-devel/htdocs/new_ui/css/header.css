@@ -1,0 +1,171 @@
+html, body
+{
+	margin: 0px;
+}
+
+#header
+{
+
+}
+
+#top_row
+{
+	background-color: #202020;
+}
+
+#top_row_wrapper
+{
+	margin-left: auto;
+	margin-right: auto;
+	overflow: auto;
+	width: 1024px;
+	font-family: Helvetica, sans-serif;
+}
+
+#top_row_left
+{
+	float: left;
+	font-size: 48px;
+	color: #999999;
+	width: 400px;
+}
+
+#top_row_right
+{
+	float: right;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 20px 0px 0px 0px;
+	width: 200px;
+ }
+
+#top_row a
+{
+	text-decoration: none;
+	color: #fafafa;
+}
+
+#mid_row
+{
+	background-color: #004400;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#mid_row_wrapper
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 1024px;
+}
+
+#mid_row_tabs
+{
+	list-style-type: none;
+	padding: 13px 0px 5px 10px;
+	margin: 0px;
+}
+
+#mid_row_tabs li
+{
+	display: inline;
+	border-radius: 3px 3px 0px 0px;
+	-moz-border-radius: 3px 3px 0px 0px;
+	padding: 5px 10px;
+}
+
+#mid_row_active
+{
+	background-color: #009900 !important;
+}
+
+#mid_row_tabs li:hover
+{
+	text-decoration: underline;
+	color: #fff;
+	background-color: #006600;
+}
+
+#mid_row_active:hover
+{
+	text-decoration: none !important;
+	background-color: #009900 !important;
+}
+
+#mid_row_tabs li a
+{
+	text-decoration: none;
+	color: #fff;
+}
+
+#bottom_row
+{
+	background-color: #009900;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#bottom_row_wrapper
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 1024px;
+}
+
+#bottom_row_tabs
+{
+	list-style-type: none;
+	padding: 10px 0px 2px 10px;
+	margin: 0px;
+}
+
+#bottom_row_tabs li
+{
+	display: inline;
+	border-radius: 3px 3px 0px 0px;
+	-moz-border-radius: 3px 3px 0px 0px;
+	padding: 2px 10px;
+}
+
+#separator
+{
+	padding: 0px !important;
+}
+
+#bottom_row_active
+{
+	background-color: #fff !important;
+}
+
+#bottom_row_tabs li:hover
+{
+	text-decoration: underline;
+	color: #fff;
+	background-color: #00cc00;
+}
+
+#bottom_row_active:hover
+{
+	text-decoration: none !important;
+}
+
+#bottom_row_tabs li a
+{
+	text-decoration: none;
+	color: #fff;
+}
+
+#bottom_row_active a
+{
+	color: #000 !important;
+}
+
+#separator
+{
+	color: #ffffff !important;
+	font-size: 14px !important;
+}
+
+#separator:hover
+{
+	text-decoration: none !important;
+	background-color: #009900 !important;
+}

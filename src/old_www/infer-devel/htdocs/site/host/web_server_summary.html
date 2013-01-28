@@ -1,0 +1,237 @@
+<script type="text/javascript">
+
+tab_uri_notify = function(e) {
+	if (argv[1] == undefined) {
+		$.address.path('/error/nohost');
+		return;
+	}
+	
+	// TODO verify host...
+
+	$.getJSON('/data/date_checker/' + argv[2], function(content) {
+		var date =
+			(Date.parse(content.date_checker.date.replace(/-/g, '/'))) / 1000;
+		var first_date =
+			(Date.parse(content.date_checker.first_date.replace(/-/g, '/'))) 
+				/ 1000;
+		var last_date =
+			(Date.parse(content.date_checker.last_date.replace(/-/g, '/')))
+				/ 1000;
+		var date_object = new Date(date * 1000);
+		var current_date = date_format(date_object);
+		
+		argv[2] = date_format(
+			new Date(Date.parse(content.date_checker.date.replace(/-/g, '/'))));
+
+		if ($.address.pathNames()[2] != argv[2]) {
+			$.address.path(argv.join("/"));
+			return;
+		}
+
+		set_page_date(argv[2]);
+		document.title = page_title + ' - Web Server Summary - ' + argv[1] + ' - ' + argv[2];
+
+		var ip = argv[1];
+
+		$('#current_date').text(current_date);
+		$('#current_host').text(argv[1]);
+		$('#previous_date').text(function()
+		{
+			var temp_date = date_format(new Date(date_object.getTime() - 86400000));
+			$(this).parent().attr('href', '#/' + argv[0] + '/' + argv[1] + '/' + temp_date);
+			return temp_date;
+		});
+		
+		$('#next_date').text(function()
+		{
+			var temp_date = date_format(new Date(date_object.getTime() + 86400000));
+			$(this).parent().attr('href', '#/' + argv[0] + '/' + argv[1] + '/' + temp_date);
+			return temp_date;
+		});
+	
+		$('#previous_date').css('visibility', date - 86400 < first_date ? 'hidden' : 'visible');
+		$('#next_date').css('visibility', date + 86400 > last_date ? 'hidden' : 'visible');
+
+		$.getJSON('/data/host_web_server/servers/' + ip + '/' + current_date + '?page=1&rp=100', function(content) {
+			var table = '<ul class="recent_events">';
+			$.each(content.rows, function(i, val) {
+				table += '<li>' +
+							val.cell[0] +
+							'<div class="event_date">' +
+								val.cell[1] + ' responses between ' + val.cell[2] + ' and ' + val.cell[3] +
+							'</div>' +
+						 '</li>';
+			});
+			table += '</ul>';
+			$('#server_environment').html(table);
+		});
+
+		$.getJSON('/data/host_web_server/top_hosts/' + ip + '/' + current_date + '?page=1&rp=10', function(content) {
+			var table = '<table class="comp-table"><caption>Top Domains</caption>';
+			table += '<thead id="top_domains_head">' +
+						'<tr>' +
+							'<th>Domain</th>' +
+							'<th>Requests</th>' +
+						'</tr>' +
+					 '</thead>';
+			table += '<tbody id="top_domains_body">';
+			$.each(content.rows, function(i, val) {
+				table += '<tr>' +
+							'<td>' + val.cell[0] + '</td>' +
+							'<td>' + val.cell[1] + '</td>' +
+						 '</tr>';
+			});
+			table += '</tbody></table>';
+			$('#top_domains').html(table);
+		});
+
+		$.getJSON('/data/host_web_server/top_urls/' + ip + '/' + current_date + '?page=1&rp=10', function(content) {
+			var table = '<table class="comp-table"><caption>Top URLs</caption>';
+			table += '<thead id="top_urlss_head">' +
+						'<tr>' +
+							'<th>URL</th>' +
+							'<th>Requests</th>' +
+						'</tr>' +
+					 '</thead>';
+			table += '<tbody id="top_urls_body">';
+			$.each(content.rows, function(i, val) {
+				table += '<tr>' +
+							'<td><a href="http://' + val.cell[0] + '">http://'
+								+ val.cell[0] + '</a></td>' +
+							'<td>' + val.cell[1] + '</td>' +
+						 '</tr>';
+			});
+			table += '</tbody></table>';
+			$('#top_urls').html(table);
+		});
+
+		$.getJSON('/data/host_web_server/crawlers/' + ip + '/' + current_date + '?page=1&rp=10', function(content) {
+			var table = '<table class="comp-table"><caption>Crawlers</caption>';
+			table += '<thead id="crawlers_head">' +
+						'<tr>' +
+							'<th>User Agent</th>' +
+							'<th>Requests</th>' +
+						'</tr>' +
+					 '</thead>';
+			table += '<tbody id="crawlers_body">';
+			$.each(content.rows, function(i, val) {
+				table += '<tr>' +
+							'<td>' + val.cell[0] + '</td>' +
+							'<td>' + val.cell[1] + '</td>' +
+						 '</tr>';
+			});
+			table += '</tbody></table>';
+			$('#crawlers').html(table);
+		});
+
+		$.getJSON('/data/host_web_server/crawler_hosts/' + ip + '/' + current_date + '?page=1&rp=10', function(content) {
+			var table = '<table class="comp-table"><caption>Crawler Hosts</caption>';
+			table += '<thead id="crawler_hosts_head">' +
+						'<tr>' +
+							'<th>Crawler IP</th>' +
+							'<th>User Agent</th>' +
+							'<th>Requests</th>' +
+						'</tr>' +
+					 '</thead>';
+			table += '<tbody id="crawler_hosts_body">';
+			$.each(content.rows, function(i, val) {
+				table += '<tr>' +
+							'<td>' + val.cell[0] + '</td>' +
+							'<td>' + val.cell[1] + '</td>' +
+							'<td>' + val.cell[2] + '</td>' +
+						 '</tr>';
+			});
+			table += '</tbody></table>';
+			$('#crawler_hosts').html(table);
+		});
+
+		$.getJSON('/data/host_web_server/browsers/' + ip + '/' + current_date + '?page=1&rp=100', function(content) {
+			var table = '<table class="comp-table"><caption>Browsers</caption>';
+			table += '<thead id="browsers_head">' +
+						'<tr>' +
+							'<th>Browser</th>' +
+							'<th>Requests</th>' +
+						'</tr>' +
+					 '</thead>';
+			table += '<tbody id="browsers_body">';
+			$.each(content.rows, function(i, val) {
+				table += '<tr>' +
+							'<td>' + val.cell[0] + '</td>' +
+							'<td>' + val.cell[1] + '</td>' +
+						 '</tr>';
+			});
+			table += '</tbody></table>';
+			$('#browsers').html(table);
+		});
+
+		$.getJSON('/data/host_web_server/browser_versions/' + ip + '/' + current_date + '?page=1&rp=10', function(content) {
+			var table = '<table class="comp-table"><caption>Top Browser Versions</caption>';
+			table += '<thead id="browser_versions_head">' +
+						'<tr>' +
+							'<th>Browser</th>' +
+							'<th>Browser Version</th>' +
+							'<th>Requests</th>' +
+						'</tr>' +
+					 '</thead>';
+			table += '<tbody id="browser_versions_body">';
+			$.each(content.rows, function(i, val) {
+				table += '<tr>' +
+							'<td>' + val.cell[0] + '</td>' +
+							'<td>' + val.cell[1] + '</td>' +
+							'<td>' + val.cell[2] + '</td>' +
+						 '</tr>';
+			});
+			table += '</tbody></table>';
+			$('#browser_versions').html(table);
+		});
+
+/*
+		$.getJSON('/data/host_web_server/top_urls/' + ip + '/' + current_date + '?page=1&rp=100', function(content) {
+			var table = '<ul class="recent_events">';
+			$.each(content.rows, function(i, val) {
+				table += '<li>' +
+							'<a href="http://' + val.cell[0] + '">http://' +
+								val.cell[0] + '</a>' +
+							'<div class="event_date">' +
+								val.cell[1] + ' requests between ' + val.cell[2] + ' and ' + val.cell[3] +
+							'</div>' +
+						 '</li>';
+			});
+			table += '</ul>';
+			$('#top_urls').html(table);
+		});
+*/
+	});
+}
+
+function date_format(date)
+{
+	var year = date.getFullYear();
+	var month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+	var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+	return year + '-' + month + '-' + day;
+}
+
+</script>
+
+<div id="inner_wrapper">
+	<div class="navigation">
+		<a><div class="nav_date" id="previous_date"></div></a>
+		<div id="status_title">Web Server Summary for <span id="current_host"></span> on <span id="current_date"></span></div>
+		<a><div class="nav_date" id="next_date"></div></a>
+	</div>
+	<div class="label">Web Server Environments</div>
+	<div id="server_environment"></div>
+	<div id="domains_urls">
+		<div id="top_domains" style="display: inline-block; vertical-align: top; width: 340px; margin: 10px;"></div>
+		<div id="top_urls" style="display: inline-block; vertical-align: top; width: 590px; margin: 10px;"></div>
+	</div>
+	<div id="crawlers_crawler_hosts">
+		<div id="crawlers" style="display: inline-block; vertical-align: top; width: 340px; margin: 10px;"></div>
+		<div id="crawler_hosts" style="display: inline-block; vertical-align: top; width: 590px; margin: 10px;"></div>
+	</div>
+	<div id="browsers_browser_versions">
+		<div id="browsers" style="display: inline-block; vertical-align: top; width: 340px; margin: 10px;"></div>
+		<div id="browser_versions" style="display: inline-block; vertical-align: top; width: 590px; margin: 10px;"></div>
+	</div>
+</div>

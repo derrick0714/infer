@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>Bandwidth Content Test</title>
+	<script type="text/javascript" src="/js/jQuery/jquery.js"></script> 
+	<!--[if IE]>
+    <script type="text/javascript" src="/js/protovis/3rdparty/svg.js" data-path="/js/protovis/3rdparty/"></script>
+	<![endif]-->
+    <script type="text/javascript" src="/js/protovis/protovis-d3.3.js"></script>	
+    <script type="text/javascript" src="/js/vn/vn.js"></script>
+    <script type="text/javascript" src="/js/vn/vn-internals.js"></script>
+    <script type="text/javascript" src="/js/vn/widget.js"></script>
+    <script type="text/javascript" src="/js/vn/widget/bandwidth_content_stack.js"></script>
+
+    <script type="text/javascript+protovis">
+
+var bandwidth_content_stack = new vn.widget.bandwidth_content_stack()
+	.div("bandwidth_content_stack")
+	.width(500)
+	.height(100)
+	.data_uri("/data/bandwidth_content/ingress/128.238.34.100/2010-06-20");
+
+bandwidth_content_stack.render();
+
+var i = 20;
+
+var timer = window.setInterval(function() {
+	bandwidth_content_stack.data_uri("/data/bandwidth_content/ingress/128.238.34.100/2010-06-" + i)
+		.render();
+	i = i + 1;
+	if (i > 30) {
+		i = 20;
+	}
+}, 1000);
+    </script>
+  </head>
+  <body>
+    <div id="bandwidth_content_stack"></div>
+  </body>
+</html>

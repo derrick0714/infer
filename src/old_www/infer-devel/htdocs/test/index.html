@@ -1,0 +1,119 @@
+<html>
+  <head>
+    <title>Dashboard Test</title>
+	<link rel="stylesheet" type="text/css" href="/css/smoothness/jquery-ui.css" /> 
+	<link rel="stylesheet" type="text/css" href="/css/main.css" /> 
+
+	<script type="text/javascript" src="/js/jQuery/jquery.js"></script> 
+	<script type="text/javascript" src="/js/jQuery/jquery.ui.core.js"></script> 
+	<script type="text/javascript" src="/js/jQuery/jquery.ui.widget.js"></script> 
+	<script type="text/javascript" src="/js/jQuery/jquery.ui.tabs.js"></script>
+	<script type="text/javascript" src="/js/protovis/protovis-d3.2.js_orig"></script>	
+
+	<script type="text/javascript" src="/js/widgets.js"></script>
+	<script type="text/javascript" src="/js/main.js"></script>
+
+    <script type="text/javascript" src="/js/vn/vn.js"></script>
+    <script type="text/javascript" src="/js/vn/vn-internals.js"></script>
+    <script type="text/javascript" src="/js/vn/widget.js"></script>
+    <script type="text/javascript" src="/js/vn/widget/traffic_content_pie.js"></script>
+    <script type="text/javascript" src="/js/vn/widget/traffic_content_legend.js"></script>
+    <script type="text/javascript" src="/js/vn/widget/bandwidth_utilization_area.js"></script>
+    <script type="text/javascript" src="/js/vn/widget/host_inventory_table.js"></script>
+    <script type="text/javascript" src="/js/vn/widget/app_inventory_table.js"></script>
+
+    <script type="text/javascript+protovis">
+
+var traffic_content_ingress_pie = new vn.widget.traffic_content_pie()
+	.div("traffic_content_ingress_pie")
+	.width(180)
+	.height(200)
+	.data_uri("/data/traffic_content/ingress/2010-06-28");
+
+var traffic_content_egress_pie = new vn.widget.traffic_content_pie()
+	.div("traffic_content_egress_pie")
+	.width(180)
+	.height(200)
+	.data_uri("/data/traffic_content/egress/2010-06-28");
+
+var traffic_content_legend = new vn.widget.traffic_content_legend()
+	.div("traffic_content_legend")
+	.width(100)
+	.height(200)
+	.data_uri("/data/traffic_content/legend");
+
+var bandwidth_utilization_areas = new vn.widget.bandwidth_utilization_area()
+	.div("bandwidth_utilization_area")
+	.width(500)
+	.height(100)
+	.data_uri(["/data/bandwidth_utilization/ingress/2010-06-28", "/data/bandwidth_utilization/egress/2010-06-28"]);
+
+var host_inventory_table = new vn.widget.host_inventory_table()
+	.div("host_inventory_table")
+	.width(500)
+	.height(300)
+	.data_uri(["/data/role/web_server/2010-06-28",
+			   "/data/role/web_client/2010-06-28",
+			   "/data/role/mail_server/2010-06-28",
+			   "/data/role/mail_client/2010-06-28",
+			   "/data/role/secure_web_server/2010-06-28",
+			   "/data/role/secure_web_client/2010-06-28",
+			   "/data/role/secure_mail_server/2010-06-28",
+			   "/data/role/secure_mail_client/2010-06-28"]);
+
+var app_inventory_table = new vn.widget.app_inventory_table()
+	.div("app_inventory_table")
+	.width(500)
+	.height(300)
+	.data_uri(["/data/app_inventory/browser/2010-06-28"]);
+
+traffic_content_ingress_pie.render();
+traffic_content_egress_pie.render();
+traffic_content_legend.render();
+bandwidth_utilization_areas.render();
+host_inventory_table.render();
+app_inventory_table.render();
+
+    </script>
+  </head>
+  <body>
+<div id="wrapper">
+	<div id="tabs"> 
+		<ul> 
+			<li><a class="tabs-text" href="#tabs-1">Network Status</a></li> 
+			<li><a class="tabs-text" href="html/tabs-2.html">Incidents</a></li> 
+			<li><a class="tabs-text" href="html/tabs-3.html">Search</a></li> 
+		</ul> 
+		<div id="tabs-1"> 
+			<div class="column">
+				<div class="portlet">
+					<div class="portlet-content" id="network_traffic_window">
+						<div id="traffic_content_ingress_pie"></div>
+						<div id="traffic_content_egress_pie"></div>
+						<div id="traffic_content_legend"></div>
+						<div id="bandwidth_utilization_area"></div>
+					</div>
+				</div>
+				<div class="portlet">
+					<div class="portlet-content" id="app_inventory_window">
+						<div id="app_inventory_table"></div> 
+					</div>
+				</div>
+			</div>
+			<div class="column">
+				<div class="portlet">
+					<div class="portlet-content" id="host_inventory_window">
+						<div id="host_inventory_table"></div> 
+					</div>
+				</div>
+				<div class="portlet">
+					<div class="portlet-content" id="network_exposure_window">
+						<div id="ne_bubble"></div>
+					</div>
+				</div>
+			</div>
+		</div> 
+	</div> 
+</div>
+  </body>
+</html>

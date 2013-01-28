@@ -1,0 +1,184 @@
+<script type="text/javascript">
+
+tab_uri_notify = function(e) {
+	if (argv[1] == undefined) {
+		$.address.path('/error/nohost');
+		return;
+	}
+	
+	// TODO verify host...
+
+	$.getJSON('/data/date_checker/' + argv[2], function(content) {
+		var date =
+			(Date.parse(content.date_checker.date.replace(/-/g, '/'))) / 1000;
+		var first_date =
+			(Date.parse(content.date_checker.first_date.replace(/-/g, '/'))) 
+				/ 1000;
+		var last_date =
+			(Date.parse(content.date_checker.last_date.replace(/-/g, '/')))
+				/ 1000;
+		var date_object = new Date(date * 1000);
+		var current_date = date_format(date_object);
+		
+		argv[2] = date_format(
+			new Date(Date.parse(content.date_checker.date.replace(/-/g, '/'))));
+
+		if ($.address.pathNames()[2] != argv[2]) {
+			$.address.path(argv.join("/"));
+			return;
+		}
+
+		set_page_date(argv[2]);
+		document.title = page_title + ' - Identity - ' + argv[1] + ' - ' + argv[2];
+		$('#current_date').text(current_date);
+		$('#current_host').text(argv[1]);
+		$('#previous_date').text(function()
+		{
+			var temp_date = date_format(new Date(date_object.getTime() - 86400000));
+			$(this).parent().attr('href', '#/' + argv[0] + '/' + argv[1] + '/' + temp_date);
+			return temp_date;
+		});
+		
+		$('#next_date').text(function()
+		{
+			var temp_date = date_format(new Date(date_object.getTime() + 86400000));
+			$(this).parent().attr('href', '#/' + argv[0] + '/' + argv[1] + '/' + temp_date);
+			return temp_date;
+		});
+	
+		$('#previous_date').css('visibility', date - 86400 < first_date ? 'hidden' : 'visible');
+		$('#next_date').css('visibility', date + 86400 > last_date ? 'hidden' : 'visible');
+
+
+		var ip = argv[1];
+
+		$.getJSON("/data/host/network_identity/" + ip + "/" + current_date,
+				  function(content)
+		{
+			var network_id_table = '<table class="comp-table"><caption>Network Identity</caption>';
+			network_id_table += '<tbody id="host_network_identity_body">';
+			$.each(content.host_network_identity.names, function(i, val) {
+				network_id_table += '<tr><td class="property">' + val + '</td>';
+				network_id_table += '<td class="value">' + content.host_network_identity.values[i] + '</td></tr>';
+			});
+			network_id_table += '</tbody></table>';
+			$('#host_network_identity').html(network_id_table);
+		});
+
+		$.getJSON("/data/host/physical_identity/" + ip + "/" + current_date,
+				  function(content)
+		{
+			var network_id_table = '<table class="comp-table"><caption>Physical Identity</caption>';
+			network_id_table += '<tbody id="host_physical_identity_body">';
+			$.each(content.host_physical_identity.names, function(i, val) {
+				network_id_table += '<tr><td class="property">' + val + '</td>';
+				network_id_table += '<td class="value">' +
+					(content.host_physical_identity.values[i] == undefined
+						?"Unavailable":content.host_physical_identity.values[i]) +
+					'</td></tr>';
+			});
+			network_id_table += '</tbody></table>';
+			$('#host_physical_identity').html(network_id_table);
+		});
+
+		$.getJSON("/data/host/related_hosts/" + ip + "/" + current_date,
+				  function(content)
+		{
+			var network_id_table =
+				'<table class="comp-table">' +
+					'<caption>' + content.table.caption + '</caption>'
+					'<thead id="related_hosts_head">' +
+						'<tr>';
+			for (var i in content.table.header) {
+				network_id_table +=
+							'<th>' + content.table.header[i][1] + '</th>';
+			}
+			network_id_table +=
+					'</thead>' +
+					'<tbody id="related_hosts_body">';
+			for (var i in content.table.rows) {
+				network_id_table +=
+						'<tr>';
+				for (var j in content.table.rows[i]) {
+					if (j == 0) {
+						network_id_table +=
+							'<td><a href="/host/#/identity/' + content.table.rows[i][j] + '/' + current_date + '">' + content.table.rows[i][j] + '</a></td>';
+					}
+					else {
+						network_id_table +=
+								'<td>' + content.table.rows[i][j] + '</td>';
+					}
+				}
+				network_id_table +=
+						'</tr>';
+			}
+			network_id_table +=
+					'</tbody>' +
+				'</table>';
+
+			$('#related_hosts').html(network_id_table);
+		});
+
+		$.getJSON("/data/host/top_http_hosts/" + ip + "/" + current_date,
+				  function(content)
+		{
+			var network_id_table =
+				'<table class="comp-table">' +
+					'<caption>' + content.table.caption + '</caption>'
+					'<thead id="top_http_hosts_head">' +
+						'<tr>';
+			for (var i in content.table.header) {
+				network_id_table +=
+							'<th>' + content.table.header[i][1] + '</th>';
+			}
+			network_id_table +=
+					'</thead>' +
+					'<tbody id="top_http_hosts_body">';
+			for (var i in content.table.rows) {
+				network_id_table +=
+						'<tr>';
+				for (var j in content.table.rows[i]) {
+					if (j == 0) {
+						network_id_table +=
+							'<td><a href="/host/#/indicators/' + content.metadata.ip + '/' + current_date + '/web_client/by_host/' + content.table.rows[i][j] + '/">' + content.table.rows[i][j] + '</a></td>';
+					}
+					else {
+						network_id_table +=
+								'<td>' + content.table.rows[i][j] + '</td>';
+					}
+				}
+				network_id_table +=
+						'</tr>';
+			}
+			network_id_table +=
+					'</tbody>' +
+				'</table>';
+
+			$('#top_http_hosts').html(network_id_table);
+		});
+	});
+}
+
+function date_format(date)
+{
+	var year = date.getFullYear();
+	var month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1);
+	var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+	return year + '-' + month + '-' + day;
+}
+
+</script>
+
+<div id="inner_wrapper">
+	<div class="navigation">
+		<a><div class="nav_date" id="previous_date"></div></a>
+		<div id="status_title">Identity of <span id="current_host"></span> on <span id="current_date"></span></div>
+		<a><div class="nav_date" id="next_date"></div></a>
+	</div>
+<!--	<div id="host_identities"> -->
+		<div id="host_network_identity" style="display: inline-block; vertical-align: top; width:300px; margin:20px;"></div>
+		<div id="host_physical_identity" style="display: inline-block; vertical-align: top; width:300px; margin:20px;"></div>
+<!--	</div> -->
+	<div id="related_hosts" style="display: inline-block; vertical-align: top; width:300px; margin:20px;"></div>
+	<div id="top_http_hosts" style="display: inline-block; vertical-align: top; width:300px; margin:20px;"></div>
+</div>
