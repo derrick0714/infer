@@ -9,12 +9,12 @@
 *.class
 
 # generated files
-bin/
+/bin/
 gen/
-build/
-contrib/
-deprecated/
-dist/
+/build/
+/contrib/
+/deprecated/
+/dist/
 
 # svn
 *.svn
