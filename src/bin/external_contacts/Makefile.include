@@ -1,0 +1,10 @@
+bin/external_contacts/external_contacts: BOOST_LIBS :=
+bin/external_contacts/external_contacts: BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+											 $(BOOST_PROGRAM_OPTIONS_LIB)
+#											 $(BOOST_FILESYSTEM_LIB)
+bin/external_contacts/external_contacts: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/external_contacts/external_contacts: DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+bin/external_contacts/external_contacts: STATIC_LIBS :=
+bin/external_contacts/external_contacts: \
+	bin/external_contacts/external_contacts.o \
+	include/stringHelpers.o

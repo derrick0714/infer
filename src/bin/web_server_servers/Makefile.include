@@ -1,0 +1,17 @@
+bin/web_server_servers/web_server_servers: \
+	BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+	$(BOOST_FILESYSTEM_LIB) \
+	$(BOOST_PROGRAM_OPTIONS_LIB) \
+	$(BOOST_REGEX_LIB)
+bin/web_server_servers/web_server_servers: \
+	BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/web_server_servers/web_server_servers: \
+	DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+bin/web_server_servers/web_server_servers: \
+	STATIC_LIBS :=
+bin/web_server_servers/web_server_servers: \
+	bin/web_server_servers/web_server_servers.o \
+	include/HTTPResponse.o \
+	include/timeStamp.o \
+	include/stringHelpers.o \
+	include/address.o

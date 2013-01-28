@@ -1,0 +1,3 @@
+bin/related_hosts_graph/related_hosts_graph: \
+	bin/related_hosts_graph/related_hosts_graph.o \
+	include/stringHelpers.o

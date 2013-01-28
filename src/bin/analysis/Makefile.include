@@ -1,0 +1,16 @@
+bin/analysis/analysis: BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+									 $(BOOST_FILESYSTEM_LIB)
+#									 $(BOOST_PROGRAM_OPTIONS_LIB)
+bin/analysis/analysis: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/analysis/analysis: DYNAMIC_LIBS := -lkvm -lpq $(BOOST_LIBS)
+bin/analysis/analysis: STATIC_LIBS :=
+bin/analysis/analysis: bin/analysis/analysis.o \
+					   include/postgreSQL.o \
+					   include/nameResolution.o \
+					   include/timeStamp.o \
+					   include/sqlTime.o \
+					   include/stringHelpers.o \
+					   include/seenIPsInformation.o \
+					   include/reputationInformation.o \
+					   include/ipInformation.o \
+					   include/address.o

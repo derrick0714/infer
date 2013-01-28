@@ -1,0 +1,3 @@
+bin/related_hosts/related_hosts: \
+	bin/related_hosts/related_hosts.o \
+	include/stringHelpers.o

@@ -1,0 +1,3 @@
+bin/pruned_network_graph/pruned_network_graph: \
+	bin/pruned_network_graph/pruned_network_graph.o \
+	include/stringHelpers.o

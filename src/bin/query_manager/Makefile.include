@@ -1,0 +1,10 @@
+bin/query_manager/query_manager: BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+											   $(BOOST_FILESYSTEM_LIB)
+#									 $(BOOST_PROGRAM_OPTIONS_LIB)
+bin/query_manager/query_manager: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/query_manager/query_manager: DYNAMIC_LIBS := $(BOOST_LIBS)
+bin/query_manager/query_manager: STATIC_LIBS :=
+bin/query_manager/query_manager: bin/query_manager/query_manager.o \
+							   include/nameResolutionManager.o \
+							   include/dnsNameResolutionSource.o \
+							   include/timeStamp.o \

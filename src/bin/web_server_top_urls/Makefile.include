@@ -1,0 +1,17 @@
+bin/web_server_top_urls/web_server_top_urls: \
+	BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+	$(BOOST_FILESYSTEM_LIB) \
+	$(BOOST_PROGRAM_OPTIONS_LIB) \
+	$(BOOST_REGEX_LIB)
+bin/web_server_top_urls/web_server_top_urls: \
+	BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/web_server_top_urls/web_server_top_urls: \
+	DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+bin/web_server_top_urls/web_server_top_urls: \
+	STATIC_LIBS :=
+bin/web_server_top_urls/web_server_top_urls: \
+	bin/web_server_top_urls/web_server_top_urls.o \
+	include/HTTPRequest.o \
+	include/timeStamp.o \
+	include/stringHelpers.o \
+	include/address.o

@@ -1,0 +1,10 @@
+bin/comm_channel_fanin/comm_channel_fanin: BOOST_LIBS :=
+bin/comm_channel_fanin/comm_channel_fanin: BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+											 $(BOOST_PROGRAM_OPTIONS_LIB)
+#											 $(BOOST_FILESYSTEM_LIB)
+bin/comm_channel_fanin/comm_channel_fanin: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/comm_channel_fanin/comm_channel_fanin: DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+bin/comm_channel_fanin/comm_channel_fanin: STATIC_LIBS :=
+bin/comm_channel_fanin/comm_channel_fanin: \
+	bin/comm_channel_fanin/comm_channel_fanin.o \
+	include/stringHelpers.o

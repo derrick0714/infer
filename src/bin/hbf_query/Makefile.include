@@ -1,0 +1,15 @@
+bin/hbf_query/hbf_query: BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+									   $(BOOST_FILESYSTEM_LIB) \
+									   $(BOOST_PROGRAM_OPTIONS_LIB) \
+									   $(BOOST_DATE_TIME_LIB)
+bin/hbf_query/hbf_query: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/hbf_query/hbf_query: DYNAMIC_LIBS := -lssl -lz $(BOOST_LIBS)
+bin/hbf_query/hbf_query: STATIC_LIBS :=
+bin/hbf_query/hbf_query: \
+	bin/hbf_query/hbf_query.o \
+	include/timeStamp.o \
+	include/SynappArguments.o \
+	include/PayloadSearchManagerArguments.o \
+	include/OstreamHelpers.o \
+	include/Base64.o \
+	include/ZlibCompressedHBF.o

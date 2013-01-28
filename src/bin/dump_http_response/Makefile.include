@@ -1,0 +1,7 @@
+bin/dump_http_response/dump_http_response: bin/dump_http_response/dump_http_response.o \
+					   include/HTTPResponse.o \
+					   include/options.o \
+					   include/address.o \
+					   include/timeStamp.o \
+					   include/sqlTime.o \
+					   include/stringHelpers.o

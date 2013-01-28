@@ -1,0 +1,3 @@
+bin/mutual_contacts/mutual_contacts: \
+	bin/mutual_contacts/mutual_contacts.o \
+	include/stringHelpers.o

@@ -1,0 +1,18 @@
+bin/web_server_crawlers/web_server_crawlers: \
+	BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+	$(BOOST_FILESYSTEM_LIB) \
+	$(BOOST_PROGRAM_OPTIONS_LIB) \
+	$(BOOST_REGEX_LIB)
+bin/web_server_crawlers/web_server_crawlers: \
+	BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/web_server_crawlers/web_server_crawlers: \
+	DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+bin/web_server_crawlers/web_server_crawlers: \
+	STATIC_LIBS :=
+bin/web_server_crawlers/web_server_crawlers: \
+	bin/web_server_crawlers/web_server_crawlers.o \
+	include/HTTPRequest.o \
+	include/timeStamp.o \
+	include/stringHelpers.o \
+	include/address.o \
+	include/web_browser_id.o

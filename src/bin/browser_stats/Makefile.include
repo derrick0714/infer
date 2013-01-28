@@ -1,0 +1,17 @@
+bin/browser_stats/browser_stats: \
+	BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+	$(BOOST_FILESYSTEM_LIB) \
+	$(BOOST_PROGRAM_OPTIONS_LIB) \
+	$(BOOST_REGEX_LIB)
+bin/browser_stats/browser_stats: \
+	BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/browser_stats/browser_stats: \
+	DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+bin/browser_stats/browser_stats: \
+	STATIC_LIBS :=
+bin/browser_stats/browser_stats: \
+	bin/browser_stats/browser_stats.o \
+	include/HTTPRequest.o \
+	include/timeStamp.o \
+	include/stringHelpers.o \
+	include/address.o

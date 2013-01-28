@@ -1,0 +1,20 @@
+#ifndef INFER_BIN_WEB_SERVER_TOP_URLS_TOP_HOST_DATUM_HPP_
+#define INFER_BIN_WEB_SERVER_TOP_URLS_TOP_HOST_DATUM_HPP_
+
+#include <string>
+
+#include "timeStamp.h"
+
+struct top_host_datum {
+	uint32_t server_ip;
+	std::string host;
+	int64_t request_count;
+	TimeStamp first_request_time;
+	TimeStamp last_request_time;
+
+	bool operator < (const top_host_datum &rhs) const {
+		return request_count < rhs.request_count;
+	}
+};
+
+#endif

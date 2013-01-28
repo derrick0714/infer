@@ -1,0 +1,9 @@
+bin/anonymize_neoflow/anonymize_neoflow: BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+											 $(BOOST_FILESYSTEM_LIB) \
+											 $(BOOST_PROGRAM_OPTIONS_LIB)
+bin/anonymize_neoflow/anonymize_neoflow: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/anonymize_neoflow/anonymize_neoflow: DYNAMIC_LIBS := $(BOOST_LIBS)
+bin/anonymize_neoflow/anonymize_neoflow: STATIC_LIBS :=
+bin/anonymize_neoflow/anonymize_neoflow: \
+	bin/anonymize_neoflow/anonymize_neoflow.o \
+	include/timeStamp.o

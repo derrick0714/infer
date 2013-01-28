@@ -1,0 +1,6 @@
+bin/dumpNeoflow/dumpNeoflow: bin/dumpNeoflow/dumpNeoflow.o \
+							 include/timeStamp.o \
+							 include/sqlTime.o \
+							 include/address.o \
+							 include/options.o \
+							 include/stringHelpers.o

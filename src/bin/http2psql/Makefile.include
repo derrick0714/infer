@@ -1,0 +1,4 @@
+bin/http2psql/http2psql: bin/http2psql/http2psql.o \
+					   include/HTTPRequest.o \
+					   include/HTTPResponse.o \
+					   include/timeStamp.o

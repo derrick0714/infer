@@ -1,0 +1,10 @@
+bin/host_domain/host_domain: BOOST_LIBS := \
+									 $(BOOST_PROGRAM_OPTIONS_LIB)
+#									 $(BOOST_SYSTEM_LIB) \
+#									 $(BOOST_FILESYSTEM_LIB) 
+bin/host_domain/host_domain: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/host_domain/host_domain: DYNAMIC_LIBS := -lssl $(BOOST_LIBS)
+bin/host_domain/host_domain: STATIC_LIBS :=
+bin/host_domain/host_domain: bin/host_domain/host_domain.o \
+					   include/domainSuffix.o \
+					   include/getHTTPData.o

@@ -1,0 +1,17 @@
+bin/test/interval_map_test: BOOST_LIBS :=
+bin/test/interval_map_test: DYNAMIC_LIBS := $(BOOST_LIBS)
+bin/test/interval_map_test: STATIC_LIBS :=
+bin/test/interval_map_test: bin/test/interval_map_test.o
+
+bin/test/ip_information_test: BOOST_LIBS := \
+	$(BOOST_SYSTEM_LIB) \
+	$(BOOST_FILESYSTEM_LIB) \
+	$(BOOST_PROGRAM_OPTIONS_LIB)
+bin/test/ip_information_test: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/test/ip_information_test: DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+bin/test/ip_information_test: STATIC_LIBS :=
+bin/test/ip_information_test: \
+	bin/test/ip_information_test.o \
+	include/ipInformation.o \
+	include/postgreSQL.o \
+	include/timeStamp.o

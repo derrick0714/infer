@@ -1,0 +1,4 @@
+bin/index_host_pair_ips/index_host_pair_ips: \
+	bin/index_host_pair_ips/index_host_pair_ips.o \
+	include/stringHelpers.o \
+	include/address.o

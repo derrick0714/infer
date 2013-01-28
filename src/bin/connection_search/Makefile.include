@@ -1,0 +1,5 @@
+bin/connection_search/connection_search: bin/connection_search/connection_search.o \
+				   include/timeStamp.o \
+				   include/HTTPRequest.o \
+				   include/HTTPResponse.o \
+				   include/sqlTime.o

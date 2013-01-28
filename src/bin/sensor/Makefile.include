@@ -1,0 +1,7 @@
+bin/sensor/sensor: bin/sensor/sensor.o \
+				   include/packet.o \
+				   include/timeStamp.o \
+				   include/network.o \
+				   include/stringHelpers.o \
+				   include/modules.o \
+				   include/locks.o

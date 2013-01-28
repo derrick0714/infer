@@ -1,0 +1,3 @@
+bin/as_map/as_map: bin/as_map/as_map.o \
+				 include/stringHelpers.o \
+				 include/postgreSQL.o

@@ -1,0 +1,14 @@
+bin/vhbf_query/vhbf_query: BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+									   $(BOOST_FILESYSTEM_LIB) \
+									   $(BOOST_PROGRAM_OPTIONS_LIB) \
+									   $(BOOST_DATE_TIME_LIB)
+bin/vhbf_query/vhbf_query: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/vhbf_query/vhbf_query: DYNAMIC_LIBS := -lssl $(BOOST_LIBS)
+bin/vhbf_query/vhbf_query: STATIC_LIBS :=
+bin/vhbf_query/vhbf_query: \
+	bin/vhbf_query/vhbf_query.o \
+	include/timeStamp.o \
+	include/SynappArguments.o \
+	include/PayloadSearchManagerArguments.o \
+	include/OstreamHelpers.o \
+	include/Base64.o

@@ -1,0 +1,16 @@
+bin/dns2psql/dns2psql: \
+	BOOST_LIBS :=
+bin/dns2psql/dns2psql: \
+	BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+				  $(BOOST_PROGRAM_OPTIONS_LIB) \
+				  $(BOOST_FILESYSTEM_LIB)
+bin/dns2psql/dns2psql: \
+	BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/dns2psql/dns2psql: \
+	DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+bin/dns2psql/dns2psql: \
+	STATIC_LIBS :=
+
+bin/dns2psql/dns2psql: \
+	bin/dns2psql/dns2psql.o \
+	include/timeStamp.o

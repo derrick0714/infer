@@ -1,0 +1,5 @@
+bin/shared_private_contacts/shared_private_contacts: \
+	bin/shared_private_contacts/shared_private_contacts.o \
+	include/stringHelpers.o \
+	include/timeStamp.o \
+	include/ipInformation.o

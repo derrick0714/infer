@@ -1,0 +1,3 @@
+bin/host_index/host_index: \
+	bin/host_index/host_index.o \
+	include/stringHelpers.o

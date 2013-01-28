@@ -1,0 +1,4 @@
+bin/country_map/country_map: bin/country_map/country_map.o \
+						   include/stringHelpers.o \
+						   include/address.o \
+						   include/postgreSQL.o

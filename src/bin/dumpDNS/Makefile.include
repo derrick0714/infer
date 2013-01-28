@@ -1,0 +1,3 @@
+bin/dumpDNS/dumpDNS: bin/dumpDNS/dumpDNS.o \
+					 include/timeStamp.o \
+					 include/sqlTime.o

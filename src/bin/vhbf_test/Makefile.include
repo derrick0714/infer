@@ -1,0 +1,9 @@
+bin/vhbf_test/vhbf_test: BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+									   $(BOOST_FILESYSTEM_LIB) \
+									   $(BOOST_PROGRAM_OPTIONS_LIB)
+bin/vhbf_test/vhbf_test: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/vhbf_test/vhbf_test: DYNAMIC_LIBS := -lz $(BOOST_LIBS)
+bin/vhbf_test/vhbf_test: STATIC_LIBS :=
+bin/vhbf_test/vhbf_test: \
+	bin/vhbf_test/vhbf_test.o \
+	include/timeStamp.o

@@ -1,0 +1,7 @@
+bin/dumpHTTP/dumpHTTP: bin/dumpHTTP/dumpHTTP.o \
+					   include/oldHTTP.o \
+					   include/options.o \
+					   include/address.o \
+					   include/timeStamp.o \
+					   include/sqlTime.o \
+					   include/stringHelpers.o

@@ -1,0 +1,7 @@
+bin/interesting_ips/interesting_ips: bin/interesting_ips/interesting_ips.o \
+								   include/postgreSQL.o \
+								   include/address.o \
+								   include/stringHelpers.o \
+								   include/dns.o \
+								   include/sqlTime.o \
+								   include/timeStamp.o

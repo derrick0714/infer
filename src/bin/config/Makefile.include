@@ -1,0 +1,5 @@
+bin/config/config: BOOST_LIBS := $(BOOST_PROGRAM_OPTIONS_LIB)
+bin/config/config: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/config/config: DYNAMIC_LIBS := $(BOOST_LIBS)
+bin/config/config: STATIC_LIBS :=
+bin/config/config: bin/config/config.o

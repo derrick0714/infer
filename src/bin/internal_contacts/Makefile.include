@@ -1,0 +1,10 @@
+bin/internal_contacts/internal_contacts: BOOST_LIBS :=
+bin/internal_contacts/internal_contacts: BOOST_LIBS := $(BOOST_SYSTEM_LIB) \
+											 $(BOOST_PROGRAM_OPTIONS_LIB)
+#											 $(BOOST_FILESYSTEM_LIB)
+bin/internal_contacts/internal_contacts: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/internal_contacts/internal_contacts: DYNAMIC_LIBS := -lpq $(BOOST_LIBS)
+bin/internal_contacts/internal_contacts: STATIC_LIBS :=
+bin/internal_contacts/internal_contacts: \
+	bin/internal_contacts/internal_contacts.o \
+	include/stringHelpers.o

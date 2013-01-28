@@ -1,0 +1,3 @@
+bin/privacy_matrix/privacy_matrix: \
+	bin/privacy_matrix/privacy_matrix.o \
+	include/stringHelpers.o

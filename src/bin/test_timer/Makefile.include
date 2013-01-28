@@ -1,0 +1,5 @@
+bin/test_timer/test_timer: DYNAMIC_LIBS :=
+bin/test_timer/test_timer: STATIC_LIBS :=
+bin/test_timer/test_timer: \
+	bin/test_timer/test_timer.o \
+	include/timeStamp.o

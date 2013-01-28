@@ -1,0 +1,3 @@
+bin/delete_old_data/delete_old_data: bin/delete_old_data/delete_old_data.o \
+								 include/timeStamp.o \
+								 include/sqlTime.o

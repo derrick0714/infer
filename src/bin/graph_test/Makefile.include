@@ -1,0 +1,10 @@
+bin/graph_test/graph_test: BOOST_LIBS := 
+#	$(BOOST_SYSTEM_LIB) \
+	$(BOOST_FILESYSTEM_LIB) \
+	$(BOOST_PROGRAM_OPTIONS_LIB)
+bin/graph_test/graph_test: BOOST_LIBS := $(BOOST_LIBS:%=-l%)
+bin/graph_test/graph_test: DYNAMIC_LIBS := $(BOOST_LIBS)
+bin/graph_test/graph_test: STATIC_LIBS :=
+bin/graph_test/graph_test: \
+	bin/graph_test/graph_test.o \
+	include/timeStamp.o

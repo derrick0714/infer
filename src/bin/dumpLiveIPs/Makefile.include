@@ -1,0 +1,4 @@
+bin/dumpLiveIPs/dumpLiveIPs: bin/dumpLiveIPs/dumpLiveIPs.o \
+							 include/timeStamp.o \
+							 include/sqlTime.o \
+							 include/address.o

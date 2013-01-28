@@ -1,0 +1,6 @@
+bin/split_http/split_http: bin/split_http/split_http.o \
+					   include/oldHTTP.o \
+					   include/HTTPRequest.o \
+					   include/HTTPResponse.o \
+					   include/timeStamp.o \
+					   include/stringHelpers.o
