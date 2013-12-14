@@ -36,7 +36,7 @@ When you finish intallation, you can login the Infer through any browser using u
 /usr/local/bin/infer_install.sh
 ```
 
-<img src="https://raw.github.com/derrick0714/infer/master/Screenshot/Dashboard.png" />
+<img src="https://github.com/derrick0714/infer/blob/master/Screenshot/Dashboard.png" />
 
 ## How does Infer work?
 
