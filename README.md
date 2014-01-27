@@ -5,6 +5,10 @@ INFER system  is a project applying highly efficient data mining techniques to m
 
 ## Getting Started
 
+1. git installation
+$ cd /usr/ports/devel/git
+$ make install
+
 Note: To install, make sure you have installed FreeBSD as documented in freebsd.txt and that you have followed the instructions in time.txt for setting up NTP and adjusting the timezone accordingly.
 
 First you'll need to fork and clone this repo
