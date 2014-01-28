@@ -86,3 +86,55 @@ chown -Rh analysis:analysis $analysis_dir/pruned_network_graphs
 touch /var/log/infer_search.log
 chown www:www /var/log/infer_search.log
 
+################################################################################
+# Configuration                                                                #
+################################################################################
+
+# Sensor
+cp /usr/local/share/examples/infer/infer_sensor_neoflow_fcc.model /usr/local/etc
+cp /usr/local/share/examples/infer/infer.conf /usr/local/etc/
+chown root:analysis /usr/local/etc/infer.conf
+chmod 660 /usr/local/etc/infer.conf
+pw groupmod analysis -m www
+/usr/local/bin/infer_config sensor.interface "$capture_interface"
+/usr/local/bin/infer_config data-directory "$sensor_data_dir"
+/usr/local/bin/infer_config local-networks "$monitored_networks"
+/usr/local/bin/infer_config analysis_dir "$analysis_dir"
+
+# Analysis
+cp /usr/local/share/examples/infer/infer_analysis_scanners_monitoredServices.conf /usr/local/etc/
+if [ ! -e /usr/local/etc/infer.conf ]
+then
+	cp /usr/local/share/examples/infer/infer.conf /usr/local/etc/
+fi
+
+/usr/local/bin/infer_config postgresql.user "ims"
+/usr/local/bin/infer_config postgresql.password "$pgsql_infer_pass"
+/usr/local/bin/infer_config postgresql.dbname "IMS"
+
+/usr/local/bin/infer_config data-directory "$sensor_data_dir"
+/usr/local/bin/infer_config local-networks "$monitored_networks"
+/usr/local/bin/infer_config management-host "$management_ip"
+
+################################################################################
+# Database Setup                                                               #
+################################################################################
+
+/usr/local/bin/infer_database_setup.sh "$pgsql_pgsql_pass" "$frontend_admin_user" "$frontend_admin_pass"
+
+
+################################################################################
+# Country Map                                                                  #
+################################################################################
+
+/usr/local/bin/infer_country_map
+
+
+################################################################################
+# Initialization                                                               #
+################################################################################
+
+/usr/local/etc/rc.d/infer_sensor.sh start
+
+/usr/local/etc/rc.d/apache22 start
+/usr/local/etc/rc.d/infer_query_manager.sh start
