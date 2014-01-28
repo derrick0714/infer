@@ -148,7 +148,7 @@ cat > /usr/local/etc/apache22/Includes/httpd-vhosts.conf << EOF
 NameVirtualHost *:80
 
 <VirtualHost *:80>
-  DocumentRoot "$analysis_dir/www/htdocs"
+  DocumentRoot "/usr/local/share/www/htdocs"
   ServerName $management_ip
   RewriteEngine On
   RewriteRule / https://%{HTTP_HOST}%{REQUEST_URI}
@@ -202,7 +202,7 @@ awk '{ sub(/<VirtualHost _default_:443>/, \
 		   "options multiviews\n  AcceptPathInfo ON\n</Location>"); print $0; }' \
 	/usr/local/etc/apache22/extra/httpd-ssl.conf \
 		> /usr/local/etc/apache22/Includes/httpd-ssl.conf
-sed -e "s/^\(DocumentRoot\).*/\1 \"\/usr\/home\/infer\/analysis\/www\/htdocs\"/" \
+sed -e "s/^\(DocumentRoot\).*/\1 \"\/usr\/local\/share\/www\/htdocs\"/" \
 	-e "s/^ServerName.*/ServerName $management_ip:443/" \
 	-e "s/^\(SSLCertificateFile.*\)server/\1$management_ip/" \
 	-e "s/^\(SSLCertificateKeyFile.*\)server/\1$management_ip/" \
