@@ -107,7 +107,7 @@ void StrftimeReadEnumerator::init(const fs::path &baseDir,
 		return;
 	}
 	curFile = prevFile = std::string(buf, len);
-	printf("#######:current file :%s\r\n##########",curFile.c_str());
+	printf("#######:current file :%s\r\n##########",curFile.filename());
 	if (fs::exists(fs::path(baseDir) /= curFile) && 
 		fs::is_regular_file(fs::path(baseDir) /= curFile))
 	{
