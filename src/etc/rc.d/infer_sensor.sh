@@ -12,6 +12,5 @@ if [ $# = 0 ]; then
 fi
 
 if [ $1 = "start" ]; then
-	su - $user -c \
-		"/usr/local/bin/screen -d -m /bin/sh $infer_loop $binary"
+  su - $user -c "/usr/local/bin/screen -d -m /bin/sh $infer_loop $binary"
 fi
