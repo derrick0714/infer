@@ -167,7 +167,7 @@ dist-tools: dist-tree tools
 ################################################################################
 
 dist-www: dist-tree
-	cp -R $(SRC_DIR)/www $(DIST_DIR)/share/www
+	cp -R $(SRC_DIR)/www $(DIST_DIR)/share/
 	find $(DIST_DIR)/share/www -name '.svn' -exec rm -rf {} +
 
 ################################################################################
