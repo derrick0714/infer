@@ -1,0 +1,8 @@
+'Mail Server'	'{25,110,143}'	2
+'Secure Mail Server'	'{465,993,995}'	2
+'Web Server'	'{80}'	2
+'Secure Web Server'	'{443}'	2
+'Mail Client'	'{25,110,143}'	1
+'Secure Mail Client'	'{465,993,995}'	1
+'Web Client'	'{80}'	1
+'Secure Web Client'	'{443}'	1

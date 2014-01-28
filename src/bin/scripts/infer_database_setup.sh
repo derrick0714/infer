@@ -251,22 +251,22 @@ INSERT INTO "Configuration"."analysis" VALUES ('querySockPath', NULL, '/tmp/imsQ
 EOF
 
 psql -q "user = ims password = $pgsql_infer_pass dbname = IMS" \
-	< /usr/local/www/infer/scripts/data/asIPBlocks.sql
+	< /usr/local/share/www/scripts/data/asIPBlocks.sql
 
 psql -q "user = ims password = $pgsql_infer_pass dbname = IMS" \
-	< /usr/local/www/infer/scripts/data/asIPNames.sql
+	< /usr/local/share/www/scripts/data/asIPNames.sql
 
 psql -q "user = ims password = $pgsql_infer_pass dbname = IMS" \
-	< /usr/local/www/infer/scripts/data/countryNames.sql
+	< /usr/local/share/www/scripts/data/countryNames.sql
 
 psql -q "user = ims password = $pgsql_infer_pass dbname = IMS" \
-	< /usr/local/www/infer/scripts/data/monitoredServices.sql
+	< /usr/local/share/www/scripts/data/monitoredServices.sql
 
 psql -q "user = ims password = $pgsql_infer_pass dbname = IMS" \
-	< /usr/local/www/infer/scripts/data/protocolNames.sql
+	< /usr/local/share/www/scripts/data/protocolNames.sql
 
 psql -q "user = ims password = $pgsql_infer_pass dbname = IMS" \
-	< /usr/local/www/infer/scripts/data/serviceNames.sql
+	< /usr/local/share/www/scripts/data/serviceNames.sql
 
 psql -q "user = ims password = $pgsql_infer_pass dbname = IMS" \
-	< /usr/local/www/infer/scripts/data/role_names.sql
+	< /usr/infer/www/scripts/datarole_names.sql

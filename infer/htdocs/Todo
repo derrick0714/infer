@@ -1,0 +1,68 @@
+Front Page:
+===========
+
+Host Page:
+==========
+	* Content Distribution:
+	-----------------------
+		- Content distribution table should be sorted, with most in/outbound
+		content on the top.
+		- There is no need for the pie-charts, information presented is
+		reptitive.
+
+	* Host Activity:
+    ----------------	
+		- We need to add a host activity graph for the past 24-hours. The graph
+		basically plots amount of data in and out of a host for every 30-minute 
+		interval. We can even include content types by coloring the bars
+		accordingly.
+
+	* Popular Services:
+	-------------------
+		- Popular services and host roles should be merged. They are
+		essentially the same thing. Instead of popular services, all the
+		information currently under this category should come under "Host
+		Roles." For example:
+			* Consumer		400MB 	from 8:47:58 to 23:45:06 14 hosts
+				- Mail Client	10MB 	from 9:00:32 to 10:20:09 from 13 hosts
+				- Web Client	20MB 	from 10:10:12 to 12:00:00 from 2 hosts
+
+			* Producer		320MB	from 12:00:20 to 13:34:25 to 2300 hosts
+				- Mail Server 	300MB from 12:00:20 to 13:34:25 to 2300 hosts
+
+			* Relay			1.5GB	from 9:00:00 to 15:09:45	between 1500 hosts
+				- Multimedia P2P Node	from 12:00:20 to 13:34:25 between 500 hosts
+				- Malicious P2P Node	from 11:00:21 to 12:00:21 between 1025 hosts
+
+	* Infection Report:
+	-------------------
+		- If we find a diagnostics then we should only present the diagnostics.
+		There should be no symptoms listed with diagnostics because it is noise
+		at that point.
+
+		- Need to display host rank, virulence etc. in a nicer way. Currently
+		it is a mess!!
+
+Front Page:
+===========
+	- Rename column "Symptoms" to "Symptoms/Diagnostics"
+	- Rename column "Reaction" as "Action".
+	- Integrate "Inform" user with the email address from LDAP and it sends out
+	an email when clicked.
+	- Top-N table should occupy only one line per host, no more than that!
+	- Too many symptoms showing up on front page. Remove unneccessary symptoms
+	or display only most important ones.
+		-- There should be a list which a user can use to prioritize the
+		symptoms.
+	- Whenever hosts have domain name display only domain names and mouse over
+	tooltip can display the IP address.
+	- We need network summary graphs that gives a user snap shot of how the
+	network is doing.
+		- Network activity graph: Plots the amount of data in and out of network
+	   	for every 30-minute interval for the past 24-hours. Just like the host 
+		activity graph this can also show content type distribution on each bar
+		of the graph.
+		- Network bandwidth graph: Basically a simple line graph of
+		inbound/outbound traffic for the past month or quater (4 months).
+		- Network reputation graph: Reputation of the network over the past
+		month or 4 months.

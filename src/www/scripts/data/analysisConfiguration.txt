@@ -1,0 +1,7 @@
+'udpTimeout'	NULL	30	'UDP timeout for connection initiator API'
+'localNetworks'	NULL	'128.238.0.0/16'	'monitored networks'
+'dbHome'	NULL	'/mnt/sensor'	'sensor data directory'
+'startHour'	NULL	0	'start of hour range for analysis'
+'endHour'	NULL	24	'end of hour range for analysis (non-inclusive)'
+'querySockTimeout'	NULL	600	'socket timeout for connection to query manager'
+'querySockPath'	NULL	'/tmp/imsQueryManager.sock'	'Path to query manager UNIX socket'

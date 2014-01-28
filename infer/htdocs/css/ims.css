@@ -1,0 +1,116 @@
+body {
+  background-color: #F0F0F0;
+  color: #660000;
+  margin: 0px;
+  padding: 0px;
+}
+
+a {
+  text-decoration: none;
+  color: #660000;
+}
+
+a.text {
+  color: #660000;
+  text-decoration: none;
+  border-bottom: 1px dotted;
+}
+
+a.text:hover {
+  border-bottom: 1px solid;
+}
+
+a img {
+  color: #660000;
+  padding: 1px;
+  border: 1px dotted;
+}
+
+a img:hover {
+  border: 1px solid;
+}
+
+.hidden {
+ display: none;
+}
+
+#navbar {
+  background-color: #BBAABB;
+  height: 30px;
+  margin-bottom: 10px;
+}
+
+.message {
+  background-color: #BBAABB;
+  font-style: italic;
+  padding: 4px;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.table {
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.tableName {
+  padding: 2px;
+  font-weight: bold;
+  background-color: #A987A9;
+}
+
+.columnTitle {
+  padding: 2px;
+  font-weight: bold;
+  background-color: #BBAABB;
+}
+
+.even {
+  background-color: #D9D9D9;
+}
+
+.odd {
+  background-color: #E5E5E5;
+}
+
+.whiteList {
+  background-color: #FFFFFF;
+}
+
+.right {
+  text-align: right;
+}
+
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.top {
+  padding-top: 10px;
+}
+
+.yearContainer {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  clear: left;
+  background-color: #BBAABB;
+  padding: 5px;
+}
+
+.monthContainer {
+  float: left;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.roleChange {
+  background-color: #F00000;
+}

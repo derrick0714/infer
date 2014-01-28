@@ -167,8 +167,8 @@ dist-tools: dist-tree tools
 ################################################################################
 
 dist-www: dist-tree
-#	cp -R $(SRC_DIR)/www $(DIST_DIR)/
-#	find $(DIST_DIR)/www -name '.svn' -exec rm -rf {} +
+	cp -R $(SRC_DIR)/www $(DIST_DIR)/share/www
+	find $(DIST_DIR)/share/www -name '.svn' -exec rm -rf {} +
 
 ################################################################################
 # DIST                                                                         #
@@ -180,6 +180,7 @@ dist-tree:
 			 $(DIST_DIR)/etc \
 			 $(DIST_DIR)/etc/rc.d \
 			 $(DIST_DIR)/share \
+			 $(DIST_DIR)/share/www \
 			 $(DIST_DIR)/share/examples \
 			 $(DIST_DIR)/share/examples/infer
 

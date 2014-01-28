@@ -1,0 +1,7 @@
+dn: o=ACM
+objectclass: organization
+o: ACM
+
+dn: cn=Manager,o=ACM
+objectclass: organizationalRole
+cn: Manager

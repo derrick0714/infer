@@ -14,10 +14,13 @@ monitored_networks='128.238.66.175/24 10.0.128.0/24 10.0.192.0/24'
 # Sensor
 
 # Where to store data written by the sensor
-sensor_data_dir='/home/sensor/data'
+sensor_data_dir='/usr/home/infer/sensor/data'
+
+# WHere to anyalsis data
+analysis_dir = '/usr/home/infer/analysis'
 
 # interface from which to capture packet data for analysis
-capture_interface='em1'
+capture_interface='bge0'
 
 # IP address of the management interface
 management_ip='128.238.66.175'
@@ -26,6 +29,7 @@ management_ip='128.238.66.175'
 hostname='infer'
 
 # Analysis
+#pgsql user name: pgsql
 
 # The desired PostgreSQL super user password
 pgsql_pgsql_pass='infer1234'
@@ -41,7 +45,7 @@ php_timezone='America/New_York'
 frontend_admin_user='admin'
 
 # The desired password for the initial INFER frontend administrator
-frontend_admin_pass='admin_password'
+frontend_admin_pass='infer1234'
 
 # OS info (you can probably just leave this alone)
 # os_name=$(uname -s)
@@ -144,7 +148,7 @@ cat > /usr/local/etc/apache22/Includes/httpd-vhosts.conf << EOF
 NameVirtualHost *:80
 
 <VirtualHost *:80>
-  DocumentRoot "/usr/home/analysis/www/htdocs"
+  DocumentRoot "$analysis_dir/www/htdocs"
   ServerName $management_ip
   RewriteEngine On
   RewriteRule / https://%{HTTP_HOST}%{REQUEST_URI}
@@ -198,7 +202,7 @@ awk '{ sub(/<VirtualHost _default_:443>/, \
 		   "options multiviews\n  AcceptPathInfo ON\n</Location>"); print $0; }' \
 	/usr/local/etc/apache22/extra/httpd-ssl.conf \
 		> /usr/local/etc/apache22/Includes/httpd-ssl.conf
-sed -e "s/^\(DocumentRoot\).*/\1 \"\/usr\/home\/analysis\/www\/htdocs\"/" \
+sed -e "s/^\(DocumentRoot\).*/\1 \"\/usr\/home\/infer\/analysis\/www\/htdocs\"/" \
 	-e "s/^ServerName.*/ServerName $management_ip:443/" \
 	-e "s/^\(SSLCertificateFile.*\)server/\1$management_ip/" \
 	-e "s/^\(SSLCertificateKeyFile.*\)server/\1$management_ip/" \
@@ -283,11 +287,11 @@ echo -e "15\t*\t*\t*\t*\tanalysis\t/usr/local/bin/infer_hourly.sh" \
 /etc/rc.d/cron restart
 
 
-mkdir /usr/home/analysis/privacy_graphs
-chown -Rh analysis:analysis /usr/home/analysis/privacy_graphs
+mkdir $analysis_dir/privacy_graphs
+chown -Rh analysis:analysis $analysis_dir/privacy_graphs
 
-mkdir /usr/home/analysis/pruned_network_graphs
-chown -Rh analysis:analysis /usr/home/analysis/pruned_network_graphs
+mkdir $analysis_dir/pruned_network_graphs
+chown -Rh analysis:analysis $analysis_dir/pruned_network_graphs
 
 touch /var/log/infer_search.log
 chown www:www /var/log/infer_search.log
@@ -305,6 +309,7 @@ pw groupmod analysis -m www
 /usr/local/bin/infer_config sensor.interface "$capture_interface"
 /usr/local/bin/infer_config data-directory "$sensor_data_dir"
 /usr/local/bin/infer_config local-networks "$monitored_networks"
+/usr/local/bin/infer_config analysis_dir "$analysis_dir"
 
 # Analysis
 cp /usr/local/share/examples/infer/infer_analysis_scanners_monitoredServices.conf /usr/local/etc/

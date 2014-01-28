@@ -1,0 +1,80 @@
+/* table styles for the page */
+table.lite {
+	font:normal 76%/150% "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, Helvetica, sans-serif;
+	border-collapse:separate;
+	border-spacing:0;
+	margin:0 0 1em;
+	color:#111;
+}
+table.lite a {
+	/*color: #660000;
+	text-decoration:none;
+	border-bottom:1px dotted;*/
+	}
+table.lite a:visited {
+	color: #BBAABB;
+	font-weight:normal;
+	}
+table.lite a:visited:after {
+	content:"\00A0\221A";
+	}
+table.lite a:hover {
+	border-bottom-style:solid;
+	}
+table.lite thead th,
+table.lite thead td,
+table.lite tfoot th,
+table.lite tfoot td {
+	border:1px solid #ffcc33;
+	border-width:1px 0;
+	background: #BBAABB;
+	color: #660000;
+	}
+table.lite th {
+	font-weight:bold;
+	line-height:normal;
+	padding:0.25em 0.5em;
+	text-align:left;
+	}
+table.lite tbody th,
+table.lite td {
+	padding:0.25em 0.5em;
+	text-align:left;
+	vertical-align:top;
+	background:;
+	}
+table.lite tbody th {
+	font-weight:normal;
+	white-space:nowrap;
+	}
+table.lite tbody th a:link,
+table.lite tbody th a:visited {
+	font-weight:bold;
+	}
+table.lite tbody td,
+table.lite tbody th {
+	border-bottom:1px solid #ffcc33;
+	border-width:1px 0;
+	background: #DEDEDE;
+	}
+table.lite tbody tr.odd th,
+table.lite tbody tr.odd td {
+	border-color:#ffcc33;
+	background: #EDEDED;
+	/*background:#F7F4EE;*/
+	}
+
+table.lite tbody tr:hover td,
+table.lite tbody tr:hover th {
+	background:#ffffee;
+	border-color:#523A0B;
+	}
+table.lite caption {
+	font-family:Georgia,Times,serif;
+	font-weight:normal;
+	font-size:1.4em;
+	color: #660000;
+	text-align:center;
+	margin:0;
+	padding:0.5em 0.25em;
+	}
