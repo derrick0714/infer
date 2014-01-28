@@ -269,4 +269,4 @@ psql -q "user = ims password = $pgsql_infer_pass dbname = IMS" \
 	< /usr/local/share/www/scripts/data/serviceNames.sql
 
 psql -q "user = ims password = $pgsql_infer_pass dbname = IMS" \
-	< /usr/local/share/www/scripts/data/datarole_names.sql
+	< /usr/local/share/www/scripts/data/role_names.sql
