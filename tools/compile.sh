@@ -1,3 +1,3 @@
-cd "/usr/local/code/src"
+cd "../src"
 gmake dist
-#cp /root/ims-site/trunk/dist/bin/infer_* /usr/local/bin/
+cp ../dist/bin/infer_* /usr/local/bin/

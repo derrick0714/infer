@@ -111,19 +111,16 @@ int main(int argc, char **argv) {
 	cerr << "Table Name:  " << date << endl;
 	cerr << "End date:    " << end_date << endl;
 	
-	//cerr << "this is derrik write" << endl;
 
 	if (date != end_date) {
 		cerr << "Error: the interval must not span more than one day, localtime" << endl;
 		return 1;
 	}
-
 	configuration conf;
 	if (!conf.load(vm["config-file"].as<string>())) {
 		cerr << argv[0] << ": unable to load configuration" << endl;
 		return 1;
 	}
-	
 	PostgreSQLConnection pg_conn;
 	string str;
 	configuration::error status;
@@ -257,7 +254,6 @@ int main(int argc, char **argv) {
 		cerr << argv[0] << ": response-schema required" << endl;
 		return 1;
 	}
-
 	size_t buffer_count;
 	if (conf.get(buffer_count, "buffer-count", "http2psql")
 			!= configuration::OK)
@@ -265,15 +261,13 @@ int main(int argc, char **argv) {
 		cerr << argv[0] << ": buffer-count required" << endl;
 		return 1;
 	}
-
 	boost::shared_ptr<StrftimeReadEnumerator> request_enum(
 		new StrftimeReadEnumerator);
-
+	cerr << "derrick[1.2.1]" << endl;
 	request_enum->init(data_directory,
 				   "%Y/%m/%d/http_request_%H",
 				   time_begin,
 				   time_end);
-
 	if (!(*request_enum)) {
 		cerr << "Error: Unable to initialize read enumerator" << endl;
 		return 1;
@@ -301,6 +295,7 @@ int main(int argc, char **argv) {
 		cerr << "\t" << request_writer.error() << endl;
 		return 1;
 	}
+		cerr << "derrick[4]" << endl;
 
 	HTTPRequest http_request;
 	ErrorStatus reader_status;
@@ -332,6 +327,8 @@ int main(int argc, char **argv) {
 
 	boost::shared_ptr<StrftimeReadEnumerator> response_enum(
 		new StrftimeReadEnumerator);
+
+		cerr << "derrick[5]" << endl;
 
 	response_enum->init(data_directory,
 				   "%Y/%m/%d/http_response_%H",
