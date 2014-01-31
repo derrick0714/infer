@@ -15,7 +15,7 @@ git@github.com:derrick0714/infer.git
 ```
 
 
-Go into the [src] directory and copy the install script(s) to [/usr/local/bin/]. 
+Go into the <font color="green">src</font> directory and copy the install script(s) to <font color="green">/usr/local/bin/</font>. 
 ```bash
 cp bin/scripts/infer_{install,database}* /usr/local/bin/
 ```
