@@ -6,18 +6,16 @@ INFER system  is a project applying highly efficient data mining techniques to m
 ## Getting Started
 
 
-First: 
-```bash
-To install, make sure you have installed FreeBSD 8.3 as documented in [freebsd.txt](doc/install/freebsd.txt) and that you have followed the instructions in [time.txt](doc/install/time.txt) for setting up NTP and adjusting the timezone accordingly.
-```
+Note: To install, make sure you have installed FreeBSD 8.3 as documented in [freebsd.txt](doc/install/freebsd.txt) and that you have followed the instructions in [time.txt](doc/install/time.txt) for setting up NTP and adjusting the timezone accordingly.
+
 
 Second: you'll need to fork and clone this repo
 ```bash
-git@github.com:derrick0714/infer.git 
+git@github.com:derrick0714/infer.git
 ```
 
 
-Go into the src directory and copy the install script(s) into a directory in your PATH. 
+Go into the [src] directory and copy the install script(s) to [/usr/local/bin/]. 
 ```bash
 cp bin/scripts/infer_{install,database}* /usr/local/bin/
 ```
