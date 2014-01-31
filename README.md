@@ -5,11 +5,10 @@ INFER system  is a project applying highly efficient data mining techniques to m
 
 ## Getting Started
 
-
 Note: To install, make sure you have installed FreeBSD 8.3 as documented in [freebsd.txt](doc/install/freebsd.txt) and that you have followed the instructions in [time.txt](doc/install/time.txt) for setting up NTP and adjusting the timezone accordingly.
 
 
-Second: you'll need to fork and clone this repo
+Second: you'll need to fork and clone this repo ( [how to install git](http://git-scm.com/download/linux), [how to create ssh key](https://help.github.com/articles/generating-ssh-keys))
 ```bash
 git@github.com:derrick0714/infer.git
 ```
@@ -39,6 +38,7 @@ When you finish intallation, you can login the Infer through any browser using u
 ```
 
 <img src="https://raw.github.com/derrick0714/infer/master/Screenshot/Dashboard.png?token=1255657__eyJzY29wZSI6IlJhd0Jsb2I6ZGVycmljazA3MTQvaW5mZXIvbWFzdGVyL1NjcmVlbnNob3QvRGFzaGJvYXJkLnBuZyIsImV4cGlyZXMiOjEzODc2MDE4NjN9--3a6539de7b9fc8822f4ecc34ae328fb1b91c17de" />
+
 
 ## How does Infer work?
 
