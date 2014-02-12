@@ -4,7 +4,7 @@
 #include "HTTPRequest.h"
 
 ErrorStatus HTTPRequest::serialize(std::ostream &dest) const {
-	printf("derrick is in the HTTPRequest serialize \r\n");
+//	printf("derrick is in the HTTPRequest serialize \r\n");
 	dest.write(_flowID, 13);
 	if (!dest) {
 		return E_FSTREAM;
@@ -78,7 +78,7 @@ ErrorStatus HTTPRequest::serialize(std::ostream &dest) const {
 }
 
 ErrorStatus HTTPRequest::unserialize(std::istream &src) {
-	printf("derrick is in the HTTPRequestunserialize \r\n");
+//	printf("derrick is in the HTTPRequestunserialize \r\n");
 	src.read(_flowID, 13);
 	if (!src) {
 		return E_FSTREAM;

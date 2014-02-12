@@ -34,8 +34,8 @@ class InferSession {
 		   "WHERE user_name = '" . $username . "' " .
 				"AND sha256_password = '" . $sha256_password . "' " .
 				"AND active = 'true'";
-				echo $auth_query;
-				exit();
+				//echo $auth_query;
+				//exit();
 		$result = pg_query($pg, $auth_query);
 		if (pg_num_rows($result) === 1) {
 			$_SESSION['logged_in'] = true;

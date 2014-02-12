@@ -574,12 +574,15 @@ bool commitInterestingIPs(PGconn *postgreSQL, const char *date,
 		}
 	}
 	cout << "Updating PostgreSQL database with interesting IPs" << endl;
+	cout << "derrick[1]"<<endl;
 	clock.start();
 	for (multimap <double, unordered_map <uint32_t, InfectionStats>::iterator>::reverse_iterator rankedInterestingIPItr = rankedInterestingIPs.rbegin();
 			 rankedInterestingIPItr != rankedInterestingIPs.rend(); ++rankedInterestingIPItr) {
+		cout << "derrick[2]"<<endl;
 		if (reverseDNSLookups) {
 			ptrRecords = getPTRRecords(rankedInterestingIPItr -> second -> first);
 		}
+		cout << "derrick[3]"<<endl;
 		if (!pgBulkInserter.insert(NULL, rankedInterestingIPItr -> second -> first,
 															 (void*)&(ptrRecords),
 															 rankedInterestingIPItr -> second -> second.steppingStoneScore,
@@ -598,11 +601,13 @@ bool commitInterestingIPs(PGconn *postgreSQL, const char *date,
 															 ++rank)) {
 			return false;
 		}
+		cout << "derrick[4]"<<endl;
 		clock.incrementOperations();
 	}
 	if (pgBulkInserter.size() && !pgBulkInserter.flush()) {
 		return false;
 	}
+	cout << "derrick[5]"<<endl;
 	clock.stop();
 	return true;
 }

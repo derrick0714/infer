@@ -86,7 +86,7 @@ foreach $net_str (split(/\s/, $local_networks_string)) {
 foreach my $cidr (@local_networks) {
 	${$cidr}[0] = unpack N => pack CCCC => split /\./ => ${$cidr}[0];
 	${$cidr}[1] = (2 ** 32) - (2 ** (32 - ${$cidr}[1]));
-
+	
 	die "invalid CIDR!\n" unless (${$cidr}[0] & ${$cidr}[1]) == ${$cidr}[0];
 }
 

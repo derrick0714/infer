@@ -450,6 +450,7 @@
                              &$countryNameMap) {
     global $imsHome;
     if ($countryNumber !== NULL) {
+
       $fileName = $countryCodeMap[$countryNumber];
       $name = $countryNameMap[$countryNumber];
       if (@file_exists($imsHome . '/htdocs/images/flags/' . $fileName . '.png')) {

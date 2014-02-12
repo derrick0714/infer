@@ -359,7 +359,7 @@ int main(int argc, char *argv[]) {
 	analysis_begin.set(time_begin, 0);
 	analysis_end.set(time_end, 0);
 
-	cerr << "about to read live_ips data" << endl;
+	cerr << "about to read live_ips data:" << analysis_begin<<analysis_end<< endl;
 	/* Reads live IPs from live IP data. */
 	StrftimeReadEnumerator readEnumerator;
 	boost::shared_ptr<StrftimeReadEnumerator> liveIPsEnumerator(new StrftimeReadEnumerator);
@@ -433,8 +433,8 @@ int main(int argc, char *argv[]) {
 	
 	sharedState.nameResolution = new NameResolution(query_socket_path,
 													query_socket_timeout);
-	cout<<"#derrick log# query_socket_path:"<<query_socket_path<<endl;
-	cout<<"#derrick log# query_socket_path:"<<query_socket_timeout<<endl;
+	cerr<<"#derrick log# query_socket_path:"<<query_socket_path<<endl;
+	cerr<<"#derrick log# query_socket_path:"<<query_socket_timeout<<endl;
 	if (sharedState.nameResolution -> establishConnection()) {
 		cout << "Successfully initialized NameResolution and connected to socket." << endl;
 	}

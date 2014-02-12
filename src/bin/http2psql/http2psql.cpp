@@ -301,7 +301,7 @@ int main(int argc, char **argv) {
 	ErrorStatus reader_status;
 	size_t rows(0);
 	while ((reader_status = request_reader.read(http_request)) == E_SUCCESS) {
-		cerr << "#derrick: write http request " << rows << "rows" << endl;
+//		cerr << "#derrick: write http request " << rows << "rows" << endl;
 		if (!request_writer.write(http_request)) {
 			cerr << argv[0] << ": unable to write request!" << endl;
 			return 1;
